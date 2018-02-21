@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test Pasoonate</title>
+
+	<script src="src/Calendar.js"></script>
+	<script src="src/GregorianCalendar.js"></script>
+	<!-- <script src="pasoonate.js"></script> -->
+</head>
+<body>
+	<script>
+		// let pasoonate = new Pasoonate();
+		let date = new Date();
+		let calendar = new GregorianCalendar(0, 0);
+		let timestamp = Math.floor(date.getTime() / 1000);
+		console.log("timestamp: ", timestamp);
+		let julianday = calendar.timestampToJulianDay(timestamp);
+		console.log("julianday:", julianday);
+		console.log("timestamp:", calendar.julianDayToTimestamp(julianday));
+		let juliandayWithoutTime = calendar.julianDayWithoutTime(julianday);
+		let time = calendar.extractJulianDayTime(julianday);
+		console.log("juliandayWithoutTime:", juliandayWithoutTime);
+		console.log("time:", time)
+		console.log("julianday", calendar.addTimeToJulianDay(juliandayWithoutTime, time.hour, time.minute, time.second));
+		console.log("date:", date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+		console.log("julianday:", calendar.dateToJulianDay(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+		console.log("timestamp:", calendar.dateToTimestamp(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+		console.log("date:", calendar.julianDayToDate(julianday));
+		console.log("date:", calendar.timestampToDate(timestamp));
+	</script>	
+</body>
+</html>
