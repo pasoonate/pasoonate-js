@@ -33,24 +33,31 @@ class JalaliCalendar extends Calendar {
     	
     	julianDay = this.julianDayWithoutTime(julianDay);
 
-    	let wjd = Math.floor(julianDay - 0.5) + 0.5;
-        let depoch = wjd - this.GregorianEpoch;
-        let quadricent = Math.floor(depoch / 146097);
-        let dqc = this.mod(depoch, 146097);
-        let cent = Math.floor(dqc / 36524);
-        let dcent = this.mod(dqc, 36524);
-        let quad = Math.floor(dcent / 1461);
-        let dquad = this.mod(dcent, 1461);
-        let yindex = Math.floor(dquad / 365);
-        let year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
-        if (!((cent == 4) || (yindex == 4))) {
-            year++;
-        }
-        let yearday = wjd - this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second));
-        let leapadj = (wjd < this.julianDayWithoutTime(this.dateToJulianDay(year, 3, 1, time.hour, time.minute, time.second)) ? 0 : (this.isLeap(year) ? 1 : 2));
-        let month = Math.floor((((yearday + leapadj) * 12) + 373) / 367);
-        let day = (wjd - this.julianDayWithoutTime(this.dateToJulianDay(year, month, 1, time.hour, time.minute, time.second))) + 1;
+    	julianDay = Math.floor(julianDay) + 0.5;
 
+        let depoch = julianDay - this.julianDayWithoutTime(this.dateToJulianDay(475, 1, 1, time.hour, time.minute, time.second));
+        let cycle = Math.floor(depoch / 1029983);
+        let cyear = this.mod(depoch, 1029983);        
+    	let ycycle, aux1, aux2;
+
+        if (cyear == 1029982) {
+            ycycle = 2820;
+        } else {
+            aux1 = Math.floor(cyear / 366);
+            aux2 = this.mod(cyear, 366);
+            ycycle = Math.floor(((2134 * aux1) + (2816 * aux2) + 2815) / 1028522) + aux1 + 1;
+        }
+        
+        let year = ycycle + (2820 * cycle) + 474;
+        
+        if (year <= 0) {
+            year--;
+        }
+        
+        let yday = (julianDay - this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second))) + 1;
+        let month = (yday <= 186) ? Math.ceil(yday / 31) : Math.ceil((yday - 6) / 30);
+        let day = (julianDay - this.julianDayWithoutTime(this.dateToJulianDay(year, month, 1, time.hour, time.minute, time.second))) + 1;
+            
         return {
         	"year": year,
         	"month": month,
@@ -59,6 +66,5 @@ class JalaliCalendar extends Calendar {
         	"minute": time.minute,
         	"second": time.second,
         }
-
     }
 }
