@@ -53,10 +53,18 @@ class Calendar {
 
     dateToJulianDay (year, month, day, hour, minute, second) {}
 
-    dateToTimestamp (year, month, day, hour, minute, second) {}
+    dateToTimestamp (year, month, day, hour, minute, second) {
+        let julianDay = this.dateToJulianDay (year, month, day, hour, minute, second);
+
+        return this.julianDayToTimestamp(julianDay);
+    }
 
     julianDayToDate (julianDay) {}
 
-    timestampToDate (timestamp) {}
+    timestampToDate (timestamp) {
+        let julianDay = this.timestampToJulianDay(timestamp);
+
+        return this.julianDayToDate(julianDay);
+    }
 
 }

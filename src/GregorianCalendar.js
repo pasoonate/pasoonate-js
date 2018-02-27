@@ -25,12 +25,6 @@ class GregorianCalendar extends Calendar {
 		return this.addTimeToJulianDay(julianDay, hour, minute, second);
 	}
 
-    dateToTimestamp (year, month, day, hour, minute, second) {
-    	let julianDay = this.dateToJulianDay (year, month, day, hour, minute, second);
-
-    	return this.julianDayToTimestamp(julianDay);
-    }
-
     julianDayToDate (julianDay) {
     	let time = this.extractJulianDayTime(julianDay);
     	
@@ -63,11 +57,5 @@ class GregorianCalendar extends Calendar {
         	"second": time.second,
         }
 
-    }
-
-    timestampToDate (timestamp) {
-    	let julianDay = this.timestampToJulianDay(timestamp);
-
-    	return this.julianDayToDate(julianDay);
     }
 }

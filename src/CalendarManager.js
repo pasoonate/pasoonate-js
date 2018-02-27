@@ -1,0 +1,6 @@
+class CalendarManager {
+	
+	constructor () {
+		
+	}
+}
