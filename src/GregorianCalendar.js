@@ -1,13 +1,12 @@
 class GregorianCalendar extends Calendar {
 	constructor (timestamp, offset) {
+		super(timestamp, offset);
 
         this.GregorianEpoch = 1721425.5;
         Object.defineProperty(this, 'GregorianEpoch', {
             writable: false,
             configurable: false
         });
-
-		super(timestamp, offset);
 	}
 
 	isLeap (year) {
