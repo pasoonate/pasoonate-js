@@ -10,10 +10,6 @@ class JalaliCalendar extends Calendar {
         });
 	}
 
-	isLeap (year) {
-		return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
-	}
-
 	dateToJulianDay (year, month, day, hour, minute, second) {
 		let epochBase = year - (year >= 0 ? 474 : 473);
         let epochYear = 474 + this.mod(epochBase, 2820);
@@ -66,5 +62,23 @@ class JalaliCalendar extends Calendar {
         	"minute": time.minute,
         	"second": time.second,
         }
+    }
+
+    daysInMonth (year, month) {
+        let gregorianDaysInMonth = [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29]; //30
+        
+        if (month < 1 || month > 12) {
+            throw new RangeException("$month Out Of Range Exception");
+        }
+        
+        if (year && this.isLeap(year) && month == 12) {
+            return 30;
+        }
+        
+        return gregorianDaysInMonth[month - 1];
+    }
+
+    isLeap (year) {
+        return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
     }
 }

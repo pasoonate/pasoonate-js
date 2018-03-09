@@ -45,13 +45,9 @@ class Calendar {
     	return this.timestampToJulianDay(timestamp);
     }
 
-    mod (a, b) {
-    	return a - (b * Math.floor(a / b));
+    dateToJulianDay (year, month, day, hour, minute, second) {
+        //
     }
-
-    isLeap (year) {}
-
-    dateToJulianDay (year, month, day, hour, minute, second) {}
 
     dateToTimestamp (year, month, day, hour, minute, second) {
         let julianDay = this.dateToJulianDay (year, month, day, hour, minute, second);
@@ -59,12 +55,26 @@ class Calendar {
         return this.julianDayToTimestamp(julianDay);
     }
 
-    julianDayToDate (julianDay) {}
+    julianDayToDate (julianDay) {
+        //
+    }
 
     timestampToDate (timestamp) {
         let julianDay = this.timestampToJulianDay(timestamp);
 
         return this.julianDayToDate(julianDay);
+    }
+
+    daysInMonth (year, month) {
+        return 0;
+    }
+
+    mod (a, b) {
+        return a - (b * Math.floor(a / b));
+    }
+
+    isLeap (year) {
+        //
     }
 
 }

@@ -9,10 +9,6 @@ class GregorianCalendar extends Calendar {
         });
 	}
 
-	isLeap (year) {
-		return ((year % 4) == 0) && (!(((year % 100) == 0) && ((year % 400) != 0)));
-	}
-
 	dateToJulianDay (year, month, day, hour, minute, second) {
 		let julianDay = this.GregorianEpoch - 1;
 
@@ -57,5 +53,23 @@ class GregorianCalendar extends Calendar {
         	"second": time.second,
         }
 
+    }
+
+    daysInMonth (year, month) {
+        let gregorianDaysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+        
+        if (month < 1 || month > 12) {
+            throw new RangeException("$month Out Of Range Exception");
+        }
+        
+        if (year && this.isLeap(year) && month == 2) {
+            return 29;
+        }
+        
+        return gregorianDaysInMonth[month - 1];
+    }
+
+    isLeap (year) {
+        return ((year % 4) == 0) && (!(((year % 100) == 0) && ((year % 400) != 0)));
     }
 }

@@ -10,11 +10,6 @@ class IslamicCalendar extends Calendar {
         });
 	}
 
-	isLeap (year) {
-        let isLeap = (((year * 11) + 14) % 30) < 11;
-		return isLeap;
-	}
-
 	dateToJulianDay (year, month, day, hour, minute, second) {
         let julianDay = day;
 
@@ -44,5 +39,24 @@ class IslamicCalendar extends Calendar {
         	"minute": time.minute,
         	"second": time.second,
         }
+    }
+
+    daysInMonth (year, month) {
+        let islamicDaysInMonth = [30, 29, 30, 29, 30, 29, 30, 29, 30, 29, 30, 29]; //30
+
+        if (month < 1 || month > 12) {
+            throw new RangeException("$month Out Of Range Exception");
+        }
+        
+        if (year && this.isLeap(year) && month == 12) {
+            return 30;
+        }
+        
+        return islamicDaysInMonth[month - 1];
+    }
+
+    isLeap (year) {
+        let isLeap = (((year * 11) + 14) % 30) < 11;
+        return isLeap;
     }
 }
