@@ -11,11 +11,11 @@ class ShiaCalendar extends Calendar {
 	}
 
 	dateToJulianDay (year, month, day, hour, minute, second) {
-        let  = day;
+        let dayOfYear = day;
         let julianDay = 0;
 
         for (let i = 1; i < month; i++) {
-            dayOfYear += this.daysOfMonth(year, i);
+            dayOfYear += this.daysInMonth(year, i);
         }
 
         julianDay += dayOfYear;
@@ -37,13 +37,13 @@ class ShiaCalendar extends Calendar {
         let dayOfYear = julianDay - this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second));
         let days = 0;
         for (let i = 1; i <= 12; i++) {
-            days += this.daysOfMonth(year, i);
+            days += this.daysInMonth(year, i);
             if (dayOfYear < days) {
                 month = i;
                 break;
             }
         }
-        let day = (julianDay - ((days - this.daysOfMonth(year, month)) + ((year - 1) * 354) + Math.floor((3 + (11 * year)) / 30) + this.ShiaEpoch) + 1);
+        let day = (julianDay - ((days - this.daysInMonth(year, month)) + ((year - 1) * 354) + Math.floor((3 + (11 * year)) / 30) + this.ShiaEpoch) + 1);
 
         return {
         	"year": year,

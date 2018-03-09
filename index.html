@@ -8,6 +8,7 @@
 	<script src="src/GregorianCalendar.js"></script>
 	<script src="src/JalaliCalendar.js"></script>
 	<script src="src/IslamicCalendar.js"></script>
+	<script src="src/ShiaCalendar.js"></script>
 	<!-- <script src="pasoonate.js"></script> -->
 </head>
 <body>
@@ -16,7 +17,8 @@
 		let date = new Date();
 		// let calendar = new GregorianCalendar(0, 0);
 		// let calendar = new JalaliCalendar(0, 0);
-		let calendar = new IslamicCalendar(0, 0);
+		// let calendar = new IslamicCalendar(0, 0);
+		let calendar = new ShiaCalendar(0, 0);
 		let timestamp = Math.floor(date.getTime() / 1000);
 		console.log("timestamp:", timestamp);
 		let julianday = calendar.timestampToJulianDay(timestamp);
@@ -28,17 +30,33 @@
 		console.log("time:", time)
 		console.log("julianday", calendar.addTimeToJulianDay(juliandayWithoutTime, time.hour, time.minute, time.second));
 		
+		
+		// Test Gregorian Calendar
+
 		// console.log("date:", date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 		// console.log("julianday:", calendar.dateToJulianDay(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
 		// console.log("timestamp:", calendar.dateToTimestamp(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+
+		
+		// Test Jalali Calendar
 
 		// console.log("date:", 1396, 12, 8, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
 		// console.log("julianday:", calendar.dateToJulianDay(1396, 12, 8, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
 		// console.log("timestamp:", calendar.dateToTimestamp(1396, 12, 8, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
 
-		console.log("date:", 1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-		console.log("julianday:", calendar.dateToJulianDay(1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-		console.log("timestamp:", calendar.dateToTimestamp(1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+		
+		// Test Islamic Calendar
+
+		// console.log("date:", 1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+		// console.log("julianday:", calendar.dateToJulianDay(1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+		// console.log("timestamp:", calendar.dateToTimestamp(1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+
+
+		// Test Shia Calendar
+
+		console.log("date:", 1439, 6, 20, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+		console.log("julianday:", calendar.dateToJulianDay(1439, 6, 20, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
+		console.log("timestamp:", calendar.dateToTimestamp(1439, 6, 20, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
 
 
 		console.log("date:", calendar.julianDayToDate(julianday));
