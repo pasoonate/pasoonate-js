@@ -1,6 +1,6 @@
 class GregorianCalendar extends Calendar {
-	constructor (timestamp, offset) {
-		super(timestamp, offset);
+	constructor () {
+		super();
 
         this.GregorianEpoch = 1721425.5;
         Object.defineProperty(this, 'GregorianEpoch', {

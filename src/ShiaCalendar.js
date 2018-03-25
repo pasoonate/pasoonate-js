@@ -1,8 +1,8 @@
 class ShiaCalendar extends Calendar {
 	
-	constructor (timestamp, offset) {
-		super(timestamp, offset);
-		
+	constructor () {
+        super();
+        
 		this.ShiaEpoch = 1948439.5;
 		Object.defineProperty(this, 'ShiaEpoch', {
             writable: false,

@@ -1,9 +1,6 @@
 class Calendar {
 	
-	constructor (timestamp, offset) {
-		this._timestamp = timestamp;
-		this._offset = offset;
-
+	constructor () {
 		this.J1970 = 2440587.5;			// Julian date at Unix epoch: 1970-01-01
 		this.DayInSecond = 86400;
 	}	

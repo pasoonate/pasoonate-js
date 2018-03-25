@@ -1,8 +1,8 @@
 class IslamicCalendar extends Calendar {
 	
-	constructor (timestamp, offset) {
-		super(timestamp, offset);
-		
+	constructor () {
+        super();
+        
 		this.IslamicEpoch = 1948439.5;
 		Object.defineProperty(this, 'IslamicEpoch', {
             writable: false,
