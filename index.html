@@ -9,11 +9,16 @@
 	<script src="src/JalaliCalendar.js"></script>
 	<script src="src/IslamicCalendar.js"></script>
 	<script src="src/ShiaCalendar.js"></script>
+	<script src="src/BaseMethodsMixin.js"></script>
 	<script src="src/CalendarManager.js"></script>
 	<!-- <script src="pasoonate.js"></script> -->
 </head>
 <body>
 	<script>
+		let cm = new CalendarManager();
+		console.log(cm.gregorian().getHour(), cm.gregorian().getMinute()); 
+		console.log(cm.gregorian().getUTCHour(), cm.gregorian().getUTCMinute()); 
+
 		// let pasoonate = new Pasoonate();
 		// let date = new Date();
 		// let calendar = new GregorianCalendar(0, 0);
