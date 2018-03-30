@@ -68,3 +68,5 @@ class CalendarManager {
 		return this;
 	}	
 }
+
+Object.assign(CalendarManager.prototype, BaseMethodsMixin);
