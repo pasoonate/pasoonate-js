@@ -29,12 +29,7 @@ let BaseMethodsMixin = {
 	getYear () {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		return date.year;
-	},
-
-	getUTCYear () {
-		let date = this._currentCalendar.timestampToDate(this._timestamp);
-		return date.year;
-	},
+	},	
 
 	setMonth (month) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
@@ -45,11 +40,6 @@ let BaseMethodsMixin = {
 
 	getMonth () {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
-		return date.month;
-	},
-
-	getUTCMonth () {
-		let date = this._currentCalendar.timestampToDate(this._timestamp);
 		return date.month;
 	},
 
@@ -65,11 +55,6 @@ let BaseMethodsMixin = {
 		return date.day;	
 	},
 
-	getUTCDay () {
-		let date = this._currentCalendar.timestampToDate(this._timestamp);
-		return date.day;	
-	},
-
 	setHour (hour) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		let timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, hour, date.minute, date.second);
@@ -79,11 +64,6 @@ let BaseMethodsMixin = {
 
 	getHour () {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
-		return date.hour;
-	},
-
-	getUTCHour () {
-		let date = this._currentCalendar.timestampToDate(this._timestamp);
 		return date.hour;
 	},
 
@@ -99,11 +79,6 @@ let BaseMethodsMixin = {
 		return date.minute;
 	},
 
-	getUTCMinute () {
-		let date = this._currentCalendar.timestampToDate(this._timestamp);
-		return date.minute;
-	},
-
 	setSecond (second) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		let timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, date.hour, date.minute, second);
@@ -115,6 +90,68 @@ let BaseMethodsMixin = {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		return date.second;
 	},
+
+
+	setUTCYear (year) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(year, date.month, date.day, date.hour, date.minute, date.second);
+		return this;
+	},
+	
+	getUTCYear () {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		return date.year;
+	},
+
+	setUTCMonth (month) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(date.year, month, date.day, date.hour, date.minute, date.second);
+		return this;
+	},
+	
+	getUTCMonth () {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		return date.month;
+	},
+
+	setUTCDay (day) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, day, date.hour, date.minute, date.second);
+		return this;
+	},
+	
+	getUTCDay () {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		return date.day;	
+	},
+
+	setUTCHour (hour) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, hour, date.minute, date.second);
+		return this;
+	},
+	
+	getUTCHour () {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		return date.hour;
+	},
+
+	setUTCMinute (minute) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, date.hour, minute, date.second);
+		return this;
+	},
+	
+	getUTCMinute () {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		return date.minute;
+	},
+
+	setUTCSecond (second) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, date.hour, date.minute, second);
+		return this;
+	}
 
 	getUTCSecond () {
 		let date = this._currentCalendar.timestampToDate(this._timestamp);
