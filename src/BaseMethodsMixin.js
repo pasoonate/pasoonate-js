@@ -91,7 +91,6 @@ let BaseMethodsMixin = {
 		return date.second;
 	},
 
-
 	setUTCYear (year) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp);
 		this._timestamp = this._currentCalendar.dateToTimestamp(year, date.month, date.day, date.hour, date.minute, date.second);
@@ -151,10 +150,65 @@ let BaseMethodsMixin = {
 		let date = this._currentCalendar.timestampToDate(this._timestamp);
 		this._timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, date.hour, date.minute, second);
 		return this;
-	}
+	},
 
 	getUTCSecond () {
 		let date = this._currentCalendar.timestampToDate(this._timestamp);
 		return date.second;
-	}
+	},
+
+	setDate (year, month, day) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
+		let timestamp = this._currentCalendar.dateToTimestamp(year, month, day, date.hour, date.minute, date.second);
+		this._timestamp = timestamp - this._timezoneOffset;
+		return this;
+	},
+	
+	setTime (hour, minute, second) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
+		let timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, hour, minute, second);
+		this._timestamp = timestamp - this._timezoneOffset;
+		return this;
+	},
+	
+	setDateTime (year, month, day, hour, minute, second) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
+		let timestamp = this._currentCalendar.dateToTimestamp(year, month, day, hour, minute, second);
+		this._timestamp = timestamp - this._timezoneOffset;
+		return this;
+	},
+
+	setUTCDate (year, month, day) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(year, month, day, date.hour, date.minute, date.second);
+		return this;
+	},
+	
+	setUTCTime (hour, minute, second) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(date.year, date.month, date.day, hour, minute, second);
+		return this;
+	},
+	
+	setUTCDateTime (year, month, day, hour, minute, second) {
+		let date = this._currentCalendar.timestampToDate(this._timestamp);
+		this._timestamp = this._currentCalendar.dateToTimestamp(year, month, day, hour, minute, second);
+		return this;
+	},
+
+	dayOfWeek () {
+		return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset);
+    },
+
+    dayOfYear () {
+        return this._currentCalendar.dayOfYear(this._timestamp + this._timezoneOffset);
+    },
+
+    weekOfMonth () {
+    	return this._currentCalendar.weekOfMonth(this._timestamp + this._timezoneOffset);
+    },
+
+    weekOfYear () {
+    	return this._currentCalendar.weekOfYear(this._timestamp + this._timezoneOffset);
+    },
 };
