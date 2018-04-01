@@ -79,9 +79,40 @@ class Calendar {
         return Math.floor(currentJulianday - firstOfYearJulianday + 1);
     }
 
-    weekOfMonth (timestamp) {}
+    weekOfMonth (timestamp) {
+        let currentDate = this.timestampToDate(timestamp);
+        let firstDayOfMonthTimestamp = this.dateToTimestamp(currentDate.year, currentDate.month, 1, currentDate.hour, currentDate.minute, currentDate.second);
+        let dayOfWeekInCurrentDayOfMonth = this.dayOfWeek(timestamp);
+        let dayOfWeekInFirstDayOfMonth = this.dayOfWeek(firstDayOfMonthTimestamp);
 
-    weekOfYear (timestamp) {}
+        let week = 1;
+
+        if(currentDate.day <= 7 - dayOfWeekInFirstDayOfMonth) {
+            return week;
+        }
+
+        week += ((currentDate.day - ((7 - dayOfWeekInFirstDayOfMonth) + (dayOfWeekInCurrentDayOfMonth + 1))) / 7) + 1;
+
+        return week;
+    }
+
+    weekOfYear (timestamp) {
+        let currentDate = this.timestampToDate(timestamp);
+        let dayOfYear = this.dayOfYear(timestamp);
+        let firstDayOfYearTimestamp = this.dateToTimestamp(currentDate.year, 1, 1, currentDate.hour, currentDate.minute, currentDate.second);
+        let dayOfWeekInCurrentDayOfYear = this.dayOfWeek(timestamp);
+        let dayOfWeekInFirstDayOfYear = this.dayOfWeek(firstDayOfYearTimestamp);
+
+        let week = 1;
+
+        if(dayOfYear <= 7 - dayOfWeekInFirstDayOfYear) {
+            return week;
+        }
+
+        week += ((dayOfYear - ((7 - dayOfWeekInFirstDayOfYear) + (dayOfWeekInCurrentDayOfYear + 1))) / 7) + 1;
+
+        return week;   
+    }
 
     mod (a, b) {
         return a - (b * Math.floor(a / b));
