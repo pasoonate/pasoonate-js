@@ -1,0 +1,6 @@
+class Constants {
+	 
+	constructor () {
+
+	}
+}
