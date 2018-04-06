@@ -4,91 +4,23 @@
 	<meta charset="UTF-8">
 	<title>Test Pasoonate</title>
 
-	<script src="src/Calendar.js"></script>
-	<script src="src/GregorianCalendar.js"></script>
-	<script src="src/JalaliCalendar.js"></script>
-	<script src="src/IslamicCalendar.js"></script>
-	<script src="src/ShiaCalendar.js"></script>
-	<script src="src/BaseMethodsMixin.js"></script>
-	<script src="src/CalendarManager.js"></script>
-	<!-- <script src="pasoonate.js"></script> -->
+	<script src="dist/pasoonate.js"></script>
 </head>
 <body>
 	<script>
-		let cm = new CalendarManager();
-		// cm.gregorian().setDate(2018,3,24);
-		// console.log(cm.gregorian().dayOfWeek());
-		// cm.gregorian().setDate(2018,3,25);
-		// console.log(cm.gregorian().dayOfWeek());
-		// cm.gregorian().setDate(2018,3,26);
-		// console.log(cm.gregorian().dayOfWeek());
-		// cm.gregorian().setDate(2018,3,27);
-		// console.log(cm.gregorian().dayOfWeek());
-		// cm.gregorian().setDate(2018,3,28);
-		// console.log(cm.gregorian().dayOfWeek());
-		// cm.gregorian().setDate(2018,3,29);
-		// console.log(cm.gregorian().dayOfWeek());
-		// cm.gregorian().setDate(2018,3,30);
-		// console.log(cm.gregorian().dayOfWeek());
+		let pasoonate = Pasoonate.make();
 
-		cm.jalali().setDate(1397,2,31);
-		console.log(cm.jalali().dayOfYear());
-		console.log(cm.jalali().weekOfMonth());
-		console.log(cm.jalali().weekOfYear());
+		// pasoonate.jalali().setDate(1397,2,31);
+		pasoonate.shia();
+		console.log("day of year:", pasoonate.dayOfYear());
+		console.log("week of month:", pasoonate.weekOfMonth());
+		console.log("week of year:", pasoonate.weekOfYear());
+		console.log("day of week:", pasoonate.dayOfWeek());
+		console.log("date", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
 
-		// console.log(cm.gregorian().getHour(), cm.gregorian().getMinute()); 
-		// console.log(cm.gregorian().getUTCHour(), cm.gregorian().getUTCMinute()); 
+		// console.log(pasoonate.gregorian().getHour(), pasoonate.gregorian().getMinute()); 
+		// console.log(pasoonate.gregorian().getUTCHour(), pasoonate.gregorian().getUTCMinute()); 
 
-		// let pasoonate = new Pasoonate();
-		// let date = new Date();
-		// let calendar = new GregorianCalendar(0, 0);
-		// let calendar = new JalaliCalendar(0, 0);
-		// let calendar = new IslamicCalendar(0, 0);
-		// let calendar = new ShiaCalendar(0, 0);
-		// let timestamp = Math.floor(date.getTime() / 1000);
-		// console.log("timestamp:", timestamp);
-		// let julianday = calendar.timestampToJulianDay(timestamp);
-		// console.log("julianday:", julianday);
-		// console.log("timestamp:", calendar.julianDayToTimestamp(julianday));
-		// let juliandayWithoutTime = calendar.julianDayWithoutTime(julianday);
-		// let time = calendar.extractJulianDayTime(julianday);
-		// console.log("juliandayWithoutTime:", juliandayWithoutTime);
-		// console.log("time:", time)
-		// console.log("julianday", calendar.addTimeToJulianDay(juliandayWithoutTime, time.hour, time.minute, time.second));
-		
-		
-		// Test Gregorian Calendar
-
-		// console.log("date:", date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-		// console.log("julianday:", calendar.dateToJulianDay(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-		// console.log("timestamp:", calendar.dateToTimestamp(date.getFullYear(), date.getMonth() + 1, date.getDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-
-		
-		// Test Jalali Calendar
-
-		// console.log("date:", 1396, 12, 8, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-		// console.log("julianday:", calendar.dateToJulianDay(1396, 12, 8, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-		// console.log("timestamp:", calendar.dateToTimestamp(1396, 12, 8, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-
-		
-		// Test Islamic Calendar
-
-		// console.log("date:", 1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-		// console.log("julianday:", calendar.dateToJulianDay(1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-		// console.log("timestamp:", calendar.dateToTimestamp(1439, 6, 17, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-
-
-		// Test Shia Calendar
-
-		// console.log("date:", 1439, 6, 20, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
-		// console.log("julianday:", calendar.dateToJulianDay(1439, 6, 20, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-		// console.log("timestamp:", calendar.dateToTimestamp(1439, 6, 20, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()));
-
-
-		// console.log("date:", calendar.julianDayToDate(julianday));
-		// console.log("date:", calendar.timestampToDate(timestamp));
-
-		// console.log("day of week:", calendar.dayOfWeek(julianday));
 	</script>	
 </body>
 </html>
