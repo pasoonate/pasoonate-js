@@ -1,0 +1,19 @@
+{
+  "name": "pasoonate",
+  "version": "0.0.1",
+  "description": "date time helpers and convert to calendars.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ataiemajid63/pasoonate-js.git"
+  },
+  "author": "Majid Ataee",
+  "license": "MIT",
+  "dependencies": {
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^2.1.0",
+    "gulp-sourcemaps": "^2.6.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
