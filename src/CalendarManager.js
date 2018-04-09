@@ -1,3 +1,4 @@
+
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -70,3 +71,4 @@ class CalendarManager {
 }
 
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);
+Object.assign(CalendarManager.prototype, AdditionAndSubstractionMixin);
