@@ -11,12 +11,28 @@
 		let pasoonate = Pasoonate.make();
 
 		// pasoonate.jalali().setDate(1397,2,31);
-		pasoonate.shia();
+		pasoonate.jalali();
 		console.log("day of year:", pasoonate.dayOfYear());
 		console.log("week of month:", pasoonate.weekOfMonth());
 		console.log("week of year:", pasoonate.weekOfYear());
 		console.log("day of week:", pasoonate.dayOfWeek());
 		console.log("date", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
+
+		pasoonate.addMonth(5);
+		console.log("Add +5 month", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
+		pasoonate.addMonth(23);	
+		console.log("Add +23 month", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
+
+		pasoonate.subMonth(5);
+		console.log("Add -5 month", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
+		pasoonate.subMonth(23);	
+		console.log("Add -23 month", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
+
+		pasoonate.subYear(2);	
+		console.log("Add -2 year", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
+
+		pasoonate.addDay(10);	
+		console.log("Add +10 day", pasoonate.getYear(), pasoonate.getMonth(), pasoonate.getDay());
 
 		// console.log(pasoonate.gregorian().getHour(), pasoonate.gregorian().getMinute()); 
 		// console.log(pasoonate.gregorian().getUTCHour(), pasoonate.gregorian().getUTCMinute()); 
