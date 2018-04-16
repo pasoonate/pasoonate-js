@@ -73,10 +73,10 @@ class Calendar {
 
     dayOfYear (timestamp) {
         let currentDate = this.timestampToDate(timestamp);
-        let firstOfYearJulianday = this.dateToJulianDay(currentDate.year, 1, 1, 0, 0, 0);
-        let currentJulianday = this.dateToJulianDay(currentDate.year, currentDate.month, currentDate.day, currentDate.hour, currentDate.minute, currentDate.second);
+        let firstOfYearjulianDay = this.dateToJulianDay(currentDate.year, 1, 1, 0, 0, 0);
+        let currentjulianDay = this.dateToJulianDay(currentDate.year, currentDate.month, currentDate.day, currentDate.hour, currentDate.minute, currentDate.second);
 
-        return Math.floor(currentJulianday - firstOfYearJulianday + 1);
+        return Math.floor(currentjulianDay - firstOfYearjulianDay + 1);
     }
 
     weekOfMonth (timestamp) {
