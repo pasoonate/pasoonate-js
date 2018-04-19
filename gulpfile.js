@@ -4,7 +4,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var minify = require('gulp-minify');
  
 gulp.task('default', function(){
-  return gulp.src(['./src/mixin/*.js','./src/*.js'], {base:'./'})
+  return gulp.src(['./src/mixin/*.js','./src/*.js', './src/lang/*.js'], {base:'./'})
     .pipe(sourcemaps.init())
     .pipe(concat('pasoonate.js'))
     .pipe(sourcemaps.write())
