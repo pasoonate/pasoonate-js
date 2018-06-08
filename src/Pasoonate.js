@@ -13,7 +13,7 @@ class Pasoonate extends Constants {
 	}
 
 	static setLocale (locale) {
-		return Pasoonate.localization.setLocale(locale);
+		Pasoonate.localization.setLocale(locale);
 	}
 
 	static getLocal () {
@@ -23,10 +23,20 @@ class Pasoonate extends Constants {
 	static isLocal (locale) {
 		return Pasoonate.localization.isLocal(locale);
 	}
+
+	static setFormatter (formatter) {
+		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
+	}
 }
 
 Pasoonate.localization = new Localization();
 Object.defineProperty(Pasoonate, 'localization', {
     writable: false,
+    configurable: false
+});
+
+Pasoonate.formatter = new SimpleDateFormat();
+Object.defineProperty(Pasoonate, 'formatter', {
+    writable: true,
     configurable: false
 });
