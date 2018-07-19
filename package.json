@@ -4,16 +4,17 @@
   "description": "date time helpers and convert to calendars.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ataiemajid63/pasoonate-js.git"
+    "url": "https://github.com/pasoonate/pasoonate-js.git"
   },
   "author": "Majid Ataee",
   "license": "MIT",
   "dependencies": {
+    
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "^2.1.0",
     "gulp-sourcemaps": "^2.6.4"
-  },
-  "devDependencies": {
-    "gulp": "^3.9.1"
   }
 }
