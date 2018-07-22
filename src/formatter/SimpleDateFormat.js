@@ -1,3 +1,4 @@
+import DateFormat from "./DateFormat";
 
 class SimpleDateFormat extends DateFormat {
 	
@@ -41,7 +42,7 @@ class SimpleDateFormat extends DateFormat {
 			}
 			prevChar = currChar;
 		}
-console.log(chars);
+
 		for (let i in chars) {
 			switch (chars[i].text) {
 				case FullYear:
@@ -67,3 +68,5 @@ console.log(chars);
 		return result;
 	}
 }
+
+export default SimpleDateFormat;

@@ -81,3 +81,5 @@ let AdditionAndSubstractionMixin = {
 		return this;
 	}
 };
+
+export default AdditionAndSubstractionMixin;

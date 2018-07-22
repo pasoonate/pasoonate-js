@@ -1,3 +1,5 @@
+import Calendar from "./Calendar";
+
 class IslamicCalendar extends Calendar {
 	
 	constructor () {
@@ -60,3 +62,5 @@ class IslamicCalendar extends Calendar {
         return isLeap;
     }
 }
+
+export default IslamicCalendar;
