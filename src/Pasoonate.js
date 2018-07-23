@@ -45,3 +45,5 @@ Object.defineProperty(Pasoonate, 'formatter', {
     writable: true,
     configurable: false
 });
+
+export default Pasoonate;
