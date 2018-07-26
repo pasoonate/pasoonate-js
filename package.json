@@ -2,18 +2,19 @@
   "name": "pasoonate",
   "version": "0.1.1",
   "description": "DateTime helpers and convert to calendars.",
-  "main": "index.js",
+  "files": [
+    "dist/",
+    "src/"
+  ],
+  "main": "dist/pasoonate",
   "keywords": [
     "calendar",
     "convert",
     "date",
-    "time",
-    "datetime"
+    "time"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode=production",
-    "dev": "webpack --mode=development"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -21,11 +22,11 @@
   },
   "author": "Majid Ataee",
   "license": "MIT",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
-    "webpack": "^4.16.1",
-    "webpack-cli": "^3.1.0"
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify": "^2.1.0",
+    "gulp-sourcemaps": "^2.6.4"
   }
 }

@@ -6,7 +6,7 @@ import SimpleDateFormat from "./formatter/SimpleDateFormat";
 class Pasoonate extends Constants {
 
 	constructor () {
-		
+		super();
 	}
 
 	static make (timestamp, timezoneOffset) {
