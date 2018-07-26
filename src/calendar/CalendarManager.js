@@ -1,9 +1,3 @@
-import GregorianCalendar from "./GregorianCalendar";
-import JalaliCalendar from "./JalaliCalendar";
-import IslamicCalendar from "./IslamicCalendar";
-import ShiaCalendar from "./ShiaCalendar";
-import BaseMethodsMixin from "../mixin/BaseMethodsMixin";
-import AdditionAndSubstractionMixin from "../mixin/AdditionAndSubstractionMixin";
 
 class CalendarManager {
 	
@@ -85,5 +79,3 @@ class CalendarManager {
 
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);
 Object.assign(CalendarManager.prototype, AdditionAndSubstractionMixin);
-
-export default CalendarManager;

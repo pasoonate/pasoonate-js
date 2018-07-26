@@ -49,5 +49,3 @@ class Localization {
         return this.getTrans(key, locale);
     }
 }
-
-export default Localization;

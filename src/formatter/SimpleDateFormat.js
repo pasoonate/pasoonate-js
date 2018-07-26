@@ -1,4 +1,3 @@
-import DateFormat from "./DateFormat";
 
 class SimpleDateFormat extends DateFormat {
 	
@@ -68,5 +67,3 @@ class SimpleDateFormat extends DateFormat {
 		return result;
 	}
 }
-
-export default SimpleDateFormat;

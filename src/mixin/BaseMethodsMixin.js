@@ -212,5 +212,3 @@ let BaseMethodsMixin = {
     	return this._currentCalendar.weekOfYear(this._timestamp + this._timezoneOffset);
     },
 };
-
-export default BaseMethodsMixin;

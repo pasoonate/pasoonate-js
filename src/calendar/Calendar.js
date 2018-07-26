@@ -1,3 +1,4 @@
+
 class Calendar {
 	
 	constructor () {
@@ -123,5 +124,3 @@ class Calendar {
     }
 
 }
-
-export default Calendar;

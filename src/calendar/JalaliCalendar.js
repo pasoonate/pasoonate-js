@@ -1,4 +1,3 @@
-import Calendar from "./Calendar";
 
 class JalaliCalendar extends Calendar {
 	
@@ -84,5 +83,3 @@ class JalaliCalendar extends Calendar {
         return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
     }
 }
-
-export default JalaliCalendar;

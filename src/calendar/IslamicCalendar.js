@@ -1,4 +1,3 @@
-import Calendar from "./Calendar";
 
 class IslamicCalendar extends Calendar {
 	
@@ -62,5 +61,3 @@ class IslamicCalendar extends Calendar {
         return isLeap;
     }
 }
-
-export default IslamicCalendar;

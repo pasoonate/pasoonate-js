@@ -1,4 +1,3 @@
-import Calendar from './Calendar';
 
 class GregorianCalendar extends Calendar {
 	constructor () {
@@ -75,5 +74,3 @@ class GregorianCalendar extends Calendar {
         return ((year % 4) == 0) && (!(((year % 100) == 0) && ((year % 400) != 0)));
     }
 }
-
-export default GregorianCalendar;
