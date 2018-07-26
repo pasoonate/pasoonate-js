@@ -1,6 +1,6 @@
 {
   "name": "pasoonate",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "DateTime helpers and convert to calendars.",
   "files": [
     "dist/",
