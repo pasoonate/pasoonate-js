@@ -9,8 +9,6 @@ class CalendarManager {
 		this._currentCalendar = null;
 		this._formatter = Pasoonate.formatter;
 
-		this._formatter.setCalendar(this);
-
 		let date = new Date();
 		this._timestamp = timestamp || Math.floor(date.getTime() / 1000); // milisecond to seconds
 		this._timezoneOffset = timezoneOffset || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
@@ -73,6 +71,7 @@ class CalendarManager {
 	}
 
 	format (pattern, locale) {
+		this._formatter.setCalendar(this);
 		return this._formatter.format(pattern, locale);
 	}	
 }
