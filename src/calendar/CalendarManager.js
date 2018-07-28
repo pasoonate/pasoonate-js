@@ -77,4 +77,4 @@ class CalendarManager {
 }
 
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);
-Object.assign(CalendarManager.prototype, AdditionAndSubstractionMixin);
+Object.assign(CalendarManager.prototype, AdditionAndSubtractionMixin);

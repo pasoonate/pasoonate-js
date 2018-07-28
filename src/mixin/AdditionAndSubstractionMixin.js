@@ -1,5 +1,5 @@
 
-let AdditionAndSubstractionMixin = {
+let AdditionAndSubtractionMixin = {
 	addYear(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		let timestamp = this._currentCalendar.dateToTimestamp(date.year + count, date.month, date.day, date.hour, date.minute, date.second);
