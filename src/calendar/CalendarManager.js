@@ -23,7 +23,8 @@ class CalendarManager {
 		minute = minute || date.minute;
 		second = second || date.second;
 
-		this._timestamp = this._gregorian.dateToTimestamp(year, month, day, hour, minute, second);
+		let timestamp = this._gregorian.dateToTimestamp(year, month, day, hour, minute, second);
+		this._timestamp = timestamp - this._timezoneOffset;
 		this._currentCalendar = this._gregorian;
 		return this;
 	}
@@ -37,7 +38,8 @@ class CalendarManager {
 		minute = minute || date.minute;
 		second = second || date.second;
 
-		this._timestamp = this._jalali.dateToTimestamp(year, month, day, hour, minute, second);
+		let timestamp = this._jalali.dateToTimestamp(year, month, day, hour, minute, second);
+		this._timestamp = timestamp - this._timezoneOffset;
 		this._currentCalendar = this._jalali;
 		return this;
 	}
@@ -51,7 +53,8 @@ class CalendarManager {
 		minute = minute || date.minute;
 		second = second || date.second;
 
-		this._timestamp = this._islamic.dateToTimestamp(year, month, day, hour, minute, second);
+		let timestamp = this._islamic.dateToTimestamp(year, month, day, hour, minute, second);
+		this._timestamp = timestamp - this._timezoneOffset;
 		this._currentCalendar = this._islamic;
 		return this;
 	}
@@ -65,7 +68,8 @@ class CalendarManager {
 		minute = minute || date.minute;
 		second = second || date.second;
 
-		this._timestamp = this._shia.dateToTimestamp(year, month, day, hour, minute, second);
+		let timestamp = this._shia.dateToTimestamp(year, month, day, hour, minute, second);
+		this._timestamp = timestamp - this._timezoneOffset;
 		this._currentCalendar = this._shia;
 		return this;
 	}
