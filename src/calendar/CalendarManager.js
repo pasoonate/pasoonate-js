@@ -60,9 +60,7 @@ class CalendarManager {
 	}
 
 	shia (year, month, day, hour, minute, second) {
-		console.log(this._timestamp);
 		let date = this._shia.timestampToDate(this._timestamp);
-		console.log(date);
 		year = year || date.year;
 		month = month || date.month;
 		day = day || date.day;
@@ -72,7 +70,6 @@ class CalendarManager {
 
 		let timestamp = this._shia.dateToTimestamp(year, month, day, hour, minute, second);
 		this._timestamp = timestamp - this._timezoneOffset;
-		console.log(this._timestamp);
 		this._currentCalendar = this._shia;
 		return this;
 	}
