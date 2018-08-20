@@ -11,7 +11,7 @@ class CalendarManager {
 
 		let date = new Date();
 		this._timestamp = timestamp || Math.floor(date.getTime() / 1000); // milisecond to seconds
-		this._timezoneOffset = timezoneOffset || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
+		this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
 	}
 
 	gregorian (year, month, day, hour, minute, second) {

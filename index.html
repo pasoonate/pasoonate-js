@@ -8,12 +8,14 @@
 </head>
 <body>
 	<script>
-		let pasoonate = Pasoonate.make(1536679708);
+		let pasoonate = Pasoonate.make(1534751554, 0);
 
 		// pasoonate.shia(1439,12,30);
 		// pasoonate.jalali(1397,6,20);
+		// pasoonate.shia();
 		
-		console.log(pasoonate.gregorian().getTimestamp() + pasoonate.gregorian().getTimezoneOffset());
+		console.log(pasoonate.gregorian().getYear(), pasoonate.gregorian().getMonth(), pasoonate.gregorian().getDay());
+		console.log(pasoonate.gregorian().getHour(), pasoonate.gregorian().getMinute(), pasoonate.gregorian().getSecond());
 		// console.log(pasoonate.shia().format("yyyy-mm-dd"));
 		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
 		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
