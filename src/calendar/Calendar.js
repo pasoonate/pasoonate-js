@@ -7,9 +7,11 @@ class Calendar {
 	}	
 
 	timestampToJulianDay (timestamp) {
-		let julianDay =  timestamp / this.DayInSecond + this.J1970;
+        let julianDay =  timestamp / this.DayInSecond + this.J1970;
+        
+        let julianDayFloatRounded = Math.round((julianDay - Math.floor(julianDay)) * 10000000) / 10000000;
 
-		return julianDay;
+        return Math.floor(julianDay) + julianDayFloatRounded;
 	}
 
 	julianDayToTimestamp (julianDay) {
@@ -20,14 +22,14 @@ class Calendar {
 
 	julianDayWithoutTime (julianDay) {
 		
-		return Math.floor(julianDay) + ((julianDay - Math.floor(julianDay)) > 0.5 ?  1.5 : 0.5);
+		return Math.floor(julianDay) + ((julianDay - Math.floor(julianDay)) >= 0.5 ?  0.5 : -0.5);
 	}
 
 	extractJulianDayTime (julianDay) {
         julianDay += 0.5;
 
         // Astronomical to civil
-        let time = ((julianDay - Math.floor(julianDay)) * this.DayInSecond) + 0.5;
+        let time = Math.floor((julianDay - Math.floor(julianDay)) * this.DayInSecond);
 
         return {
         	"hour": Math.floor(time / 3600),
@@ -40,7 +42,10 @@ class Calendar {
     	let timestamp = this.julianDayToTimestamp(julianDay);
     	timestamp += (hour * 3600) + (minute * 60) + second;
 
-    	return this.timestampToJulianDay(timestamp);
+        julianDay = this.timestampToJulianDay(timestamp);
+        let julianDayFloatRounded = Math.round((julianDay - Math.floor(julianDay)) * 10000000) / 10000000;
+
+        return Math.floor(julianDay) + julianDayFloatRounded;
     }
 
     dateToJulianDay (year, month, day, hour, minute, second) {
@@ -74,10 +79,10 @@ class Calendar {
 
     dayOfYear (timestamp) {
         let currentDate = this.timestampToDate(timestamp);
-        let firstOfYearjulianDay = this.dateToJulianDay(currentDate.year, 1, 1, 0, 0, 0);
-        let currentjulianDay = this.dateToJulianDay(currentDate.year, currentDate.month, currentDate.day, currentDate.hour, currentDate.minute, currentDate.second);
+        let firstOfYearJulianDay = this.dateToJulianDay(currentDate.year, 1, 1, 0, 0, 0);
+        let currentJulianDay = this.dateToJulianDay(currentDate.year, currentDate.month, currentDate.day, currentDate.hour, currentDate.minute, currentDate.second);
 
-        return Math.floor(currentjulianDay - firstOfYearjulianDay + 1);
+        return Math.floor(currentJulianDay - firstOfYearJulianDay + 1);
     }
 
     weekOfMonth (timestamp) {
