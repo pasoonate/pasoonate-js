@@ -7,7 +7,7 @@ class Calendar {
 	}	
 
 	timestampToJulianDay (timestamp) {
-		let julianDay = this.J1970 + timestamp / this.DayInSecond;
+		let julianDay =  timestamp / this.DayInSecond + this.J1970;
 
 		return julianDay;
 	}
@@ -20,7 +20,7 @@ class Calendar {
 
 	julianDayWithoutTime (julianDay) {
 		
-		return Math.floor(julianDay) + 0.5;
+		return Math.floor(julianDay) + ((julianDay - Math.floor(julianDay)) > 0.5 ?  1.5 : 0.5);
 	}
 
 	extractJulianDayTime (julianDay) {
