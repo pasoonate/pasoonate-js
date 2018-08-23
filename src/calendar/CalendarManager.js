@@ -14,62 +14,22 @@ class CalendarManager {
 		this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
 	}
 
-	gregorian (year, month, day, hour, minute, second) {
-		let date = this._gregorian.timestampToDate(this._timestamp);		
-		year = year || date.year;
-		month = month || date.month;
-		day = day || date.day;
-		hour = hour || date.hour;
-		minute = minute || date.minute;
-		second = second || date.second;
-
-		let timestamp = this._gregorian.dateToTimestamp(year, month, day, hour, minute, second);
-		this._timestamp = timestamp - this._timezoneOffset;
+	gregorian () {
 		this._currentCalendar = this._gregorian;
 		return this;
 	}
 
-	jalali (year, month, day, hour, minute, second) {
-		let date = this._jalali.timestampToDate(this._timestamp);		
-		year = year || date.year;
-		month = month || date.month;
-		day = day || date.day;
-		hour = hour || date.hour;
-		minute = minute || date.minute;
-		second = second || date.second;
-
-		let timestamp = this._jalali.dateToTimestamp(year, month, day, hour, minute, second);
-		this._timestamp = timestamp - this._timezoneOffset;
+	jalali () {
 		this._currentCalendar = this._jalali;
 		return this;
 	}
 
-	islamic (year, month, day, hour, minute, second) {
-		let date = this._islamic.timestampToDate(this._timestamp);		
-		year = year || date.year;
-		month = month || date.month;
-		day = day || date.day;
-		hour = hour || date.hour;
-		minute = minute || date.minute;
-		second = second || date.second;
-
-		let timestamp = this._islamic.dateToTimestamp(year, month, day, hour, minute, second);
-		this._timestamp = timestamp - this._timezoneOffset;
+	islamic () {
 		this._currentCalendar = this._islamic;
 		return this;
 	}
 
-	shia (year, month, day, hour, minute, second) {
-		let date = this._shia.timestampToDate(this._timestamp);
-		year = year || date.year;
-		month = month || date.month;
-		day = day || date.day;
-		hour = hour || date.hour;
-		minute = minute || date.minute;
-		second = second || date.second;
-
-		let timestamp = this._shia.dateToTimestamp(year, month, day, hour, minute, second);
-		this._timestamp = timestamp - this._timezoneOffset;
+	shia () {
 		this._currentCalendar = this._shia;
 		return this;
 	}
