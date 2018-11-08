@@ -1,4 +1,5 @@
-let BaseMethodsMixin = {
+
+const BaseMethodsMixin = {
 	setTimestamp (timestamp) {
 		this._timestamp = timestamp;
 
