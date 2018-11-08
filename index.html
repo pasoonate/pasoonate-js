@@ -8,38 +8,19 @@
 </head>
 <body>
 	<script>
-		let pasoonate = Pasoonate.make();
-		// pasoonate.setTimezoneOffset(0);
+		const pasoonate = Pasoonate.make();
+		const secondPasoonate = Pasoonate.make();
 
-		// pasoonate.shia();
+		secondPasoonate.jalali().setDate(1363, 7, 23);
+		console.log('Diff In Seconds ', pasoonate.diffInSeconds(secondPasoonate));
+		console.log('Diff In Hours \t', pasoonate.diffInHours(secondPasoonate));
+		console.log('Diff In Days \t', pasoonate.diffInDays(secondPasoonate));
+		console.log('Diff In Months \t', pasoonate.diffInMonths(secondPasoonate));
 		
-		// console.log(pasoonate.gregorian().getYear(), pasoonate.gregorian().getMonth(), pasoonate.gregorian().getDay());
-		// console.log(pasoonate.gregorian().getHour(), pasoonate.gregorian().getMinute(), pasoonate.gregorian().getSecond());
-		// console.log(pasoonate.shia().format("yyyy-mm-dd"));
-
-		let secondPasoonate = Pasoonate.make();
-		secondPasoonate.gregorian().setDate(2018, 10, 25);
-
-		console.log(pasoonate.diffInSeconds(secondPasoonate));
-		console.log(pasoonate.diffInHours(secondPasoonate));
-		console.log(pasoonate.diffInDays(secondPasoonate));
-		console.log(pasoonate.diffInMonths(secondPasoonate));
-		
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.shia().format("yyyy/mm/dd"));
-		// console.log(pasoonate.jalali().format("yyyy-mm-dd"));
-
+		console.log('Shia \t\t', pasoonate.shia().format("yyyy-mm-dd"));
+		console.log('Islamic \t', pasoonate.islamic().format("yyyy-mm-dd"));
+		console.log('Jalali \t\t', pasoonate.jalali().format("yyyy-mm-dd"));
+		console.log('Garegorian \t', pasoonate.gregorian().format("yyyy-mm-dd"));
 	</script>	
 </body>
 </html>
