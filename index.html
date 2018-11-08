@@ -12,10 +12,12 @@
 		const secondPasoonate = Pasoonate.make();
 
 		secondPasoonate.jalali().setDate(1363, 7, 23);
+		console.log('Diff \t\t\t', pasoonate.diff(secondPasoonate));
 		console.log('Diff In Seconds ', pasoonate.diffInSeconds(secondPasoonate));
 		console.log('Diff In Hours \t', pasoonate.diffInHours(secondPasoonate));
 		console.log('Diff In Days \t', pasoonate.diffInDays(secondPasoonate));
 		console.log('Diff In Months \t', pasoonate.diffInMonths(secondPasoonate));
+		console.log('Diff In Years \t', pasoonate.diffInYears(secondPasoonate));
 		
 		console.log('Shia \t\t', pasoonate.shia().format("yyyy-mm-dd"));
 		console.log('Islamic \t', pasoonate.islamic().format("yyyy-mm-dd"));
