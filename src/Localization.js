@@ -1,4 +1,3 @@
-
 class Localization {
 
     constructor () {
@@ -49,3 +48,5 @@ class Localization {
         return this.getTrans(key, locale);
     }
 }
+
+export default Localization;

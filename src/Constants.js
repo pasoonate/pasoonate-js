@@ -1,4 +1,3 @@
-
 class Constants {
 	 
 	constructor () {
@@ -15,4 +14,6 @@ Constants.IslamicEpoch = 1948439.5;
 Constants.DaysOfIslamicYear = 354;
 Constants.DaysOfShiaYear = 354;
 Constants.DaysOfJalaliYear = 365;
-Constants.DaysOfGaregorianYear = 365;
+Constants.DaysOfGregorianYear = 365;
+
+export default Constants;

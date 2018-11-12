@@ -68,3 +68,5 @@ const DifferenceMethodsMixin = {
         return diffInYears;
     }
 };
+
+export default DifferenceMethodsMixin;

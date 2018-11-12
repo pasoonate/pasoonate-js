@@ -1,3 +1,4 @@
+import CalendarManager from "../calendar/CalendarManager";
 
 class DateFormat {
 	
@@ -21,3 +22,5 @@ class DateFormat {
 		return `${this._calendar.getYear()}-${this._calendar.getMonth()}-${this._calendar.getDay()} ${this._calendar.getHour()}:${this._calendar.getMinute()}:${this._calendar.getSecond()}`;
 	}
 }
+
+export default DateFormat;

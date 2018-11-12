@@ -1,12 +1,13 @@
 {
   "name": "pasoonate",
-  "version": "0.1.6",
+  "version": "0.2.1",
   "description": "DateTime helpers and convert to calendars.",
-  "files": [
-    "dist/",
-    "src/"
-  ],
-  "main": "dist/pasoonate",
+  "main": "src/pasoonate.js",
+  "directories": {
+    "example": "example",
+    "dist": "dist",
+    "src": "src"
+  },
   "keywords": [
     "calendar",
     "convert",
@@ -14,7 +15,10 @@
     "time"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp minify",
+    "dev": "gulp build",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -26,7 +30,8 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
-    "gulp-minify": "^2.1.0",
-    "gulp-sourcemaps": "^2.6.4"
+    "gulp-rename": "^1.4.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-replace": "^1.0.0"
   }
 }

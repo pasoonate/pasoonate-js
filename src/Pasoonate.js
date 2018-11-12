@@ -1,3 +1,9 @@
+import Constants from './Constants';
+import Localization from './Localization';
+import DateFormat from './formatter/DateFormat';
+import SimpleDateFormat from './formatter/SimpleDateFormat';
+import CalendarManager from './calendar/CalendarManager';
+import './lang/fa';
 
 class Pasoonate extends Constants {
 
@@ -41,3 +47,5 @@ Object.defineProperty(Pasoonate, 'formatter', {
     writable: true,
     configurable: false
 });
+
+export default Pasoonate;

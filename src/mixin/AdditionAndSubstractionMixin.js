@@ -1,4 +1,3 @@
-
 const AdditionAndSubtractionMixin = {
 	addYear(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
@@ -81,3 +80,5 @@ const AdditionAndSubtractionMixin = {
 		return this;
 	}
 };
+
+export default AdditionAndSubtractionMixin;

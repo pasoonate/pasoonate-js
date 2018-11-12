@@ -1,3 +1,4 @@
+import Pasoonate from '../Pasoonate';
 
 let fa = {
 	gregorian: {
