@@ -509,6 +509,7 @@ class Calendar {
 
 
 
+
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -1053,7 +1054,6 @@ class Localization {
         return this.getTrans(key, locale);
     }
 }
-
 
 
 
