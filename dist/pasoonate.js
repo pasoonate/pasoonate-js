@@ -506,6 +506,9 @@ class Calendar {
 
 
 
+
+
+
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -550,6 +553,7 @@ class CalendarManager {
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);
 Object.assign(CalendarManager.prototype, AdditionAndSubtractionMixin);
 Object.assign(CalendarManager.prototype, DifferenceMethodsMixin);
+
 
 
 
