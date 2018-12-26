@@ -1,3 +1,4 @@
+import Pasoonate from '../Pasoonate';
 import GregorianCalendar from './GregorianCalendar';
 import JalaliCalendar from './JalaliCalendar';
 import IslamicCalendar from './IslamicCalendar';
