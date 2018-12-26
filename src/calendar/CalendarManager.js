@@ -2,6 +2,9 @@ import GregorianCalendar from './GregorianCalendar';
 import JalaliCalendar from './JalaliCalendar';
 import IslamicCalendar from './IslamicCalendar';
 import ShiaCalendar from './ShiaCalendar';
+import BaseMethodsMixin from '../mixin/BaseMethodsMixin';
+import AdditionAndSubtractionMixin from '../mixin/AdditionAndSubstractionMixin';
+import DifferenceMethodsMixin from '../mixin/DifferenceMethodsMixin';
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
