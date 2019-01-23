@@ -521,7 +521,7 @@ class CalendarManager {
 		this._formatter = Pasoonate.formatter;
 
 		let date = new Date();
-		this._timestamp = timestamp || Math.floor(date.getTime() / 1000); // millisecond to seconds
+		this._timestamp = timestamp || (Math.floor(date.getTime() / 1000) - (-date.getTimezoneOffset() * 60)); // millisecond to seconds
 		this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
 	}
 
