@@ -335,35 +335,35 @@ const DifferenceMethodsMixin = {
 
     diffInMinutes (secondInstance) {
         const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMinutes = diffInSeconds > 60 ? Math.floor(diffInSeconds / 60) : 0;
+        const diffInMinutes = diffInSeconds >= 60 ? Math.floor(diffInSeconds / 60) : 0;
 
         return diffInMinutes;
     },
 
     diffInHours (secondInstance) {
         const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInHours = diffInSeconds > 3600 ? Math.floor(diffInSeconds / 3600) : 0;
+        const diffInHours = diffInSeconds >= 3600 ? Math.floor(diffInSeconds / 3600) : 0;
 
         return diffInHours;
     },
 
     diffInDays (secondInstance) {
         const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInDays = diffInSeconds > 86400 ? Math.floor(diffInSeconds / 86400) : 0;
+        const diffInDays = diffInSeconds >= 86400 ? Math.floor(diffInSeconds / 86400) : 0;
 
         return diffInDays;
     },
 
     diffInMonths (secondInstance) {
         const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMonths = diffInSeconds > 2592000 ? Math.floor(diffInSeconds / 2592000) : 0;
+        const diffInMonths = diffInSeconds >= 2592000 ? Math.floor(diffInSeconds / 2592000) : 0;
 
         return diffInMonths;
     },
 
     diffInYears (secondInstance) {
         const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInYears = diffInSeconds > 31536000 ? Math.floor(diffInSeconds / 31536000) : 0;
+        const diffInYears = diffInSeconds >= 31536000 ? Math.floor(diffInSeconds / 31536000) : 0;
 
         return diffInYears;
     }
