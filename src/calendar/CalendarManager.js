@@ -21,28 +21,36 @@ class CalendarManager {
 		this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
 	}
 
-	gregorian () {
+	gregorian (strDateTime) {
 		this._currentCalendar = this._gregorian;
+		this.parse(strDateTime);
+		
 		return this;
 	}
 
-	jalali () {
+	jalali (strDateTime) {
 		this._currentCalendar = this._jalali;
+		this.parse(strDateTime);
+
 		return this;
 	}
 
-	islamic () {
+	islamic (strDateTime) {
 		this._currentCalendar = this._islamic;
+		this.parse(strDateTime);
+
 		return this;
 	}
 
-	shia () {
+	shia (strDateTime) {
 		this._currentCalendar = this._shia;
+		this.parse(strDateTime);
+
 		return this;
 	}
 
 	parse (expression) {
-		if(this._currentCalendar) {
+		if(this._currentCalendar && expression) {
 			const [date, time] = String(expression).trim().split(' ');
 
 			if(date) {

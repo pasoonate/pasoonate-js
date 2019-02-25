@@ -11,7 +11,8 @@
 		const pasoonate = Pasoonate.make();
 		const secondPasoonate = Pasoonate.make();
 
-		secondPasoonate.jalali().parse("1363/07/23");
+		// secondPasoonate.jalali().parse("1363/07/23");
+		secondPasoonate.jalali("1363/07/23");
 
 		console.log('Second ', secondPasoonate.jalali().format("yyyy-mm-dd"));
 		
