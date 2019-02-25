@@ -374,8 +374,13 @@ class Calendar {
 	
 	constructor () {
 		this.J1970 = 2440587.5;			// Julian date at Unix epoch: 1970-01-01
-		this.DayInSecond = 86400;
-	}	
+        this.DayInSecond = 86400;
+        this.name = '';
+    }
+    
+    getName () {
+        return this.name;
+    }
 
 	timestampToJulianDay (timestamp) {
         let julianDay =  timestamp / this.DayInSecond + this.J1970;
@@ -553,6 +558,10 @@ class CalendarManager {
 		return this;
 	}
 
+	name () {
+		return this._currentCalendar ? this._currentCalendar.getName() : '';
+	}
+
 	parse (expression) {
 		if(this._currentCalendar && expression) {
 			const [date, time] = String(expression).trim().split(' ');
@@ -574,7 +583,7 @@ class CalendarManager {
 	format (pattern, locale) {
 		this._formatter.setCalendar(this);
 		return this._formatter.format(pattern, locale);
-	}	
+	}
 }
 
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);
@@ -587,8 +596,9 @@ Object.assign(CalendarManager.prototype, DifferenceMethodsMixin);
 
 class GregorianCalendar extends Calendar {
 	constructor () {
-		super();
+        super();
         
+        this.name = "gregorian";
         this.GregorianEpoch = 1721425.5;
         Object.defineProperty(this, 'GregorianEpoch', {
             writable: false,
@@ -668,7 +678,8 @@ class IslamicCalendar extends Calendar {
 	
 	constructor () {
         super();
-        
+
+        this.name = "islamic";
 		this.IslamicEpoch = 1948439.5;
 		Object.defineProperty(this, 'IslamicEpoch', {
             writable: false,
@@ -735,6 +746,7 @@ class JalaliCalendar extends Calendar {
 	constructor () {
         super();
 
+        this.name = "jalali";
 		this.JalaliEpoch = 1948320.5;
 		Object.defineProperty(this, 'JalaliEpoch', {
             writable: false,
@@ -823,6 +835,7 @@ class ShiaCalendar extends Calendar {
 	constructor () {
         super();
         
+        this.name = "shia";
 		this.ShiaEpoch = 1948439.5;
 		Object.defineProperty(this, 'ShiaEpoch', {
             writable: false,
@@ -941,6 +954,7 @@ class DateFormat {
 
 
 
+
 class SimpleDateFormat extends DateFormat {
 	
 	constructor () {
@@ -952,61 +966,100 @@ class SimpleDateFormat extends DateFormat {
 	}
 
 	compile (pattern, locale) {
-		pattern = String(pattern).toLowerCase();
+		pattern = String(pattern);
 
-		let result = pattern;
-
-		const Signs = ['y', 'm', 'd'];
 		const FullYear = 'yyyy';
 		const ShortYear = 'yy';
-		const Month = 'mm';
-		const SingleMonth = 'm';
-		const Day = 'dd';
-		const SingleDay = 'd';
+		const FullMonthName = 'MMMM';
+		const ShortMonthName = 'MMM';
+		const FullMonth = 'MM';
+		const ShortMonth = 'M';
+		const ShortDayName = 'ddd';
+		const FullDayName = 'dddd';
+		const FullDay = 'dd';
+		const ShortDay = 'd';
+		const FullHour = 'HH';
+		const ShortHour = 'H';
+		const FullMinute = 'mm';
+		const ShortMinute = 'm';
+		const FullSecond = 'ss';
+		const ShortSecond = 's';
 
-		let chars = [];
+		let categories = [];
 		let prevChar = '';
 		let currChar = '';
 		let index = 0;
 
 		for (let i = 0; i < pattern.length; i++) {
-			currChar = Signs.includes(pattern[i]) ? pattern[i] : '';
+			currChar = pattern[i];
 
 			if(currChar === '') {
 				continue;
 			}
 
 			if(currChar === prevChar) {
-				chars[index].text += currChar;
+				categories[index] += currChar;
 			} else {
-				chars[++index] = { text: currChar, position: i};
+				categories[++index] = currChar;
 			}
+
 			prevChar = currChar;
 		}
 
-		for (let i in chars) {
-			switch (chars[i].text) {
+		for (let i in categories) {
+			switch (categories[i]) {
 				case FullYear:
-					result = result.replace(FullYear, this.getCalendar().getYear());
+					categories[i] = this.getCalendar().getYear();
 				break;
 				case ShortYear:
-					result = result.replace(ShortYear, String(this.getCalendar().getYear()).substr(-2, 2));
+					categories[i] = String(this.getCalendar().getYear()).substr(-2, 2);
 				break;
-				case SingleMonth:
-					result = result.replace(SingleMonth, this.getCalendar().getMonth());
+				case FullMonthName:
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.month_name.${this.getCalendar().getMonth()}`);
 				break;
-				case Month:
-					result = result.replace(Month, this.getCalendar().getMonth() > 9 ? this.getCalendar().getMonth() : '0' + this.getCalendar().getMonth());
+				case ShortMonthName:
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.short_month_name.${this.getCalendar().getMonth()}`);
 				break;
-				case SingleDay:
-					result = result.replace(SingleDay, this.getCalendar().getDay());
+				case FullMonth:
+					categories[i] = this.getCalendar().getMonth() > 9 ? this.getCalendar().getMonth() : `0${this.getCalendar().getMonth()}`;
 				break;
-				case Day:
-					result = result.replace(Day, this.getCalendar().getDay() > 9 ? this.getCalendar().getDay() : '0' + this.getCalendar().getDay());
+				case ShortMonth:
+					categories[i] = this.getCalendar().getMonth();
+				break;
+				case FullDayName:
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.short_day_name.${this.getCalendar().getDay()}`);
+				break;
+				case ShortDayName:
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.day_name.${this.getCalendar().getDay()}`);
+				break;
+				case FullDay:
+					categories[i] = this.getCalendar().getDay() > 9 ? this.getCalendar().getDay() : `0${this.getCalendar().getDay()}`;
+				break;
+				case ShortDay:
+					categories[i] = this.getCalendar().getDay();
+				break;
+				case FullHour:
+					categories[i] = this.getCalendar().getHour() > 9 ? this.getCalendar().getHour() : `0${this.getCalendar().getHour()}`;
+				break;
+				case ShortHour:
+					categories[i] = this.getCalendar().getHour();
+				break;
+				case FullMinute:
+					categories[i] = this.getCalendar().getMinute() > 9 ? this.getCalendar().getMinute() : `0${this.getCalendar().getMinute()}`;
+				break;
+				case ShortMinute:
+					categories[i] = this.getCalendar().getMinute();
+				break;
+				case FullSecond:
+					categories[i] = this.getCalendar().getSecond() > 9 ? this.getCalendar().getSecond() : `0${this.getCalendar().getSecond()}`;
+				break;
+				case ShortSecond:
+					categories[i] = this.getCalendar().getSecond();
 				break;
 			}
 		}
-		return result;
+
+		return categories.join('');
 	}
 }
 
@@ -1137,12 +1190,196 @@ Object.defineProperty(Pasoonate, 'formatter', {
 let fa = {
 	gregorian: {
 		day_name: {
-			sunday: "Sunday"
-		}
+            '0': 'Saturday',
+            '1': 'Sunday',
+            '2': 'Monday',
+            '3': 'Tuesday',
+            '4': 'Wednesday',
+            '5': 'Thursday',
+            '6': 'Friday'
+		},
+		short_day_name: {
+            '0': 'Sat',
+            '1': 'Sun',
+            '2': 'Mon',
+            '3': 'Tue',
+            '4': 'Wed',
+            '5': 'Thu',
+            '6': 'Fri'
+        },
+        month_name: {
+            '1':  'January',
+            '2':  'February',
+            '3':  'March',
+            '4':  'April',
+            '5':  'May',
+            '6':  'June',
+            '7':  'July',
+            '8':  'August',
+            '9':  'September',
+            '10': 'October',
+            '11': 'November',
+            '12': 'December',
+		},
+		short_month_name: {
+            '1':  'Jan',
+            '2':  'Feb',
+            '3':  'Mar',
+            '4':  'Apr',
+            '5':  'May',
+            '6':  'Jun',
+            '7':  'Jul',
+            '8':  'Aug',
+            '9':  'Sep',
+            '10': 'Oct',
+            '11': 'Nov',
+            '12': 'Dec',
+        }
 	},
-	jalali: {},
-	islamic: {},
-	shia: {}
+	jalali: {
+		day_name: {
+            '0': 'شنبه',
+            '1': 'یک‌شنبه',
+            '2': 'دوشنبه',
+            '3': 'سه‌شنبه',
+            '4': 'چهارشنبه',
+            '5': 'پنج‌شنبه',
+            '6': 'جمعه'
+		},
+		short_day_name: {
+            '0': 'ش',
+            '1': 'ی',
+            '2': 'د',
+            '3': 'س',
+            '4': 'چ',
+            '5': 'پ',
+            '6': 'ج'
+        },
+        month_name: {
+            '1':  'فروردین',
+            '2':  'اردیبهشت',
+            '3':  'خرداد',
+            '4':  'تیر',
+            '5':  'مرداد',
+            '6':  'شهریور',
+            '7':  'مهر',
+            '8':  'آبان',
+            '9':  'آذر',
+            '10': 'دی',
+            '11': 'بهمن',
+            '12': 'اسفند',
+		},
+		short_month_name: {
+            '1':  'فرو',
+            '2':  'ارد',
+            '3':  'خرد',
+            '4':  'تیر',
+            '5':  'مرد',
+            '6':  'شهر',
+            '7':  'مهر',
+            '8':  'آبا',
+            '9':  'آذر',
+            '10': 'دی',
+            '11': 'بهم',
+            '12': 'اسف',
+        }
+	},
+	islamic: {
+		day_name: {
+            '0': 'السبت',
+            '1': 'الأحَد',
+            '2': 'الإثنين',
+            '3': 'الثلاثاء',
+            '4': 'الأربعاء',
+            '5': 'الخميس',
+            '6': 'الجمعة'
+		},
+		short_day_name: {
+            '0': 'السبت',
+            '1': 'الأحَد',
+            '2': 'الإثنين',
+            '3': 'الثلاثاء',
+            '4': 'الأربعاء',
+            '5': 'الخميس',
+            '6': 'الجمعة'
+        },
+        month_name: {
+            '1':  'محرم',
+            '2':  'صفر',
+            '3':  'ربیع‌الاول',
+            '4':  'ربیع‌الثانی',
+            '5':  'جمادی‌الاول',
+            '6':  'جمادی‌الثانی',
+            '7':  'رجب',
+            '8':  'شعبان',
+            '9':  'رمضان',
+            '10': 'شوال',
+            '11': 'ذیقعده',
+            '12': 'ذیحجه',
+		},
+		short_month_name: {
+            '1':  'محرم',
+            '2':  'صفر',
+            '3':  'ربیع‌الاول',
+            '4':  'ربیع‌الثانی',
+            '5':  'جمادی‌الاول',
+            '6':  'جمادی‌الثانی',
+            '7':  'رجب',
+            '8':  'شعبان',
+            '9':  'رمضان',
+            '10': 'شوال',
+            '11': 'ذیقعده',
+            '12': 'ذیحجه',
+        }
+	},
+	shia: {
+		day_name: {
+            '0': 'السبت',
+            '1': 'الأحَد',
+            '2': 'الإثنين',
+            '3': 'الثلاثاء',
+            '4': 'الأربعاء',
+            '5': 'الخميس',
+            '6': 'الجمعة'
+		},
+		short_day_name: {
+            '0': 'السبت',
+            '1': 'الأحَد',
+            '2': 'الإثنين',
+            '3': 'الثلاثاء',
+            '4': 'الأربعاء',
+            '5': 'الخميس',
+            '6': 'الجمعة'
+        },
+        month_name: {
+            '1':  'محرم',
+            '2':  'صفر',
+            '3':  'ربیع‌الاول',
+            '4':  'ربیع‌الثانی',
+            '5':  'جمادی‌الاول',
+            '6':  'جمادی‌الثانی',
+            '7':  'رجب',
+            '8':  'شعبان',
+            '9':  'رمضان',
+            '10': 'شوال',
+            '11': 'ذیقعده',
+            '12': 'ذیحجه',
+		},
+		short_month_name: {
+            '1':  'محرم',
+            '2':  'صفر',
+            '3':  'ربیع‌الاول',
+            '4':  'ربیع‌الثانی',
+            '5':  'جمادی‌الاول',
+            '6':  'جمادی‌الثانی',
+            '7':  'رجب',
+            '8':  'شعبان',
+            '9':  'رمضان',
+            '10': 'شوال',
+            '11': 'ذیقعده',
+            '12': 'ذیحجه',
+        }
+	}
 };
 
 Pasoonate.localization.setLang('fa', fa);
