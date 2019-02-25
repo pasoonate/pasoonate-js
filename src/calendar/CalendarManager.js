@@ -49,6 +49,10 @@ class CalendarManager {
 		return this;
 	}
 
+	name () {
+		return this._currentCalendar ? this._currentCalendar.getName() : '';
+	}
+
 	parse (expression) {
 		if(this._currentCalendar && expression) {
 			const [date, time] = String(expression).trim().split(' ');
@@ -70,7 +74,7 @@ class CalendarManager {
 	format (pattern, locale) {
 		this._formatter.setCalendar(this);
 		return this._formatter.format(pattern, locale);
-	}	
+	}
 }
 
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);

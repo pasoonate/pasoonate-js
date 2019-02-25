@@ -5,6 +5,7 @@ class JalaliCalendar extends Calendar {
 	constructor () {
         super();
 
+        this.name = "jalali";
 		this.JalaliEpoch = 1948320.5;
 		Object.defineProperty(this, 'JalaliEpoch', {
             writable: false,

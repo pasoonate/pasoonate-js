@@ -2,8 +2,9 @@ import Calendar from "./Calendar";
 
 class GregorianCalendar extends Calendar {
 	constructor () {
-		super();
+        super();
         
+        this.name = "gregorian";
         this.GregorianEpoch = 1721425.5;
         Object.defineProperty(this, 'GregorianEpoch', {
             writable: false,
