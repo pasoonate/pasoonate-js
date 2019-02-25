@@ -545,6 +545,24 @@ class CalendarManager {
 		return this;
 	}
 
+	parse (expression) {
+		if(this._currentCalendar) {
+			const [date, time] = String(expression).trim().split(' ');
+
+			if(date) {
+				const [year, month, day] = date.trim().split(/[/-]/g);
+				this.setDate(Number(year), Number(month) || 1, Number(day) || 1);
+			}
+
+			if(time) {
+				const [hour, minute, second] = time.trim().split(':');
+				this.setTime(Number(hour) || 0, Number(minute) || 0, Number(second) || 0);
+			}
+		}
+
+		return this;
+	}
+
 	format (pattern, locale) {
 		this._formatter.setCalendar(this);
 		return this._formatter.format(pattern, locale);
