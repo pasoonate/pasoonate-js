@@ -6,6 +6,7 @@ import ShiaCalendar from './ShiaCalendar';
 import BaseMethodsMixin from '../mixin/BaseMethodsMixin';
 import AdditionAndSubtractionMixin from '../mixin/AdditionAndSubstractionMixin';
 import DifferenceMethodsMixin from '../mixin/DifferenceMethodsMixin';
+import ComparisonMethodsMixin from '../mixin/ComparisonMethodsMixin';
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -80,5 +81,6 @@ class CalendarManager {
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);
 Object.assign(CalendarManager.prototype, AdditionAndSubtractionMixin);
 Object.assign(CalendarManager.prototype, DifferenceMethodsMixin);
+Object.assign(CalendarManager.prototype, ComparisonMethodsMixin);
 
 export default CalendarManager;
