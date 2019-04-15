@@ -7,7 +7,7 @@ import CalendarManager from './calendar/CalendarManager';
 class Pasoonate {
 
 	constructor () {
-		
+
 	}
 
 	static make (timestamp, timezoneOffset) {
@@ -32,6 +32,10 @@ class Pasoonate {
 
 	static setFormatter (formatter) {
 		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
+	}
+
+	static clone (instance) {
+		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
 	}
 }
 

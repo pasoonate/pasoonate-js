@@ -76,6 +76,10 @@ class CalendarManager {
 		this._formatter.setCalendar(this);
 		return this._formatter.format(pattern, locale);
 	}
+
+	clone () {
+		return Pasoonate.make(this.getTimestamp(), this.getTimezoneOffset());
+	}
 }
 
 Object.assign(CalendarManager.prototype, BaseMethodsMixin);
