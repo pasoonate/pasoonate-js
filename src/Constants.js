@@ -24,6 +24,10 @@ const Constants = {
 	DaysOfShiaYear: 354,
 	DaysOfJalaliYear: 365,
 	DaysOfGregorianYear: 365,
+	Gregorian: 'gregorian',
+	Jalali: 'jalali',
+	Shia: 'shia',
+	Islamic: 'islamic'
 };
 
 export default Constants;

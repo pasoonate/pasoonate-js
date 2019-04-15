@@ -50,7 +50,18 @@ class CalendarManager {
 		return this;
 	}
 
-	name () {
+	name (calendar) {
+		if(calendar) {
+			calendar = String(calendar).toLowerCase();
+			const instance = this[`_${calendar}`];
+
+			if(instance) {
+				this._currentCalendar = instance;	
+			}
+
+			return;
+		}
+
 		return this._currentCalendar ? this._currentCalendar.getName() : '';
 	}
 
