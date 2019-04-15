@@ -4,10 +4,10 @@ import DateFormat from './formatter/DateFormat';
 import SimpleDateFormat from './formatter/SimpleDateFormat';
 import CalendarManager from './calendar/CalendarManager';
 
-class Pasoonate extends Constants {
+class Pasoonate {
 
 	constructor () {
-		super();
+		
 	}
 
 	static make (timestamp, timezoneOffset) {
@@ -34,6 +34,8 @@ class Pasoonate extends Constants {
 		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
 	}
 }
+
+Object.assign(Pasoonate, Constants);
 
 Pasoonate.localization = new Localization();
 Object.defineProperty(Pasoonate, 'localization', {
