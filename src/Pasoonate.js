@@ -3,6 +3,8 @@ import Localization from './Localization';
 import DateFormat from './formatter/DateFormat';
 import SimpleDateFormat from './formatter/SimpleDateFormat';
 import CalendarManager from './calendar/CalendarManager';
+import SimpleParser from './parser/SimpleParser';
+import Parser from './parser/Parser';
 
 class Pasoonate {
 
@@ -22,18 +24,31 @@ class Pasoonate {
 		Pasoonate.localization.setLocale(locale);
 	}
 
-	static getLocal () {
-		return Pasoonate.localization.getLocal();
+	static getLocale () {
+		return Pasoonate.localization.getLocale();
 	}
 
-	static isLocal (locale) {
-		return Pasoonate.localization.isLocal(locale);
+	static isLocale (locale) {
+		return Pasoonate.localization.isLocale(locale);
 	}
 
 	static setFormatter (formatter) {
 		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
 	}
 
+	/**
+	 * 
+	 * @param {Parser} parser 
+	 */
+	static setParser (parser) {
+		Pasoonate.parsers.push(parser);
+	}
+
+	/**
+	 *
+	 * @param {CalendarManager} instance 
+	 * @param {CalendarManager}
+	 */
 	static clone (instance) {
 		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
 	}
@@ -51,6 +66,12 @@ Pasoonate.formatter = new SimpleDateFormat();
 Object.defineProperty(Pasoonate, 'formatter', {
     writable: true,
     configurable: false
+});
+
+Pasoonate.parsers = [SimpleParser];
+Object.defineProperty(Pasoonate, 'parsers', {
+	writable: false,
+	configurable: false
 });
 
 export default Pasoonate;

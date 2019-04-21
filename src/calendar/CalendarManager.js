@@ -7,6 +7,7 @@ import BaseMethodsMixin from '../mixin/BaseMethodsMixin';
 import AdditionAndSubtractionMixin from '../mixin/AdditionAndSubstractionMixin';
 import DifferenceMethodsMixin from '../mixin/DifferenceMethodsMixin';
 import ComparisonMethodsMixin from '../mixin/ComparisonMethodsMixin';
+import SimpleParser from '../parser/SimpleParser';
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -65,21 +66,14 @@ class CalendarManager {
 		return this._currentCalendar ? this._currentCalendar.getName() : '';
 	}
 
+	/**
+	 * 
+	 * @param {String} expression 
+	 */
 	parse (expression) {
-		if(this._currentCalendar && expression) {
-			const [date, time] = String(expression).trim().split(' ');
-
-			if(date) {
-				const [year, month, day] = date.trim().split(/[/-]/g);
-				this.setDate(Number(year), Number(month) || 1, Number(day) || 1);
-			}
-
-			if(time) {
-				const [hour, minute, second] = time.trim().split(':');
-				this.setTime(Number(hour) || 0, Number(minute) || 0, Number(second) || 0);
-			}
-		}
-
+		
+		const parser = new SimpleParser(this);
+		parser.parse(expression);
 		return this;
 	}
 
