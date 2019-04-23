@@ -71,9 +71,17 @@ class CalendarManager {
 	 * @param {String} expression 
 	 */
 	parse (expression) {
-		
-		const parser = new SimpleParser(this);
-		parser.parse(expression);
+		const parsers = Pasoonate.parsers;
+
+		for(let i in parsers) {
+			const pattern = parsers[i].pattern();
+			
+			if(pattern.test(expression)) {
+				(new parsers[i](this)).parse(expression);
+				break;
+			}
+		}
+
 		return this;
 	}
 

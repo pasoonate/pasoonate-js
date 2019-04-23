@@ -9,7 +9,7 @@ class Parser {
      */
     constructor (calendarManager) {
         this._calendarManager = calendarManager instanceof CalendarManager ? calendarManager : null;
-        this._locale = Pasoonate.getLocal();
+        this._locale = Pasoonate.getLocale();
         this._format = '';
     }
 
