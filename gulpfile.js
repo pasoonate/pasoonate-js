@@ -11,6 +11,7 @@ gulp.task('js-build', function(){
     './src/mixin/*.js',
     './src/calendar/*.js',
     './src/formatter/*.js',
+    './src/parser/*.js',
     './src/*.js', 
     './src/lang/*.js'
   ], {base:'./'})
@@ -24,6 +25,7 @@ gulp.task('js-minify', function(){
     './src/mixin/*.js',
     './src/calendar/*.js',
     './src/formatter/*.js',
+    './src/parser/*.js',
     './src/*.js', 
     './src/lang/*.js'
   ], {base:'./'})
@@ -41,5 +43,5 @@ gulp.task('minify', ['js-minify']);
 gulp.task('build', ['js-build']);
  
 gulp.task('watch', function () {
-  gulp.watch('./src', ['js-build']);
+  gulp.watch('./src/**/*.*', ['js-build']);
 });

@@ -11,11 +11,9 @@
 		const pasoonate = Pasoonate.make();
 		const secondPasoonate = Pasoonate.make();
 
-		// secondPasoonate.jalali().parse("1363/07/23");
 		secondPasoonate.jalali("1363/07/23");
 
-		console.log('Second ', secondPasoonate.jalali().format("yyyy-mm-dd"));
-		
+		console.log('Second ', secondPasoonate.jalali().format("yyyy-MM-dd"));
 
 		console.log('Diff \t\t\t', pasoonate.diff(secondPasoonate));
 		console.log('Diff In Seconds ', pasoonate.diffInSeconds(secondPasoonate));
