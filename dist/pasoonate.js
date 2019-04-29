@@ -692,6 +692,7 @@ class Calendar {
 
 
 
+
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -750,18 +751,19 @@ class CalendarManager {
 		return this._currentCalendar ? this._currentCalendar.getName() : '';
 	}
 
+	/**
+	 * 
+	 * @param {String} expression 
+	 */
 	parse (expression) {
-		if(this._currentCalendar && expression) {
-			const [date, time] = String(expression).trim().split(' ');
+		const parsers = Pasoonate.parsers;
 
-			if(date) {
-				const [year, month, day] = date.trim().split(/[/-]/g);
-				this.setDate(Number(year), Number(month) || 1, Number(day) || 1);
-			}
-
-			if(time) {
-				const [hour, minute, second] = time.trim().split(':');
-				this.setTime(Number(hour) || 0, Number(minute) || 0, Number(second) || 0);
+		for(let i in parsers) {
+			const pattern = parsers[i].pattern();
+			
+			if(pattern.test(expression)) {
+				(new parsers[i](this)).parse(expression);
+				break;
 			}
 		}
 
@@ -1258,6 +1260,81 @@ class SimpleDateFormat extends DateFormat {
 }
 
 
+
+
+
+class Parser {
+
+    /**
+     * 
+     * @param {CalendarManager} calendarManager 
+     */
+    constructor (calendarManager) {
+        this._calendarManager = calendarManager instanceof CalendarManager ? calendarManager : null;
+        this._locale = Pasoonate.getLocale();
+        this._format = '';
+    }
+
+    /**
+     * @returns {RegExp}
+     */
+    static pattern() {
+        return '';
+    }
+
+    /**
+     * 
+     * @param {String} datetime 
+     */
+    parse (datetime) {
+        
+    }
+}
+
+
+
+
+
+class SimpleParser extends Parser {
+    
+    /**
+     * 
+     * @param {CalendarManager} calendarManager 
+     */
+    constructor (calendarManager) {
+        super(calendarManager);
+    }
+
+    /**
+     * @returns {RegExp}
+     */
+    static pattern () {
+        return /\d{2,4}[-\/]{1}\d{1,2}[-\/]{1}\d{1,2}([ ]+\d{1,2}[:]{1}\d{1,2}[:]{1}\d{1,2}){0,1}/;
+    }
+
+    /**
+     * 
+     * @param {String} datetime 
+     */
+    parse (datetime) {
+        if(this._calendarManager && datetime) {
+			const [date, time] = String(datetime).trim().split(' ');
+            
+            
+			if(date) {
+				const [year, month, day] = date.trim().split(/[\/-]/g);
+				this._calendarManager.setDate(Number(year), Number(month) || 1, Number(day) || 1);
+			}
+
+			if(time) {
+				const [hour, minute, second] = time.trim().split(':');
+				this._calendarManager.setTime(Number(hour) || 0, Number(minute) || 0, Number(second) || 0);
+			}
+		}
+    }
+}
+
+
 const Constants = {
 	J1970: 2440587.5, // Julian date at Unix epoch: 1970-01-01
 	SATURDAY: 1,
@@ -1349,6 +1426,8 @@ class Localization {
 
 
 
+
+
 class Pasoonate {
 
 	constructor () {
@@ -1367,18 +1446,31 @@ class Pasoonate {
 		Pasoonate.localization.setLocale(locale);
 	}
 
-	static getLocal () {
-		return Pasoonate.localization.getLocal();
+	static getLocale () {
+		return Pasoonate.localization.getLocale();
 	}
 
-	static isLocal (locale) {
-		return Pasoonate.localization.isLocal(locale);
+	static isLocale (locale) {
+		return Pasoonate.localization.isLocale(locale);
 	}
 
 	static setFormatter (formatter) {
 		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
 	}
 
+	/**
+	 * 
+	 * @param {Parser} parser 
+	 */
+	static setParser (parser) {
+		Pasoonate.parsers.push(parser);
+	}
+
+	/**
+	 *
+	 * @param {CalendarManager} instance 
+	 * @param {CalendarManager}
+	 */
 	static clone (instance) {
 		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
 	}
@@ -1396,6 +1488,12 @@ Pasoonate.formatter = new SimpleDateFormat();
 Object.defineProperty(Pasoonate, 'formatter', {
     writable: true,
     configurable: false
+});
+
+Pasoonate.parsers = [SimpleParser];
+Object.defineProperty(Pasoonate, 'parsers', {
+	writable: false,
+	configurable: false
 });
 
 
