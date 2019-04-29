@@ -1221,10 +1221,10 @@ class SimpleDateFormat extends DateFormat {
 					categories[i] = this.getCalendar().getMonth();
 				break;
 				case FullDayName:
-					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.short_day_name.${this.getCalendar().getDay()}`);
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.day_name.${this.getCalendar().dayOfWeek()}`);
 				break;
 				case ShortDayName:
-					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.day_name.${this.getCalendar().getDay()}`);
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.short_day_name.${this.getCalendar().dayOfWeek()}`);
 				break;
 				case FullDay:
 					categories[i] = this.getCalendar().getDay() > 9 ? this.getCalendar().getDay() : `0${this.getCalendar().getDay()}`;
