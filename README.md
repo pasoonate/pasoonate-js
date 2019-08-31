@@ -1,7 +1,7 @@
 # pasoonate-js
 Pasoonate is a library that includes date-time methods and calendars.
 
-Install with [npm](https://www.npmjs.com): ```npm install bootstrap```
+Install with [npm](https://www.npmjs.com): ```npm install pasoonate```
 
 ```
 const now = Pasoonate.make();
