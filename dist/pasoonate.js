@@ -9,8 +9,8 @@ const AdditionAndSubtractionMixin = {
 	addMonth(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		let totalMonth = date.month + count;
-		let year = date.year + Math.floor(totalMonth / 12);
-		let month = totalMonth % 12;
+		let year = date.year + Math.ceil((totalMonth / 12) - 1);
+		let month = (totalMonth % 12) === 0 ? 12 : (totalMonth % 12);
 		let timestamp = this._currentCalendar.dateToTimestamp(year, month, date.day, date.hour, date.minute, date.second);
 		this._timestamp = timestamp - this._timezoneOffset;
 		return this;
