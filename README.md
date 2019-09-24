@@ -65,7 +65,7 @@ let datetime = now.jalali('1398/02/01 20:00:00').gregorian().getDateTime();
 - setUTCHour(hour)
 - setUTCMinute(minute)
 - setUTCSecond(second)
-- dayOfWeek() `from 1 saturday to 7 friday`
+- dayOfWeek() `from 0 saturday to 6 friday`
 - dayOfYear()
 - weekOfMonth()
 - weekOfYear()
