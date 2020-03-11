@@ -1,8 +1,9 @@
+import Constants from "../Constants";
+
 class Calendar {
 	
 	constructor () {
 		this.J1970 = 2440587.5;			// Julian date at Unix epoch: 1970-01-01
-        this.DayInSecond = 86400;
         this.name = '';
     }
     
@@ -11,7 +12,7 @@ class Calendar {
     }
 
 	timestampToJulianDay (timestamp) {
-        let julianDay =  timestamp / this.DayInSecond + this.J1970;
+        let julianDay =  timestamp / Constants.DayInSeconds + this.J1970;
         
         let julianDayFloatRounded = Math.round((julianDay - Math.floor(julianDay)) * 10000000) / 10000000;
 
@@ -19,7 +20,7 @@ class Calendar {
 	}
 
 	julianDayToTimestamp (julianDay) {
-		let timestamp = Math.round((julianDay - this.J1970) * this.DayInSecond);
+		let timestamp = Math.round((julianDay - this.J1970) * Constants.DayInSeconds);
 		
 		return timestamp;
     }
@@ -33,7 +34,7 @@ class Calendar {
         julianDay += 0.5;
 
         // Astronomical to civil
-        let time = Math.floor((julianDay - Math.floor(julianDay)) * this.DayInSecond);
+        let time = Math.floor((julianDay - Math.floor(julianDay)) * Constants.DayInSeconds);
 
         return {
         	"hour": Math.floor(time / 3600),
