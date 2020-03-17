@@ -1,69 +1,97 @@
+import Constants from '../Constants';
+import CalendarManager from '../calendar/CalendarManager';
 
 const DifferenceMethodsMixin = {
-    diff (secondInstance) {
-        let diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
+    diff (instance) {
+        const diffInSeconds = this.diffInSeconds(instance);
+        const diffInDays = diffInSeconds / Constants.DayInSeconds;
 
-        const years = Math.floor(diffInSeconds / 31536000); // Constants.DaysOfJalaliYear * 24 * 60 * 60
-        diffInSeconds %= 31536000;
-        const months = Math.floor(diffInSeconds / 2592000); // 30 * 24 * 60 * 60
-        diffInSeconds %= 2592000;
-        const days = Math.floor(diffInSeconds / 86400); // 24 * 60 * 60
-        diffInSeconds %= 86400;
-        const hours = Math.floor(diffInSeconds / 3600); // 60 * 60
-        diffInSeconds %= 3600;
-        const minutes = Math.floor(diffInSeconds / 60);
-        diffInSeconds %= 60;
-        const seconds = diffInSeconds;
+        const years = parseInt(diffInDays) / Constants.YearInDays;
+        const months = parseInt(diffInDays) / Constants.MonthInDays
+        const days = this.diffInDays(instance) % Constants.MonthInDays;
+        const hours = this.diffInHours(instance) % Constants.HoursPerDay;
+        const minutes = this.diffInMinutes(instance) % Constants.MinutesPerHour;
+        const seconds = diffInSeconds % Constants.SecondsPerMinute;
 
         const diff = {
-            years: years,
-            months: months,
-            days: days,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
+            years: parseInt(years),
+            months: parseInt(months),
+            days: parseInt(days),
+            hours: parseInt(hours),
+            minutes: parseInt(minutes),
+            seconds: parseInt(seconds)
         };
 
         return diff;
     },
 
-    diffInSeconds (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInSeconds (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
 
         return diffInSeconds;
     },
 
-    diffInMinutes (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMinutes = diffInSeconds >= 60 ? Math.floor(diffInSeconds / 60) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInMinutes (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInMinutes = diffInSeconds >= Constants.SecondsPerMinute ? parseInt(diffInSeconds / Constants.SecondsPerMinute) : 0;
 
         return diffInMinutes;
     },
 
-    diffInHours (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInHours = diffInSeconds >= 3600 ? Math.floor(diffInSeconds / 3600) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInHours (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInHours = diffInSeconds >= Constants.HourInSeconds ? parseInt(diffInSeconds / Constants.HourInSeconds) : 0;
 
         return diffInHours;
     },
 
-    diffInDays (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInDays = diffInSeconds >= 86400 ? Math.floor(diffInSeconds / 86400) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInDays (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInDays = diffInSeconds >= Constants.DayInSeconds ? parseInt(diffInSeconds / Constants.DayInSeconds) : 0;
 
         return diffInDays;
     },
 
-    diffInMonths (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMonths = diffInSeconds >= 2592000 ? Math.floor(diffInSeconds / 2592000) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInMonths (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInMonths = diffInSeconds >= Constants.MonthInSeconds ? parseInt(diffInSeconds / Constants.MonthInSeconds) : 0;
 
         return diffInMonths;
     },
 
-    diffInYears (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInYears = diffInSeconds >= 31536000 ? Math.floor(diffInSeconds / 31536000) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInYears (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInYears = diffInSeconds >= Constants.YearInSeconds ? parseInt(diffInSeconds / Constants.YearInSeconds) : 0;
 
         return diffInYears;
     }
