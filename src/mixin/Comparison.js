@@ -1,5 +1,5 @@
 
-const ComparisonMethodsMixin = {
+const Comparison = {
     equal (other) {
         return this._timestamp === other._timestamp;
     },
@@ -107,4 +107,4 @@ const ComparisonMethodsMixin = {
     }
 };
 
-export default ComparisonMethodsMixin;
+export default Comparison;

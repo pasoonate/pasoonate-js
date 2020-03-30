@@ -1,4 +1,4 @@
-const BaseMethodsMixin = {
+const Base = {
 	setTimestamp (timestamp) {
 		this._timestamp = timestamp;
 
@@ -279,4 +279,4 @@ const BaseMethodsMixin = {
     },
 };
 
-export default BaseMethodsMixin;
+export default Base;
