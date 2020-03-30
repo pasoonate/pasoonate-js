@@ -1,4 +1,4 @@
-const AdditionAndSubtractionMixin = {
+const AdditionAndSubtraction = {
 	addYear(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		let year = date.year + count;
@@ -105,7 +105,7 @@ const AdditionAndSubtractionMixin = {
 };
 
 
-const BaseMethodsMixin = {
+const Base = {
 	setTimestamp (timestamp) {
 		this._timestamp = timestamp;
 
@@ -388,7 +388,7 @@ const BaseMethodsMixin = {
 
 
 
-const ComparisonMethodsMixin = {
+const Comparison = {
     equal (other) {
         return this._timestamp === other._timestamp;
     },
@@ -498,82 +498,152 @@ const ComparisonMethodsMixin = {
 
 
 
-const DifferenceMethodsMixin = {
-    diff (secondInstance) {
-        let diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
 
-        const years = Math.floor(diffInSeconds / 31536000); // Constants.DaysOfJalaliYear * 24 * 60 * 60
-        diffInSeconds %= 31536000;
-        const months = Math.floor(diffInSeconds / 2592000); // 30 * 24 * 60 * 60
-        diffInSeconds %= 2592000;
-        const days = Math.floor(diffInSeconds / 86400); // 24 * 60 * 60
-        diffInSeconds %= 86400;
-        const hours = Math.floor(diffInSeconds / 3600); // 60 * 60
-        diffInSeconds %= 3600;
-        const minutes = Math.floor(diffInSeconds / 60);
-        diffInSeconds %= 60;
-        const seconds = diffInSeconds;
+
+const Difference = {
+    diff (instance) {
+        const diffInSeconds = this.diffInSeconds(instance);
+        const diffInDays = diffInSeconds / Constants.DayInSeconds;
+
+        const years = parseInt(diffInDays) / Constants.YearInDays;
+        const months = parseInt(diffInDays) / Constants.MonthInDays
+        const days = this.diffInDays(instance) % Constants.MonthInDays;
+        const hours = this.diffInHours(instance) % Constants.HoursPerDay;
+        const minutes = this.diffInMinutes(instance) % Constants.MinutesPerHour;
+        const seconds = diffInSeconds % Constants.SecondsPerMinute;
 
         const diff = {
-            years: years,
-            months: months,
-            days: days,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
+            years: parseInt(years),
+            months: parseInt(months),
+            days: parseInt(days),
+            hours: parseInt(hours),
+            minutes: parseInt(minutes),
+            seconds: parseInt(seconds)
         };
 
         return diff;
     },
 
-    diffInSeconds (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInSeconds (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
 
         return diffInSeconds;
     },
 
-    diffInMinutes (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMinutes = diffInSeconds >= 60 ? Math.floor(diffInSeconds / 60) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInMinutes (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInMinutes = diffInSeconds >= Constants.SecondsPerMinute ? parseInt(diffInSeconds / Constants.SecondsPerMinute) : 0;
 
         return diffInMinutes;
     },
 
-    diffInHours (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInHours = diffInSeconds >= 3600 ? Math.floor(diffInSeconds / 3600) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInHours (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInHours = diffInSeconds >= Constants.HourInSeconds ? parseInt(diffInSeconds / Constants.HourInSeconds) : 0;
 
         return diffInHours;
     },
 
-    diffInDays (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInDays = diffInSeconds >= 86400 ? Math.floor(diffInSeconds / 86400) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInDays (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInDays = diffInSeconds >= Constants.DayInSeconds ? parseInt(diffInSeconds / Constants.DayInSeconds) : 0;
 
         return diffInDays;
     },
 
-    diffInMonths (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMonths = diffInSeconds >= 2592000 ? Math.floor(diffInSeconds / 2592000) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInMonths (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInMonths = diffInSeconds >= Constants.MonthInSeconds ? parseInt(diffInSeconds / Constants.MonthInSeconds) : 0;
 
         return diffInMonths;
     },
 
-    diffInYears (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInYears = diffInSeconds >= 31536000 ? Math.floor(diffInSeconds / 31536000) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInYears (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInYears = diffInSeconds >= Constants.YearInSeconds ? parseInt(diffInSeconds / Constants.YearInSeconds) : 0;
 
         return diffInYears;
     }
 };
 
 
+
+const Modifiers = {
+    
+    startOfDay() {
+        return this.setTime(0, 0, 0);
+    },
+    
+    endOfDay() {
+        return this.setTime(23, 59, 59);
+    },
+    
+    startOfMonth() {
+        return this.setDay(1).startOfDay();
+    },
+    
+    endOfMonth() {
+        return this.setDay(this._currentCalendar.daysInMonth(this.getYear(), this.getMonth())).endOfDay();
+    },
+
+    startOfYear() {
+        return this.setMonth(1).startOfMonth();
+    },
+
+    endOfYear() {
+        return this.setMonth(12).endOfMonth();
+    },
+
+    startOfWeek() {
+        const daysToSaturday = this.dayOfWeek();
+
+        return this.subDay(daysToSaturday).startOfDay();
+    },
+
+    endOfWeek() {
+        const daysToFriday = 6 - this.dayOfWeek();
+
+        return this.addDay(daysToFriday).endOfDay();
+    }
+};
+
+
+
+
 class Calendar {
 	
 	constructor () {
 		this.J1970 = 2440587.5;			// Julian date at Unix epoch: 1970-01-01
-        this.DayInSecond = 86400;
         this.name = '';
     }
     
@@ -582,7 +652,7 @@ class Calendar {
     }
 
 	timestampToJulianDay (timestamp) {
-        let julianDay =  timestamp / this.DayInSecond + this.J1970;
+        let julianDay =  timestamp / Constants.DayInSeconds + this.J1970;
         
         let julianDayFloatRounded = Math.round((julianDay - Math.floor(julianDay)) * 10000000) / 10000000;
 
@@ -590,7 +660,7 @@ class Calendar {
 	}
 
 	julianDayToTimestamp (julianDay) {
-		let timestamp = Math.round((julianDay - this.J1970) * this.DayInSecond);
+		let timestamp = Math.round((julianDay - this.J1970) * Constants.DayInSeconds);
 		
 		return timestamp;
     }
@@ -604,7 +674,7 @@ class Calendar {
         julianDay += 0.5;
 
         // Astronomical to civil
-        let time = Math.floor((julianDay - Math.floor(julianDay)) * this.DayInSecond);
+        let time = Math.floor((julianDay - Math.floor(julianDay)) * Constants.DayInSeconds);
 
         return {
         	"hour": Math.floor(time / 3600),
@@ -715,6 +785,7 @@ class Calendar {
 
 
 
+
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -801,10 +872,11 @@ class CalendarManager {
 	}
 }
 
-Object.assign(CalendarManager.prototype, BaseMethodsMixin);
-Object.assign(CalendarManager.prototype, AdditionAndSubtractionMixin);
-Object.assign(CalendarManager.prototype, DifferenceMethodsMixin);
-Object.assign(CalendarManager.prototype, ComparisonMethodsMixin);
+Object.assign(CalendarManager.prototype, Base);
+Object.assign(CalendarManager.prototype, AdditionAndSubtraction);
+Object.assign(CalendarManager.prototype, Difference);
+Object.assign(CalendarManager.prototype, Comparison);
+Object.assign(CalendarManager.prototype, Modifiers);
 
 
 
@@ -1298,7 +1370,13 @@ const Constants = {
 	HoursPerDay: 24,
 	MinutesPerHour: 60,
 	SecondsPerMinute: 60,
-	DayInSecond: 86400,
+	HourInSeconds: 3600,
+	DayInSeconds: 86400,
+	WeekInSeconds: 604800,
+	MonthInSeconds: 2629743,
+	YearInSeconds: 31556926,
+	MonthInDays: 30.44,
+	YearInDays: 365.24,
 	ShiaEpoch: 1948439.5,
 	JalaliEpoch: 1948320.5,
 	GregorianEpoch: 1721425.5,
