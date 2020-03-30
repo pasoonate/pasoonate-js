@@ -3,10 +3,11 @@ import GregorianCalendar from './GregorianCalendar';
 import JalaliCalendar from './JalaliCalendar';
 import IslamicCalendar from './IslamicCalendar';
 import ShiaCalendar from './ShiaCalendar';
-import BaseMethodsMixin from '../mixin/BaseMethodsMixin';
-import AdditionAndSubtractionMixin from '../mixin/AdditionAndSubstractionMixin';
-import DifferenceMethodsMixin from '../mixin/DifferenceMethodsMixin';
-import ComparisonMethodsMixin from '../mixin/ComparisonMethodsMixin';
+import Base from '../mixin/Base';
+import AdditionAndSubtraction from '../mixin/AdditionAndSubstraction';
+import Difference from '../mixin/Difference';
+import Comparison from '../mixin/Comparison';
+import Modifiers from '../mixin/Modifiers';
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -93,9 +94,10 @@ class CalendarManager {
 	}
 }
 
-Object.assign(CalendarManager.prototype, BaseMethodsMixin);
-Object.assign(CalendarManager.prototype, AdditionAndSubtractionMixin);
-Object.assign(CalendarManager.prototype, DifferenceMethodsMixin);
-Object.assign(CalendarManager.prototype, ComparisonMethodsMixin);
+Object.assign(CalendarManager.prototype, Base);
+Object.assign(CalendarManager.prototype, AdditionAndSubtraction);
+Object.assign(CalendarManager.prototype, Difference);
+Object.assign(CalendarManager.prototype, Comparison);
+Object.assign(CalendarManager.prototype, Modifiers);
 
 export default CalendarManager;
