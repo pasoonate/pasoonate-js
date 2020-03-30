@@ -1,7 +1,7 @@
 import Constants from '../Constants';
 import CalendarManager from '../calendar/CalendarManager';
 
-const DifferenceMethodsMixin = {
+const Difference = {
     diff (instance) {
         const diffInSeconds = this.diffInSeconds(instance);
         const diffInDays = diffInSeconds / Constants.DayInSeconds;
@@ -97,4 +97,4 @@ const DifferenceMethodsMixin = {
     }
 };
 
-export default DifferenceMethodsMixin;
+export default Difference;
