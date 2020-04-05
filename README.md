@@ -137,7 +137,6 @@ today.jalali().subSecond(35).format('yyyy/MM/dd hh:mm:ss');
 
 ### Start Of Day
 Set time `00:00:00` of the day.
-
 ```
 today.jalali('1399/01/15 11:22:00').startOfDay().format('yyyy/MM/dd hh:mm:ss'); 
 // 1399/01/15 00:00:00
@@ -190,4 +189,8 @@ Set the Friday of the same week and set time as `23:59:59`.
 ```
 today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
 // 1399/01/15 23:59:59
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> c5aac74c2ad1f4397c2df376581537dfec67d670
