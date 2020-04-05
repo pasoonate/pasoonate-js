@@ -388,6 +388,7 @@ const Base = {
 
 
 
+
 const Comparison = {
     equal (other) {
         return this._timestamp === other._timestamp;
@@ -422,39 +423,39 @@ const Comparison = {
     },
 
     isWeekday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) !== 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) !== Constants.Friday;
     },
 
     isWeekend () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Friday;
     },
 
     isSaturday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 1;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Saturday;
     },
     
     isSunday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 2;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Sunday;
     },
     
     isMonday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 3;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Monday;
     },
     
     isTuesday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 4;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Tuesday;
     },
     
     isWednesday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 5;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Wednesday;
     },
     
     isThursday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 6;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Thursday;
     },
     
     isFriday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Friday;
     },
 
     isYesterday () {
@@ -506,7 +507,7 @@ const Difference = {
         const diffInDays = diffInSeconds / Constants.DayInSeconds;
 
         const years = parseInt(diffInDays) / Constants.YearInDays;
-        const months = parseInt(diffInDays) / Constants.MonthInDays
+        const months = parseInt(diffInDays) / Constants.MonthInDays;
         const days = this.diffInDays(instance) % Constants.MonthInDays;
         const hours = this.diffInHours(instance) % Constants.HoursPerDay;
         const minutes = this.diffInMinutes(instance) % Constants.MinutesPerHour;
@@ -1355,13 +1356,13 @@ class SimpleDateFormat extends DateFormat {
 
 const Constants = {
 	J1970: 2440587.5, // Julian date at Unix epoch: 1970-01-01
-	SATURDAY: 1,
-	Sunday: 2,
-	Monday: 3,
-	Tuesday: 4,
-	Wednesday: 5,
-	Thursday: 6,
-	Friday: 7,
+	Saturday: 0,
+	Sunday: 1,
+	Monday: 2,
+	Tuesday: 3,
+	Wednesday: 4,
+	Thursday: 5,
+	Friday: 6,
 	YearsPerCentury: 100,
 	YearsPerDecade: 10,
 	MonthsPerYear: 12,
