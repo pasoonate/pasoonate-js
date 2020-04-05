@@ -85,3 +85,61 @@ let datetime = now.jalali('1398/02/01 20:00:00').gregorian().getDateTime();
 - subMinute(count)
 - subSecond(count)
 
+## Modifier Methods
+
+### Start Of Day
+Set time `00:00:00` of the day.
+
+```
+    today.jalali('1399/01/15 11:22:00').startOfDay().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/01/15 00:00:00
+```
+### End Of Day
+Set time `23:59:59` of the day.
+
+```
+    today.jalali('1399/01/15 11:22:00').endOfDay().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/01/15 23:59:59
+```
+### Start Of Month
+Set day to 1 of the month and set time as `00:00:00`.
+
+```
+    today.jalali('1399/01/15 11:22:00').startOfMonth().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/01/01 00:00:00
+```
+### End Of Month
+Set day to latest day of the month and set time as `23:59:59`.
+
+```
+    today.jalali('1399/01/15 11:22:00').endOfMonth().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/01/31 23:59:59
+```
+### Start Of Year
+Sets the day and the month to 1 of the year and set time as `00:00:00`.
+
+```
+    today.jalali('1399/01/15 11:22:00').startOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/01/01 00:00:00
+```
+### End Of Year
+Set day to latest day of the year and set time as `23:59:59`.
+
+```
+    today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/12/30 23:59:59
+```
+### Start Of Week
+Sets the Saturday of the same week and set time as `00:00:00`.
+
+```
+    today.jalali('1399/01/15 11:22:00').startOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/01/09 00:00:00
+```
+### End Of Week
+Set the Friday of the same week and set time as `23:59:59`.
+
+```
+    today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+    // 1399/01/15 23:59:59
+```
