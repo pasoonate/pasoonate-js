@@ -7,7 +7,7 @@ const Difference = {
         const diffInDays = diffInSeconds / Constants.DayInSeconds;
 
         const years = parseInt(diffInDays) / Constants.YearInDays;
-        const months = parseInt(diffInDays) / Constants.MonthInDays
+        const months = parseInt(diffInDays) / Constants.MonthInDays;
         const days = this.diffInDays(instance) % Constants.MonthInDays;
         const hours = this.diffInHours(instance) % Constants.HoursPerDay;
         const minutes = this.diffInMinutes(instance) % Constants.MinutesPerHour;

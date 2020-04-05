@@ -1,3 +1,4 @@
+import Constants from '../Constants';
 
 const Comparison = {
     equal (other) {
@@ -33,39 +34,39 @@ const Comparison = {
     },
 
     isWeekday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) !== 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) !== Constants.Friday;
     },
 
     isWeekend () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Friday;
     },
 
     isSaturday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 1;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Saturday;
     },
     
     isSunday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 2;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Sunday;
     },
     
     isMonday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 3;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Monday;
     },
     
     isTuesday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 4;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Tuesday;
     },
     
     isWednesday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 5;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Wednesday;
     },
     
     isThursday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 6;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Thursday;
     },
     
     isFriday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Friday;
     },
 
     isYesterday () {
