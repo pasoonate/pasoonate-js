@@ -72,18 +72,66 @@ let datetime = now.jalali('1398/02/01 20:00:00').gregorian().getDateTime();
 
 ## Addition and Substraction Methods
 
-- addYear(count)
-- addMonth(count)
-- addDay(count)
-- addHour(count)
-- addMinute(count)
-- addSecond(count)
-- subYear(count)
-- subMonth(count)
-- subDay(count)
-- subHour(count)
-- subMinute(count)
-- subSecond(count)
+### Add Year
+```
+today.jalali('1399/01/15 11:22:00').addYear(1).format('yyyy/MM/dd hh:mm:ss'); 
+// 1400/01/15 11:22:00
+```
+### Add Month
+```
+today.jalali().addMonth(1).format('yyyy/MM/dd hh:mm:ss'); 
+// 1400/02/15 11:22:00
+```
+### Add Day
+```
+today.jalali().addDay(3).format('yyyy/MM/dd hh:mm:ss'); 
+// 1400/02/18 11:22:00
+```
+### Add Hour
+```
+today.jalali().addHour(4).format('yyyy/MM/dd hh:mm:ss'); 
+// 1400/02/18 15:22:00
+```
+### Add Minute
+```
+today.jalali().addMinute(2).format('yyyy/MM/dd hh:mm:ss'); 
+// 1400/02/18 15:24:00
+```
+### Add Second
+```
+today.jalali().addSecond(35).format('yyyy/MM/dd hh:mm:ss'); 
+// 1400/02/18 15:24:35
+```
+### Sub Year
+```
+today.jalali().subYear(1).format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/02/18 15:24:35
+```
+### Sub Month
+```
+today.jalali().subMonth(1).format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/18 15:24:35
+```
+### Sub Day
+```
+today.jalali().subDay(3).format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 15:24:35
+```
+### Sub Hour
+```
+today.jalali().subHour(4).format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 11:24:35
+```
+### Sub Minute
+```
+today.jalali().subMinute(2).format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 11:22:35
+```
+### Sub Second
+```
+today.jalali().subSecond(35).format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 11:22:00
+```
 
 ## Modifier Methods
 
@@ -91,55 +139,55 @@ let datetime = now.jalali('1398/02/01 20:00:00').gregorian().getDateTime();
 Set time `00:00:00` of the day.
 
 ```
-    today.jalali('1399/01/15 11:22:00').startOfDay().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/01/15 00:00:00
+today.jalali('1399/01/15 11:22:00').startOfDay().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 00:00:00
 ```
 ### End Of Day
 Set time `23:59:59` of the day.
 
 ```
-    today.jalali('1399/01/15 11:22:00').endOfDay().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/01/15 23:59:59
+today.jalali('1399/01/15 11:22:00').endOfDay().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 23:59:59
 ```
 ### Start Of Month
 Set day to 1 of the month and set time as `00:00:00`.
 
 ```
-    today.jalali('1399/01/15 11:22:00').startOfMonth().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/01/01 00:00:00
+today.jalali('1399/01/15 11:22:00').startOfMonth().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/01 00:00:00
 ```
 ### End Of Month
 Set day to latest day of the month and set time as `23:59:59`.
 
 ```
-    today.jalali('1399/01/15 11:22:00').endOfMonth().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/01/31 23:59:59
+today.jalali('1399/01/15 11:22:00').endOfMonth().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/31 23:59:59
 ```
 ### Start Of Year
 Sets the day and the month to 1 of the year and set time as `00:00:00`.
 
 ```
-    today.jalali('1399/01/15 11:22:00').startOfYear().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/01/01 00:00:00
+today.jalali('1399/01/15 11:22:00').startOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/01 00:00:00
 ```
 ### End Of Year
 Set day to latest day of the year and set time as `23:59:59`.
 
 ```
-    today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/12/30 23:59:59
+today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/12/30 23:59:59
 ```
 ### Start Of Week
 Sets the Saturday of the same week and set time as `00:00:00`.
 
 ```
-    today.jalali('1399/01/15 11:22:00').startOfYear().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/01/09 00:00:00
+today.jalali('1399/01/15 11:22:00').startOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/09 00:00:00
 ```
 ### End Of Week
 Set the Friday of the same week and set time as `23:59:59`.
 
 ```
-    today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
-    // 1399/01/15 23:59:59
+today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 23:59:59
 ```
