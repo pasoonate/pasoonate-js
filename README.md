@@ -148,6 +148,20 @@ Set time `23:59:59` of the day.
 today.jalali('1399/01/15 11:22:00').endOfDay().format('yyyy/MM/dd hh:mm:ss'); 
 // 1399/01/15 23:59:59
 ```
+### Start Of Week
+Sets the Saturday of the same week and set time as `00:00:00`.
+
+```js
+today.jalali('1399/01/15 11:22:00').startOfWeek().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/09 00:00:00
+```
+### End Of Week
+Set the Friday of the same week and set time as `23:59:59`.
+
+```js
+today.jalali('1399/01/15 11:22:00').endOfWeek().format('yyyy/MM/dd hh:mm:ss'); 
+// 1399/01/15 23:59:59
+```
 ### Start Of Month
 Set day to 1 of the month and set time as `00:00:00`.
 
@@ -175,18 +189,4 @@ Set day to latest day of the year and set time as `23:59:59`.
 ```js
 today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
 // 1399/12/30 23:59:59
-```
-### Start Of Week
-Sets the Saturday of the same week and set time as `00:00:00`.
-
-```js
-today.jalali('1399/01/15 11:22:00').startOfYear().format('yyyy/MM/dd hh:mm:ss'); 
-// 1399/01/09 00:00:00
-```
-### End Of Week
-Set the Friday of the same week and set time as `23:59:59`.
-
-```js
-today.jalali('1399/01/15 11:22:00').endOfYear().format('yyyy/MM/dd hh:mm:ss'); 
-// 1399/01/15 23:59:59
 ```
