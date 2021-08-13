@@ -1150,8 +1150,9 @@ class ShiaCalendar extends Calendar {
 
         julianDay += dayOfYear;
         julianDay += (year - 1) * Constants.DaysOfShiaYear;
-        julianDay += Math.floor(((11 * year) + 3) / 30);
+        julianDay += Math.floor(((11 * year) + 14) / 30);
         julianDay += this.ShiaEpoch - (year === 1440 ? 2 : 1);
+        
 		return this.addTimeToJulianDay(julianDay, hour, minute, second);
 	}
 
@@ -1162,7 +1163,7 @@ class ShiaCalendar extends Calendar {
 
         let year = Math.floor((((julianDay - this.ShiaEpoch) * 30) + 10646) / 10631);
         let month = Math.min(12, Math.ceil((julianDay - (29 + this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second)))) / 29.5) + 1);
-        let dayOfYear = julianDay - this.julianDayWithoutTime(this.dateToJulianDay(year - 1, 12, this.daysInMonth(year - 1, 12), time.hour, time.minute, time.second));
+        let dayOfYear = julianDay - this.dateToJulianDay(year, 1, 1, 0, 0, 0) + 1;
         let days = 0;
 
         for (let i = 1; i <= 12; i++) {
@@ -1196,17 +1197,18 @@ class ShiaCalendar extends Calendar {
             1439: [29, 30, 30, 30, 30, 29, 30, 29, 29, 30, 29, 29],
             1440: [30, 29, 30, 30, 30, 29, 30, 29, 30, 29, 30, 29],
             1441: [29, 30, 29, 30, 30, 29, 30, 30, 29, 30, 29, 30],
-            1442: [29, 29, 30, 29, 30, 29, 30, 30, 30, 29, 30, 29]
+            1442: [29, 29, 30, 29, 30, 29, 30, 30, 29, 30, 30, 29],
+            1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30]
         };
 
         if (month < 1 || month > 12) {
             throw new RangeException("$month Out Of Range Exception");
         }
-
+        
         if (shiaDaysInMonthInYears[year] === undefined) {
             return islamicDaysInMonth[month - 1];
         }
-
+        
         return shiaDaysInMonthInYears[year][month - 1];   	
     }
 
