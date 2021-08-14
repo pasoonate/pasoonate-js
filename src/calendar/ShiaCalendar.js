@@ -17,6 +17,7 @@ class ShiaCalendar extends Calendar {
 	dateToJulianDay (year, month, day, hour, minute, second) {
         const daysInMonth = this.daysInMonth(year, month);
         let dayOfYear = day;
+        let firstOfYear = this.julianDayFirstOfYear(year);
         let julianDay = 0;
 
         if(day > daysInMonth) {
@@ -30,9 +31,15 @@ class ShiaCalendar extends Calendar {
         }
 
         julianDay += dayOfYear;
-        julianDay += (year - 1) * Constants.DaysOfShiaYear;
-        julianDay += Math.floor(((11 * year) + 14) / 30);
-        julianDay += this.ShiaEpoch - (year === 1440 ? 2 : 1);
+        
+        if(firstOfYear) {
+            julianDay += firstOfYear - 1;
+        }
+        else {
+            julianDay += (year - 1) * Constants.DaysOfShiaYear;
+            julianDay += Math.floor(((11 * year) + 14) / 30);
+            julianDay += this.ShiaEpoch - (year === 1440  ? 2 : 1);
+        }
         
 		return this.addTimeToJulianDay(julianDay, hour, minute, second);
 	}
@@ -93,8 +100,25 @@ class ShiaCalendar extends Calendar {
         return shiaDaysInMonthInYears[year][month - 1];   	
     }
 
+    julianDayFirstOfYear(year) {
+        let julianDays = {
+            1435: 2456601.5, 
+            1436: 2456956.5,
+            1437: 2457310.5,
+            1438: 2457664.5,
+            1439: 2458018.5,
+            1440: 2458372.5,
+            1441: 2458727.5,
+            1442: 2459082.5,
+            1443: 2459436.5
+        };
+
+        return julianDays[year];
+    }
+
     isLeap (year) {
         let isLeap = (((year * 11) + 14) % 30) < 11;
+
 		return isLeap;
 	}
 }
