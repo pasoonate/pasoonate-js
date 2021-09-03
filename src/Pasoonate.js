@@ -3,7 +3,7 @@ import Localization from './Localization';
 import DateFormat from './formatter/DateFormat';
 import SimpleDateFormat from './formatter/SimpleDateFormat';
 import CalendarManager from './calendar/CalendarManager';
-
+import fa from './lang/fa';
 class Pasoonate {
 
 	constructor () {
@@ -52,5 +52,7 @@ Object.defineProperty(Pasoonate, 'formatter', {
     writable: true,
     configurable: false
 });
+
+Pasoonate.localization.setLang('fa', fa)
 
 export default Pasoonate;

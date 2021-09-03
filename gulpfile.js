@@ -11,12 +11,12 @@ function jsBuild(){
     './src/mixin/*.js',
     './src/calendar/*.js',
     './src/formatter/*.js',
-    './src/*.js', 
-    './src/lang/*.js'
+    './src/lang/*.js',
+    './src/*.js' 
   ], {base:'./'})
     .pipe(concat('pasoonate.js'))
     .pipe(replace(regex, ''))
-    .pipe(dest('dist'))
+    .pipe(dest('browser'))
 }
 
 function jsMinify(){
@@ -24,13 +24,13 @@ function jsMinify(){
     './src/mixin/*.js',
     './src/calendar/*.js',
     './src/formatter/*.js',
-    './src/*.js', 
-    './src/lang/*.js'
+    './src/lang/*.js',
+    './src/*.js' 
   ], {base:'./'})
     .pipe(concat('pasoonate.js'))
     .pipe(replace(regex, ''))
     .pipe(minify())
-    .pipe(dest('dist'))
+    .pipe(dest('browser'))
     .pipe(rename('pasoonate.min.js'))
 }
 

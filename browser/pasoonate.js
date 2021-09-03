@@ -1382,156 +1382,7 @@ class SimpleDateFormat extends DateFormat {
 }
 
 
-const Constants = {
-	J1970: 2440587.5, // Julian date at Unix epoch: 1970-01-01
-	Saturday: 0,
-	Sunday: 1,
-	Monday: 2,
-	Tuesday: 3,
-	Wednesday: 4,
-	Thursday: 5,
-	Friday: 6,
-	YearsPerCentury: 100,
-	YearsPerDecade: 10,
-	MonthsPerYear: 12,
-	WeeksPerYear: 52,
-	DaysPerWeek: 7,
-	HoursPerDay: 24,
-	MinutesPerHour: 60,
-	SecondsPerMinute: 60,
-	HourInSeconds: 3600,
-	DayInSeconds: 86400,
-	WeekInSeconds: 604800,
-	MonthInSeconds: 2629743,
-	YearInSeconds: 31556926,
-	MonthInDays: 30.44,
-	YearInDays: 365.24,
-	ShiaEpoch: 1948439.5,
-	JalaliEpoch: 1948320.5,
-	GregorianEpoch: 1721425.5,
-	IslamicEpoch: 1948439.5,
-	DaysOfIslamicYear: 354,
-	DaysOfShiaYear: 354,
-	DaysOfJalaliYear: 365,
-	DaysOfGregorianYear: 365,
-	Gregorian: 'gregorian',
-	Jalali: 'jalali',
-	Shia: 'shia',
-	Islamic: 'islamic'
-};
-
-
-class Localization {
-
-    constructor () {
-        this._langs = {};
-        this._locale = 'fa';
-    }
-
-    setLang (name, trans) {
-        this._langs[name] = trans;
-    }
-
-    setLocale(locale) {
-        this._locale = locale || this._locale;
-    }
-
-    getLocale () {
-        return this._locale;
-    }
-
-    isLocale (locale) {
-        return this._locale === locale;
-    }
-
-    hasTransKey (key, locale) {
-        let subKeys = key.split('.');
-        if (this._langs[locale] == undefined) return false;
-        let result = this._langs[locale];
-        for (let i = 0; i < subKeys.length; i++) {
-            if (subKeys[i] in result) {
-                result = result[subKeys[i]];
-                continue;
-            }
-
-            return false;
-        }
-
-        return result;
-    }
-
-    getTrans (key, locale) {
-        let result = this.hasTransKey(key, locale);
-        return result ? result : key;
-    }
-
-    trans (key, locale) {
-        locale = locale || this._locale;
-        key = key || '';
-        return this.getTrans(key, locale);
-    }
-}
-
-
-
-
-
-
-
-
-class Pasoonate {
-
-	constructor () {
-
-	}
-
-	static make (timestamp, timezoneOffset) {
-		return new CalendarManager(timestamp, timezoneOffset);
-	}
-
-	static trans (key, locale) {
-		return Pasoonate.localization.trans(key, locale);
-	}
-
-	static setLocale (locale) {
-		Pasoonate.localization.setLocale(locale);
-	}
-
-	static getLocal () {
-		return Pasoonate.localization.getLocal();
-	}
-
-	static isLocal (locale) {
-		return Pasoonate.localization.isLocal(locale);
-	}
-
-	static setFormatter (formatter) {
-		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
-	}
-
-	static clone (instance) {
-		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
-	}
-}
-
-Object.assign(Pasoonate, Constants);
-
-Pasoonate.localization = new Localization();
-Object.defineProperty(Pasoonate, 'localization', {
-    writable: false,
-    configurable: false
-});
-
-Pasoonate.formatter = new SimpleDateFormat();
-Object.defineProperty(Pasoonate, 'formatter', {
-    writable: true,
-    configurable: false
-});
-
-
-
-
-let fa = {
+const fa = {
 	gregorian: {
 		day_name: {
             '0': 'Saturday',
@@ -1726,4 +1577,152 @@ let fa = {
 	}
 };
 
-Pasoonate.localization.setLang('fa', fa);
+
+const Constants = {
+	J1970: 2440587.5, // Julian date at Unix epoch: 1970-01-01
+	Saturday: 0,
+	Sunday: 1,
+	Monday: 2,
+	Tuesday: 3,
+	Wednesday: 4,
+	Thursday: 5,
+	Friday: 6,
+	YearsPerCentury: 100,
+	YearsPerDecade: 10,
+	MonthsPerYear: 12,
+	WeeksPerYear: 52,
+	DaysPerWeek: 7,
+	HoursPerDay: 24,
+	MinutesPerHour: 60,
+	SecondsPerMinute: 60,
+	HourInSeconds: 3600,
+	DayInSeconds: 86400,
+	WeekInSeconds: 604800,
+	MonthInSeconds: 2629743,
+	YearInSeconds: 31556926,
+	MonthInDays: 30.44,
+	YearInDays: 365.24,
+	ShiaEpoch: 1948439.5,
+	JalaliEpoch: 1948320.5,
+	GregorianEpoch: 1721425.5,
+	IslamicEpoch: 1948439.5,
+	DaysOfIslamicYear: 354,
+	DaysOfShiaYear: 354,
+	DaysOfJalaliYear: 365,
+	DaysOfGregorianYear: 365,
+	Gregorian: 'gregorian',
+	Jalali: 'jalali',
+	Shia: 'shia',
+	Islamic: 'islamic'
+};
+
+
+class Localization {
+
+    constructor () {
+        this._langs = {};
+        this._locale = 'fa';
+    }
+
+    setLang (name, trans) {
+        this._langs[name] = trans;
+    }
+
+    setLocale(locale) {
+        this._locale = locale || this._locale;
+    }
+
+    getLocale () {
+        return this._locale;
+    }
+
+    isLocale (locale) {
+        return this._locale === locale;
+    }
+
+    hasTransKey (key, locale) {
+        let subKeys = key.split('.');
+        if (this._langs[locale] == undefined) return false;
+        let result = this._langs[locale];
+        for (let i = 0; i < subKeys.length; i++) {
+            if (subKeys[i] in result) {
+                result = result[subKeys[i]];
+                continue;
+            }
+
+            return false;
+        }
+
+        return result;
+    }
+
+    getTrans (key, locale) {
+        let result = this.hasTransKey(key, locale);
+        return result ? result : key;
+    }
+
+    trans (key, locale) {
+        locale = locale || this._locale;
+        key = key || '';
+        return this.getTrans(key, locale);
+    }
+}
+
+
+
+
+
+
+
+
+class Pasoonate {
+
+	constructor () {
+
+	}
+
+	static make (timestamp, timezoneOffset) {
+		return new CalendarManager(timestamp, timezoneOffset);
+	}
+
+	static trans (key, locale) {
+		return Pasoonate.localization.trans(key, locale);
+	}
+
+	static setLocale (locale) {
+		Pasoonate.localization.setLocale(locale);
+	}
+
+	static getLocal () {
+		return Pasoonate.localization.getLocal();
+	}
+
+	static isLocal (locale) {
+		return Pasoonate.localization.isLocal(locale);
+	}
+
+	static setFormatter (formatter) {
+		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
+	}
+
+	static clone (instance) {
+		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
+	}
+}
+
+Object.assign(Pasoonate, Constants);
+
+Pasoonate.localization = new Localization();
+Object.defineProperty(Pasoonate, 'localization', {
+    writable: false,
+    configurable: false
+});
+
+Pasoonate.formatter = new SimpleDateFormat();
+Object.defineProperty(Pasoonate, 'formatter', {
+    writable: true,
+    configurable: false
+});
+
+Pasoonate.localization.setLang('fa', fa)
+
