@@ -22,7 +22,7 @@ const Comparison = {
     },
 
     between (value1, value2) {
-        return value1 <= this._timestamp && value2._timestamp >= this._timestamp;
+        return value1._timestamp <= this._timestamp && value2._timestamp >= this._timestamp;
     },
 
     min (other) {
