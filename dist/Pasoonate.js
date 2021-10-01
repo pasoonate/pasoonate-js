@@ -15,6 +15,10 @@ var _SimpleDateFormat = _interopRequireDefault(require("./formatter/SimpleDateFo
 
 var _CalendarManager = _interopRequireDefault(require("./calendar/CalendarManager"));
 
+var _SimpleParser = _interopRequireDefault(require("./parser/SimpleParser"));
+
+var _Parser = _interopRequireDefault(require("./parser/Parser"));
+
 var _fa = _interopRequireDefault(require("./lang/fa"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -46,20 +50,36 @@ var Pasoonate = /*#__PURE__*/function () {
       Pasoonate.localization.setLocale(locale);
     }
   }, {
-    key: "getLocal",
-    value: function getLocal() {
-      return Pasoonate.localization.getLocal();
+    key: "getLocale",
+    value: function getLocale() {
+      return Pasoonate.localization.getLocale();
     }
   }, {
-    key: "isLocal",
-    value: function isLocal(locale) {
-      return Pasoonate.localization.isLocal(locale);
+    key: "isLocale",
+    value: function isLocale(locale) {
+      return Pasoonate.localization.isLocale(locale);
     }
   }, {
     key: "setFormatter",
     value: function setFormatter(formatter) {
       Pasoonate.formatter = formatter instanceof _DateFormat["default"] ? formatter : new _SimpleDateFormat["default"]();
     }
+    /**
+     * 
+     * @param {Parser} parser 
+     */
+
+  }, {
+    key: "setParser",
+    value: function setParser(parser) {
+      Pasoonate.parsers.push(parser);
+    }
+    /**
+     *
+     * @param {CalendarManager} instance 
+     * @param {CalendarManager}
+     */
+
   }, {
     key: "clone",
     value: function clone(instance) {
@@ -79,6 +99,11 @@ Object.defineProperty(Pasoonate, 'localization', {
 Pasoonate.formatter = new _SimpleDateFormat["default"]();
 Object.defineProperty(Pasoonate, 'formatter', {
   writable: true,
+  configurable: false
+});
+Pasoonate.parsers = [_SimpleParser["default"]];
+Object.defineProperty(Pasoonate, 'parsers', {
+  writable: false,
   configurable: false
 });
 Pasoonate.localization.setLang('fa', _fa["default"]);
