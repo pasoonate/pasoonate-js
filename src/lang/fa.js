@@ -1,6 +1,4 @@
-import Pasoonate from '../Pasoonate';
-
-let fa = {
+const fa = {
 	gregorian: {
 		day_name: {
             '0': 'Saturday',
@@ -195,4 +193,4 @@ let fa = {
 	}
 };
 
-Pasoonate.localization.setLang('fa', fa);
+export default fa;

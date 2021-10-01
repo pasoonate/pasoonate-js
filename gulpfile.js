@@ -1,4 +1,4 @@
-const gulp = require('gulp');
+const { src, dest, series, watch } = require('gulp');
 const concat = require('gulp-concat');
 const minify = require('gulp-minify');
 const rename = require('gulp-rename');
@@ -6,42 +6,41 @@ const replace = require('gulp-replace');
  
 const regex = /^(import|export).*;{1}$/gm;
 
-gulp.task('js-build', function(){
-  return gulp.src([
+function jsBuild(){
+  return src([
     './src/mixin/*.js',
     './src/calendar/*.js',
     './src/formatter/*.js',
     './src/parser/*.js',
-    './src/*.js', 
-    './src/lang/*.js'
+    './src/lang/*.js',
+    './src/*.js' 
   ], {base:'./'})
     .pipe(concat('pasoonate.js'))
     .pipe(replace(regex, ''))
-    .pipe(gulp.dest('dist'))
-});
+    .pipe(dest('browser'))
+}
 
-gulp.task('js-minify', function(){
-  return gulp.src([
+function jsMinify(){
+  return src([
     './src/mixin/*.js',
     './src/calendar/*.js',
     './src/formatter/*.js',
     './src/parser/*.js',
-    './src/*.js', 
-    './src/lang/*.js'
+    './src/lang/*.js',
+    './src/*.js'
   ], {base:'./'})
     .pipe(concat('pasoonate.js'))
     .pipe(replace(regex, ''))
     .pipe(minify())
-    .pipe(gulp.dest('dist'))
+    .pipe(dest('browser'))
     .pipe(rename('pasoonate.min.js'))
-});
+}
 
-gulp.task('default', ['js-minify']);
+function watching() {
+  watch('./src', null, series(jsMinify));
+}
 
-gulp.task('minify', ['js-minify']);
-
-gulp.task('build', ['js-build']);
- 
-gulp.task('watch', function () {
-  gulp.watch('./src/**/*.*', ['js-build']);
-});
+exports.minify = jsMinify;
+exports.build = jsBuild;
+exports.default = series(jsMinify);
+exports.watch = watching;

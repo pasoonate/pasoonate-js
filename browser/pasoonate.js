@@ -1,45 +1,61 @@
-const AdditionAndSubtractionMixin = {
+const AdditionAndSubtraction = {
 	addYear(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
-		let timestamp = this._currentCalendar.dateToTimestamp(date.year + count, date.month, date.day, date.hour, date.minute, date.second);
+		let year = date.year + count;
+		let daysInMonth = this._currentCalendar.daysInMonth(year, date.month);
+		let day = date.day <= daysInMonth ? date.day : daysInMonth;
+		let timestamp = this._currentCalendar.dateToTimestamp(year, date.month, day, date.hour, date.minute, date.second);
 		this._timestamp = timestamp - this._timezoneOffset;
+
 		return this;
 	},
 
 	addMonth(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		let totalMonth = date.month + count;
-		let year = date.year + Math.floor(totalMonth / 12);
-		let month = totalMonth % 12;
-		let timestamp = this._currentCalendar.dateToTimestamp(year, month, date.day, date.hour, date.minute, date.second);
+		let year = date.year + Math.ceil((totalMonth / 12) - 1);
+		let month = (totalMonth % 12) === 0 ? 12 : (totalMonth % 12);
+		let daysInMonth = this._currentCalendar.daysInMonth(year, month);
+		let day = date.day <= daysInMonth ? date.day : daysInMonth;
+		let timestamp = this._currentCalendar.dateToTimestamp(year, month, day, date.hour, date.minute, date.second);
+
 		this._timestamp = timestamp - this._timezoneOffset;
+
 		return this;
 	},
 
 	addDay(count) {
 		this._timestamp += (count * 86400);
+
 		return this;
 	},
 
 	addHour(count) {
 		this._timestamp += (count * 3600);
+
 		return this;
 	},
 
 	addMinute(count) {
 		this._timestamp += (count * 60);
+
 		return this;
 	},
 
 	addSecond(count) {
 		this._timestamp += count;
+
 		return this;
 	},
 
 	subYear(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
-		let timestamp = this._currentCalendar.dateToTimestamp(date.year - count, date.month, date.day, date.hour, date.minute, date.second);
+		let year = date.year - count;
+		let daysInMonth = this._currentCalendar.daysInMonth(year, date.month);
+		let day = date.day <= daysInMonth ? date.day : daysInMonth;
+		let timestamp = this._currentCalendar.dateToTimestamp(year, date.month, day, date.hour, date.minute, date.second);
 		this._timestamp = timestamp - this._timezoneOffset;
+
 		return this;
 	},
 
@@ -55,34 +71,41 @@ const AdditionAndSubtractionMixin = {
 			month = 12 - (totalMonth % 12);
 		}
 
-		let timestamp = this._currentCalendar.dateToTimestamp(year, month, date.day, date.hour, date.minute, date.second);
+		let daysInMonth = this._currentCalendar.daysInMonth(year, month);
+		let day = date.day <= daysInMonth ? date.day : daysInMonth;
+		let timestamp = this._currentCalendar.dateToTimestamp(year, month, day, date.hour, date.minute, date.second);
 		this._timestamp = timestamp - this._timezoneOffset;
+
 		return this;
 	},
 
 	subDay(count) {
 		this._timestamp -= (count * 86400);
+
 		return this;
 	},
 
 	subHour(count) {
 		this._timestamp -= (count * 3600);
+
 		return this;
 	},
 
 	subMinute(count) {
 		this._timestamp -= (count * 60);
+
 		return this;
 	},
 
 	subSecond(count) {
 		this._timestamp -= count;
+
 		return this;
 	}
 };
 
 
-const BaseMethodsMixin = {
+const Base = {
 	setTimestamp (timestamp) {
 		this._timestamp = timestamp;
 
@@ -365,7 +388,8 @@ const BaseMethodsMixin = {
 
 
 
-const ComparisonMethodsMixin = {
+
+const Comparison = {
     equal (other) {
         return this._timestamp === other._timestamp;
     },
@@ -399,39 +423,39 @@ const ComparisonMethodsMixin = {
     },
 
     isWeekday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) !== 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) !== Constants.Friday;
     },
 
     isWeekend () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Friday;
     },
 
     isSaturday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 1;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Saturday;
     },
     
     isSunday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 2;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Sunday;
     },
     
     isMonday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 3;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Monday;
     },
     
     isTuesday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 4;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Tuesday;
     },
     
     isWednesday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 5;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Wednesday;
     },
     
     isThursday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 6;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Thursday;
     },
     
     isFriday () {
-        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === 7;
+        return this._currentCalendar.dayOfWeek(this._timestamp + this._timezoneOffset) === Constants.Friday;
     },
 
     isYesterday () {
@@ -475,82 +499,152 @@ const ComparisonMethodsMixin = {
 
 
 
-const DifferenceMethodsMixin = {
-    diff (secondInstance) {
-        let diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
 
-        const years = Math.floor(diffInSeconds / 31536000); // Constants.DaysOfJalaliYear * 24 * 60 * 60
-        diffInSeconds %= 31536000;
-        const months = Math.floor(diffInSeconds / 2592000); // 30 * 24 * 60 * 60
-        diffInSeconds %= 2592000;
-        const days = Math.floor(diffInSeconds / 86400); // 24 * 60 * 60
-        diffInSeconds %= 86400;
-        const hours = Math.floor(diffInSeconds / 3600); // 60 * 60
-        diffInSeconds %= 3600;
-        const minutes = Math.floor(diffInSeconds / 60);
-        diffInSeconds %= 60;
-        const seconds = diffInSeconds;
+
+const Difference = {
+    diff (instance) {
+        const diffInSeconds = this.diffInSeconds(instance);
+        const diffInDays = diffInSeconds / Constants.DayInSeconds;
+
+        const years = parseInt(diffInDays) / Constants.YearInDays;
+        const months = parseInt(diffInDays) / Constants.MonthInDays;
+        const days = this.diffInDays(instance) % Constants.MonthInDays;
+        const hours = this.diffInHours(instance) % Constants.HoursPerDay;
+        const minutes = this.diffInMinutes(instance) % Constants.MinutesPerHour;
+        const seconds = diffInSeconds % Constants.SecondsPerMinute;
 
         const diff = {
-            years: years,
-            months: months,
-            days: days,
-            hours: hours,
-            minutes: minutes,
-            seconds: seconds
+            years: parseInt(years),
+            months: parseInt(months),
+            days: parseInt(days),
+            hours: parseInt(hours),
+            minutes: parseInt(minutes),
+            seconds: parseInt(seconds)
         };
 
         return diff;
     },
 
-    diffInSeconds (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInSeconds (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
 
         return diffInSeconds;
     },
 
-    diffInMinutes (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMinutes = diffInSeconds >= 60 ? Math.floor(diffInSeconds / 60) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInMinutes (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInMinutes = diffInSeconds >= Constants.SecondsPerMinute ? parseInt(diffInSeconds / Constants.SecondsPerMinute) : 0;
 
         return diffInMinutes;
     },
 
-    diffInHours (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInHours = diffInSeconds >= 3600 ? Math.floor(diffInSeconds / 3600) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInHours (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInHours = diffInSeconds >= Constants.HourInSeconds ? parseInt(diffInSeconds / Constants.HourInSeconds) : 0;
 
         return diffInHours;
     },
 
-    diffInDays (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInDays = diffInSeconds >= 86400 ? Math.floor(diffInSeconds / 86400) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInDays (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInDays = diffInSeconds >= Constants.DayInSeconds ? parseInt(diffInSeconds / Constants.DayInSeconds) : 0;
 
         return diffInDays;
     },
 
-    diffInMonths (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInMonths = diffInSeconds >= 2592000 ? Math.floor(diffInSeconds / 2592000) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInMonths (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInMonths = diffInSeconds >= Constants.MonthInSeconds ? parseInt(diffInSeconds / Constants.MonthInSeconds) : 0;
 
         return diffInMonths;
     },
 
-    diffInYears (secondInstance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - secondInstance.getTimestamp());
-        const diffInYears = diffInSeconds >= 31536000 ? Math.floor(diffInSeconds / 31536000) : 0;
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Number}
+     */
+    diffInYears (instance) {
+        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
+        const diffInYears = diffInSeconds >= Constants.YearInSeconds ? parseInt(diffInSeconds / Constants.YearInSeconds) : 0;
 
         return diffInYears;
     }
 };
 
 
+
+const Modifiers = {
+    
+    startOfDay() {
+        return this.setTime(0, 0, 0);
+    },
+    
+    endOfDay() {
+        return this.setTime(23, 59, 59);
+    },
+    
+    startOfMonth() {
+        return this.setDay(1).startOfDay();
+    },
+    
+    endOfMonth() {
+        return this.setDay(this._currentCalendar.daysInMonth(this.getYear(), this.getMonth())).endOfDay();
+    },
+
+    startOfYear() {
+        return this.setMonth(1).startOfMonth();
+    },
+
+    endOfYear() {
+        return this.setMonth(12).endOfMonth();
+    },
+
+    startOfWeek() {
+        const daysToSaturday = this.dayOfWeek();
+
+        return this.subDay(daysToSaturday).startOfDay();
+    },
+
+    endOfWeek() {
+        const daysToFriday = 6 - this.dayOfWeek();
+
+        return this.addDay(daysToFriday).endOfDay();
+    }
+};
+
+
+
+
 class Calendar {
 	
 	constructor () {
 		this.J1970 = 2440587.5;			// Julian date at Unix epoch: 1970-01-01
-        this.DayInSecond = 86400;
         this.name = '';
     }
     
@@ -559,7 +653,7 @@ class Calendar {
     }
 
 	timestampToJulianDay (timestamp) {
-        let julianDay =  timestamp / this.DayInSecond + this.J1970;
+        let julianDay =  timestamp / Constants.DayInSeconds + this.J1970;
         
         let julianDayFloatRounded = Math.round((julianDay - Math.floor(julianDay)) * 10000000) / 10000000;
 
@@ -567,7 +661,7 @@ class Calendar {
 	}
 
 	julianDayToTimestamp (julianDay) {
-		let timestamp = Math.round((julianDay - this.J1970) * this.DayInSecond);
+		let timestamp = Math.round((julianDay - this.J1970) * Constants.DayInSeconds);
 		
 		return timestamp;
     }
@@ -581,7 +675,7 @@ class Calendar {
         julianDay += 0.5;
 
         // Astronomical to civil
-        let time = Math.floor((julianDay - Math.floor(julianDay)) * this.DayInSecond);
+        let time = Math.floor((julianDay - Math.floor(julianDay)) * Constants.DayInSeconds);
 
         return {
         	"hour": Math.floor(time / 3600),
@@ -704,7 +798,7 @@ class CalendarManager {
 		this._formatter = Pasoonate.formatter;
 
 		let date = new Date();
-		this._timestamp = timestamp || (Math.floor(date.getTime() / 1000) - (-date.getTimezoneOffset() * 60)); // millisecond to seconds
+		this._timestamp = timestamp || (Math.floor(date.getTime() / 1000)); // millisecond to seconds
 		this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
 	}
 
@@ -780,10 +874,11 @@ class CalendarManager {
 	}
 }
 
-Object.assign(CalendarManager.prototype, BaseMethodsMixin);
-Object.assign(CalendarManager.prototype, AdditionAndSubtractionMixin);
-Object.assign(CalendarManager.prototype, DifferenceMethodsMixin);
-Object.assign(CalendarManager.prototype, ComparisonMethodsMixin);
+Object.assign(CalendarManager.prototype, Base);
+Object.assign(CalendarManager.prototype, AdditionAndSubtraction);
+Object.assign(CalendarManager.prototype, Difference);
+Object.assign(CalendarManager.prototype, Comparison);
+Object.assign(CalendarManager.prototype, Modifiers);
 
 
 
@@ -1025,6 +1120,7 @@ class JalaliCalendar extends Calendar {
 
 
 
+
 class ShiaCalendar extends Calendar {
 	
 	constructor () {
@@ -1041,6 +1137,7 @@ class ShiaCalendar extends Calendar {
 	dateToJulianDay (year, month, day, hour, minute, second) {
         const daysInMonth = this.daysInMonth(year, month);
         let dayOfYear = day;
+        let firstOfYear = this.julianDayFirstOfYear(year);
         let julianDay = 0;
 
         if(day > daysInMonth) {
@@ -1054,9 +1151,16 @@ class ShiaCalendar extends Calendar {
         }
 
         julianDay += dayOfYear;
-        julianDay += (year - 1) * Constants.DaysOfShiaYear;
-        julianDay += Math.floor(((11 * year) + 3) / 30);
-        julianDay += this.ShiaEpoch - (year === 1440 ? 2 : 1);
+        
+        if(firstOfYear) {
+            julianDay += firstOfYear - 1;
+        }
+        else {
+            julianDay += (year - 1) * Constants.DaysOfShiaYear;
+            julianDay += Math.floor(((11 * year) + 14) / 30);
+            julianDay += this.ShiaEpoch - (year === 1440  ? 2 : 1);
+        }
+        
 		return this.addTimeToJulianDay(julianDay, hour, minute, second);
 	}
 
@@ -1067,7 +1171,7 @@ class ShiaCalendar extends Calendar {
 
         let year = Math.floor((((julianDay - this.ShiaEpoch) * 30) + 10646) / 10631);
         let month = Math.min(12, Math.ceil((julianDay - (29 + this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second)))) / 29.5) + 1);
-        let dayOfYear = julianDay - this.julianDayWithoutTime(this.dateToJulianDay(year - 1, 12, this.daysInMonth(year - 1, 12), time.hour, time.minute, time.second));
+        let dayOfYear = julianDay - this.dateToJulianDay(year, 1, 1, 0, 0, 0) + 1;
         let days = 0;
 
         for (let i = 1; i <= 12; i++) {
@@ -1100,22 +1204,41 @@ class ShiaCalendar extends Calendar {
             1438: [29, 30, 30, 30, 29, 30, 29, 29, 30, 29, 29, 30],
             1439: [29, 30, 30, 30, 30, 29, 30, 29, 29, 30, 29, 29],
             1440: [30, 29, 30, 30, 30, 29, 30, 29, 30, 29, 30, 29],
-            1441: [29, 30, 29, 30, 30, 29, 30, 29, 30, 29, 30, 29],
+            1441: [29, 30, 29, 30, 30, 29, 30, 30, 29, 30, 29, 30],
+            1442: [29, 29, 30, 29, 30, 29, 30, 30, 29, 30, 30, 29],
+            1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30]
         };
 
         if (month < 1 || month > 12) {
             throw new RangeException("$month Out Of Range Exception");
         }
-
+        
         if (shiaDaysInMonthInYears[year] === undefined) {
             return islamicDaysInMonth[month - 1];
         }
-
+        
         return shiaDaysInMonthInYears[year][month - 1];   	
+    }
+
+    julianDayFirstOfYear(year) {
+        let julianDays = {
+            1435: 2456601.5, 
+            1436: 2456956.5,
+            1437: 2457310.5,
+            1438: 2457664.5,
+            1439: 2458018.5,
+            1440: 2458372.5,
+            1441: 2458727.5,
+            1442: 2459082.5,
+            1443: 2459436.5
+        };
+
+        return julianDays[year];
     }
 
     isLeap (year) {
         let isLeap = (((year * 11) + 14) % 30) < 11;
+
 		return isLeap;
 	}
 }
@@ -1223,10 +1346,10 @@ class SimpleDateFormat extends DateFormat {
 					categories[i] = this.getCalendar().getMonth();
 				break;
 				case FullDayName:
-					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.short_day_name.${this.getCalendar().getDay()}`);
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.day_name.${this.getCalendar().dayOfWeek()}`);
 				break;
 				case ShortDayName:
-					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.day_name.${this.getCalendar().getDay()}`);
+					categories[i] = Pasoonate.trans(`${this.getCalendar().name()}.short_day_name.${this.getCalendar().dayOfWeek()}`);
 				break;
 				case FullDay:
 					categories[i] = this.getCalendar().getDay() > 9 ? this.getCalendar().getDay() : `0${this.getCalendar().getDay()}`;
@@ -1260,6 +1383,7 @@ class SimpleDateFormat extends DateFormat {
 }
 
 
+<<<<<<< HEAD:dist/pasoonate.js
 
 
 
@@ -1500,6 +1624,9 @@ Object.defineProperty(Pasoonate, 'parsers', {
 
 
 let fa = {
+=======
+const fa = {
+>>>>>>> master:browser/pasoonate.js
 	gregorian: {
 		day_name: {
             '0': 'Saturday',
@@ -1694,4 +1821,152 @@ let fa = {
 	}
 };
 
-Pasoonate.localization.setLang('fa', fa);
+
+const Constants = {
+	J1970: 2440587.5, // Julian date at Unix epoch: 1970-01-01
+	Saturday: 0,
+	Sunday: 1,
+	Monday: 2,
+	Tuesday: 3,
+	Wednesday: 4,
+	Thursday: 5,
+	Friday: 6,
+	YearsPerCentury: 100,
+	YearsPerDecade: 10,
+	MonthsPerYear: 12,
+	WeeksPerYear: 52,
+	DaysPerWeek: 7,
+	HoursPerDay: 24,
+	MinutesPerHour: 60,
+	SecondsPerMinute: 60,
+	HourInSeconds: 3600,
+	DayInSeconds: 86400,
+	WeekInSeconds: 604800,
+	MonthInSeconds: 2629743,
+	YearInSeconds: 31556926,
+	MonthInDays: 30.44,
+	YearInDays: 365.24,
+	ShiaEpoch: 1948439.5,
+	JalaliEpoch: 1948320.5,
+	GregorianEpoch: 1721425.5,
+	IslamicEpoch: 1948439.5,
+	DaysOfIslamicYear: 354,
+	DaysOfShiaYear: 354,
+	DaysOfJalaliYear: 365,
+	DaysOfGregorianYear: 365,
+	Gregorian: 'gregorian',
+	Jalali: 'jalali',
+	Shia: 'shia',
+	Islamic: 'islamic'
+};
+
+
+class Localization {
+
+    constructor () {
+        this._langs = {};
+        this._locale = 'fa';
+    }
+
+    setLang (name, trans) {
+        this._langs[name] = trans;
+    }
+
+    setLocale(locale) {
+        this._locale = locale || this._locale;
+    }
+
+    getLocale () {
+        return this._locale;
+    }
+
+    isLocale (locale) {
+        return this._locale === locale;
+    }
+
+    hasTransKey (key, locale) {
+        let subKeys = key.split('.');
+        if (this._langs[locale] == undefined) return false;
+        let result = this._langs[locale];
+        for (let i = 0; i < subKeys.length; i++) {
+            if (subKeys[i] in result) {
+                result = result[subKeys[i]];
+                continue;
+            }
+
+            return false;
+        }
+
+        return result;
+    }
+
+    getTrans (key, locale) {
+        let result = this.hasTransKey(key, locale);
+        return result ? result : key;
+    }
+
+    trans (key, locale) {
+        locale = locale || this._locale;
+        key = key || '';
+        return this.getTrans(key, locale);
+    }
+}
+
+
+
+
+
+
+
+
+class Pasoonate {
+
+	constructor () {
+
+	}
+
+	static make (timestamp, timezoneOffset) {
+		return new CalendarManager(timestamp, timezoneOffset);
+	}
+
+	static trans (key, locale) {
+		return Pasoonate.localization.trans(key, locale);
+	}
+
+	static setLocale (locale) {
+		Pasoonate.localization.setLocale(locale);
+	}
+
+	static getLocal () {
+		return Pasoonate.localization.getLocal();
+	}
+
+	static isLocal (locale) {
+		return Pasoonate.localization.isLocal(locale);
+	}
+
+	static setFormatter (formatter) {
+		Pasoonate.formatter = formatter instanceof DateFormat ? formatter : new SimpleDateFormat();
+	}
+
+	static clone (instance) {
+		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
+	}
+}
+
+Object.assign(Pasoonate, Constants);
+
+Pasoonate.localization = new Localization();
+Object.defineProperty(Pasoonate, 'localization', {
+    writable: false,
+    configurable: false
+});
+
+Pasoonate.formatter = new SimpleDateFormat();
+Object.defineProperty(Pasoonate, 'formatter', {
+    writable: true,
+    configurable: false
+});
+
+Pasoonate.localization.setLang('fa', fa)
+
