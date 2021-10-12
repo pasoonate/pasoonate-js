@@ -3,29 +3,33 @@ import Pasoonate from "../Pasoonate";
 
 class Parser {
 
-    /**
-     * 
-     * @param {CalendarManager} calendarManager 
-     */
-    constructor (calendarManager) {
-        this._calendarManager = calendarManager instanceof CalendarManager ? calendarManager : null;
-        this._locale = Pasoonate.getLocale();
-        this._format = '';
-    }
+    _calendar = null;
 
-    /**
-     * @returns {RegExp}
-     */
-    static pattern() {
-        return '';
-    }
-
-    /**
-     * 
-     * @param {String} datetime 
-     */
-    parse (datetime) {
+    constructor () {
         
+    }
+
+    /**
+     * @return {CalendarManager} calendar
+     */
+    get calendar() {
+        return this._calendar;
+    }
+
+    /**
+     * @param {CalendarManager} calendar 
+     */
+    set calendar(calendar) {
+        this._calendar = calendar instanceof CalendarManager ? calendar : null;
+    }
+
+    /**
+     * 
+     * @param {String} format 
+     * @param {String} text 
+     */
+    parse (format, text) {
+        //
     }
 }
 

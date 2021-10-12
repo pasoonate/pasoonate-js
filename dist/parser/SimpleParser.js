@@ -13,18 +13,6 @@ var _CalendarManager = _interopRequireDefault(require("../calendar/CalendarManag
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -45,69 +33,212 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var SimpleParser = /*#__PURE__*/function (_Parser) {
   _inherits(SimpleParser, _Parser);
 
   var _super = _createSuper(SimpleParser);
 
-  /**
-   * 
-   * @param {CalendarManager} calendarManager 
-   */
-  function SimpleParser(calendarManager) {
+  function SimpleParser() {
     _classCallCheck(this, SimpleParser);
 
-    return _super.call(this, calendarManager);
+    return _super.call(this);
   }
   /**
-   * @returns {RegExp}
+   * Translate the format to the pattern
+   * 
+   * @param {String} format
+   * 
+   * @return {Object} pattern as string and sequence as string[]
    */
 
 
   _createClass(SimpleParser, [{
-    key: "parse",
-    value:
-    /**
-     * 
-     * @param {String} datetime 
-     */
-    function parse(datetime) {
-      if (this._calendarManager && datetime) {
-        var _String$trim$split = String(datetime).trim().split(' '),
-            _String$trim$split2 = _slicedToArray(_String$trim$split, 2),
-            date = _String$trim$split2[0],
-            time = _String$trim$split2[1];
+    key: "translate",
+    value: function translate(format) {
+      var categories = {};
+      var sequence = [];
+      var prevChar = "";
+      var currChar = "";
+      var pattern = "";
+      var index = 0;
+      var patterns = new Map([[SimpleParser.FULL_YEAR, "(\d{4})"], [SimpleParser.SHORT_YEAR, "(\d{2})"], [SimpleParser.FULL_MONTH_NAME, "(\D+)"], [SimpleParser.SHORT_MONTH_NAME, "(\D+)"], [SimpleParser.FULL_MONTH, "(\d{2})"], [SimpleParser.SHORT_MONTH, "(\d{1,2})"], [SimpleParser.FULL_DAY_NAME, "(\D+)"], [SimpleParser.SHORT_DAY_NAME, "(\D+)"], [SimpleParser.FULL_DAY, "(\d{2})"], [SimpleParser.SHORT_DAY, "(\d{1,2})"], [SimpleParser.FULL_HOUR, "(\d{2})"], [SimpleParser.SHORT_HOUR, "(\d{1,2})"], [SimpleParser.FULL_MINUTE, "(\d{2})"], [SimpleParser.SHORT_MINUTE, "(\d{1,2})"], [SimpleParser.FULL_SECOND, "(\d{2})"], [SimpleParser.SHORT_SECOND, "(\d{1,2})"]]);
 
-        if (date) {
-          var _date$trim$split = date.trim().split(/[\/-]/g),
-              _date$trim$split2 = _slicedToArray(_date$trim$split, 3),
-              year = _date$trim$split2[0],
-              month = _date$trim$split2[1],
-              day = _date$trim$split2[2];
+      for (var i = 0; i < format.length; i++) {
+        currChar = format[i];
 
-          this._calendarManager.setDate(Number(year), Number(month) || 1, Number(day) || 1);
+        if (currChar === "") {
+          continue;
         }
 
-        if (time) {
-          var _time$trim$split = time.trim().split(':'),
-              _time$trim$split2 = _slicedToArray(_time$trim$split, 3),
-              hour = _time$trim$split2[0],
-              minute = _time$trim$split2[1],
-              second = _time$trim$split2[2];
+        if (currChar === prevChar) {
+          var _categories$index;
 
-          this._calendarManager.setTime(Number(hour) || 0, Number(minute) || 0, Number(second) || 0);
+          var category = (_categories$index = categories[index]) !== null && _categories$index !== void 0 ? _categories$index : "";
+          categories[index] = category + currChar;
+        } else {
+          categories[++index] = currChar;
+        }
+
+        prevChar = currChar;
+      }
+
+      for (var key in categories) {
+        var value = categories[key];
+
+        if (patterns.has(value)) {
+          categories[key] = patterns.get(value);
+          sequence.push(value);
         }
       }
+
+      pattern = Object.values(categories).join("");
+      pattern = pattern.replace("/", "\/").replace(".", "\.");
+      return {
+        pattern: pattern,
+        sequence: sequence
+      };
     }
-  }], [{
-    key: "pattern",
-    value: function pattern() {
-      return /\d{2,4}[-\/]{1}\d{1,2}[-\/]{1}\d{1,2}([ ]+\d{1,2}[:]{1}\d{1,2}[:]{1}\d{1,2}){0,1}/;
+    /**
+     * @param {String} pattern
+     * @param {String} text
+     * @param {Array} sequence
+     * 
+     * @return {Array}
+     */
+
+  }, {
+    key: "match",
+    value: function match(pattern, text, sequence) {
+      var regexp = new RegExp(pattern);
+
+      if (!regexp.test(text)) {
+        return [];
+      }
+
+      var matches = regexp.exec(text);
+      var components = {};
+
+      for (var i = 1; i < matches.length; i++) {
+        components[sequence[i - 1]] = matches[i];
+      }
+
+      return components;
+    }
+    /**
+     * 
+     * @param {String} format 
+     * @param {String} text 
+     */
+
+  }, {
+    key: "parse",
+    value: function parse(format, text) {
+      var result = this.translate(format);
+      var components = this.match(result.pattern, text, result.sequence);
+      var calendar = this.calendar;
+
+      for (var key in components) {
+        var value = components[key];
+
+        switch (key) {
+          case this.FULL_YEAR:
+          case this.SHORT_YEAR:
+            calendar.setYear(+value);
+            break;
+
+          case this.FULL_MONTH:
+          case this.SHORT_MONTH:
+            calendar.setMonth(+value);
+            break;
+
+          case this.FULL_DAY:
+          case this.SHORT_DAY:
+            calendar.setDay(+value);
+            break;
+
+          case this.FULL_HOUR:
+          case this.SHORT_HOUR:
+            calendar.setHour(+value);
+            break;
+
+          case this.FULL_MINUTE:
+          case this.SHORT_MINUTE:
+            calendar.setMinute(+value);
+            break;
+
+          case this.FULL_SECOND:
+          case this.SHORT_SECOND:
+            calendar.setSecond(+value);
+            break;
+
+          case this.FULL_MONTH_NAME:
+            names = Pasoonate.trans(calendar.name() + ".month_name");
+            month = names.indexOf(value);
+
+            if (month > 0) {
+              calendar.setMonth(month);
+            }
+
+            break;
+
+          case this.SHORT_MONTH_NAME:
+            names = Pasoonate.trans(calendar.name() + ".short_month_name");
+            month = names.indexOf(value);
+
+            if (month > 0) {
+              calendar.setMonth(month);
+            }
+
+            break;
+
+          case this.FULL_DAY_NAME:
+            // names = Pasoonate.trans(calendar.name() . ".day_name");
+            break;
+
+          case this.SHORT_DAY_NAME:
+            // names = Pasoonate.trans(calendar.name() . ".short_day_name");
+            break;
+        }
+      }
     }
   }]);
 
   return SimpleParser;
 }(_Parser2["default"]);
+
+_defineProperty(SimpleParser, "FULL_YEAR", 'yyyy');
+
+_defineProperty(SimpleParser, "SHORT_YEAR", 'yy');
+
+_defineProperty(SimpleParser, "FULL_MONTH_NAME", 'MMMM');
+
+_defineProperty(SimpleParser, "SHORT_MONTH_NAME", 'MMM');
+
+_defineProperty(SimpleParser, "FULL_MONTH", 'MM');
+
+_defineProperty(SimpleParser, "SHORT_MONTH", 'M');
+
+_defineProperty(SimpleParser, "SHORT_DAY_NAME", 'ddd');
+
+_defineProperty(SimpleParser, "FULL_DAY_NAME", 'dddd');
+
+_defineProperty(SimpleParser, "FULL_DAY", 'dd');
+
+_defineProperty(SimpleParser, "SHORT_DAY", 'd');
+
+_defineProperty(SimpleParser, "FULL_HOUR", 'HH');
+
+_defineProperty(SimpleParser, "SHORT_HOUR", 'H');
+
+_defineProperty(SimpleParser, "FULL_MINUTE", 'mm');
+
+_defineProperty(SimpleParser, "SHORT_MINUTE", 'm');
+
+_defineProperty(SimpleParser, "FULL_SECOND", 'ss');
+
+_defineProperty(SimpleParser, "SHORT_SECOND", 's');
 
 var _default = SimpleParser;
 exports["default"] = _default;

@@ -17,35 +17,40 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var Parser = /*#__PURE__*/function () {
-  /**
-   * 
-   * @param {CalendarManager} calendarManager 
-   */
-  function Parser(calendarManager) {
+  function Parser() {
     _classCallCheck(this, Parser);
 
-    this._calendarManager = calendarManager instanceof _CalendarManager["default"] ? calendarManager : null;
-    this._locale = _Pasoonate["default"].getLocale();
-    this._format = '';
+    _defineProperty(this, "_calendar", null);
   }
   /**
-   * @returns {RegExp}
+   * @return {CalendarManager} calendar
    */
 
 
   _createClass(Parser, [{
-    key: "parse",
-    value:
+    key: "calendar",
+    get: function get() {
+      return this._calendar;
+    }
+    /**
+     * @param {CalendarManager} calendar 
+     */
+    ,
+    set: function set(calendar) {
+      this._calendar = calendar instanceof _CalendarManager["default"] ? calendar : null;
+    }
     /**
      * 
-     * @param {String} datetime 
+     * @param {String} format 
+     * @param {String} text 
      */
-    function parse(datetime) {}
-  }], [{
-    key: "pattern",
-    value: function pattern() {
-      return '';
+
+  }, {
+    key: "parse",
+    value: function parse(format, text) {//
     }
   }]);
 

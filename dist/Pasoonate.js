@@ -72,7 +72,7 @@ var Pasoonate = /*#__PURE__*/function () {
   }, {
     key: "setParser",
     value: function setParser(parser) {
-      Pasoonate.parsers.push(parser);
+      Pasoonate.parser = parser instanceof _Parser["default"] ? parser : new _SimpleParser["default"]();
     }
     /**
      *
@@ -98,11 +98,11 @@ Object.defineProperty(Pasoonate, 'localization', {
 });
 Pasoonate.formatter = new _SimpleDateFormat["default"]();
 Object.defineProperty(Pasoonate, 'formatter', {
-  writable: true,
+  writable: false,
   configurable: false
 });
-Pasoonate.parsers = [_SimpleParser["default"]];
-Object.defineProperty(Pasoonate, 'parsers', {
+Pasoonate.parser = new _SimpleParser["default"]();
+Object.defineProperty(Pasoonate, 'parser', {
   writable: false,
   configurable: false
 });

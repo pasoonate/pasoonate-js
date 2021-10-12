@@ -43,6 +43,7 @@ var CalendarManager = /*#__PURE__*/function () {
     this._shia = new _ShiaCalendar["default"]();
     this._currentCalendar = null;
     this._formatter = _Pasoonate["default"].formatter;
+    this._parser = _Pasoonate["default"].parser;
     var date = new Date();
     this._timestamp = timestamp || Math.floor(date.getTime() / 1000); // millisecond to seconds
 
@@ -51,30 +52,46 @@ var CalendarManager = /*#__PURE__*/function () {
 
   _createClass(CalendarManager, [{
     key: "gregorian",
-    value: function gregorian(strDateTime) {
+    value: function gregorian(dateTime) {
       this._currentCalendar = this._gregorian;
-      this.parse(strDateTime);
+
+      if (dateTime) {
+        this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+      }
+
       return this;
     }
   }, {
     key: "jalali",
-    value: function jalali(strDateTime) {
+    value: function jalali(dateTime) {
       this._currentCalendar = this._jalali;
-      this.parse(strDateTime);
+
+      if (dateTime) {
+        this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+      }
+
       return this;
     }
   }, {
     key: "islamic",
-    value: function islamic(strDateTime) {
+    value: function islamic(dateTime) {
       this._currentCalendar = this._islamic;
-      this.parse(strDateTime);
+
+      if (dateTime) {
+        this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+      }
+
       return this;
     }
   }, {
     key: "shia",
-    value: function shia(strDateTime) {
+    value: function shia(dateTime) {
       this._currentCalendar = this._shia;
-      this.parse(strDateTime);
+
+      if (dateTime) {
+        this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+      }
+
       return this;
     }
   }, {
@@ -95,22 +112,18 @@ var CalendarManager = /*#__PURE__*/function () {
     }
     /**
      * 
-     * @param {String} expression 
+     * @param {String} pattern 
+     * @param {String} text 
+     * 
+     * @return {CalendarManager}
      */
 
   }, {
     key: "parse",
-    value: function parse(expression) {
-      var parsers = _Pasoonate["default"].parsers;
+    value: function parse(pattern, text) {
+      this._parser.calendar = this;
 
-      for (var i in parsers) {
-        var pattern = parsers[i].pattern();
-
-        if (pattern.test(expression)) {
-          new parsers[i](this).parse(expression);
-          break;
-        }
-      }
+      this._parser.parse(pattern, text);
 
       return this;
     }

@@ -17,36 +17,49 @@ class CalendarManager {
 		this._shia = new ShiaCalendar();
 		this._currentCalendar = null;
 		this._formatter = Pasoonate.formatter;
+		this._parser = Pasoonate.parser;
 
 		let date = new Date();
 		this._timestamp = timestamp || (Math.floor(date.getTime() / 1000)); // millisecond to seconds
 		this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
 	}
 
-	gregorian (strDateTime) {
+	gregorian (dateTime) {
 		this._currentCalendar = this._gregorian;
-		this.parse(strDateTime);
+		
+		if(dateTime) {
+			this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+		}
 		
 		return this;
 	}
 
-	jalali (strDateTime) {
+	jalali (dateTime) {
 		this._currentCalendar = this._jalali;
-		this.parse(strDateTime);
+		
+		if(dateTime) {
+			this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+		}
 
 		return this;
 	}
 
-	islamic (strDateTime) {
+	islamic (dateTime) {
 		this._currentCalendar = this._islamic;
-		this.parse(strDateTime);
+		
+		if(dateTime) {
+			this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+		}
 
 		return this;
 	}
 
-	shia (strDateTime) {
+	shia (dateTime) {
 		this._currentCalendar = this._shia;
-		this.parse(strDateTime);
+		
+		if(dateTime) {
+			this.parse("yyyy-MM-dd HH:mm:ss", dateTime);
+		}
 
 		return this;
 	}
@@ -68,25 +81,22 @@ class CalendarManager {
 
 	/**
 	 * 
-	 * @param {String} expression 
+	 * @param {String} pattern 
+	 * @param {String} text 
+	 * 
+	 * @return {CalendarManager}
 	 */
-	parse (expression) {
-		const parsers = Pasoonate.parsers;
+	parse (pattern, text) {
+		this._parser.calendar = this;
 
-		for(let i in parsers) {
-			const pattern = parsers[i].pattern();
-			
-			if(pattern.test(expression)) {
-				(new parsers[i](this)).parse(expression);
-				break;
-			}
-		}
+		this._parser.parse(pattern, text);
 
 		return this;
 	}
 
 	format (pattern, locale) {
 		this._formatter.setCalendar(this);
+
 		return this._formatter.format(pattern, locale);
 	}
 

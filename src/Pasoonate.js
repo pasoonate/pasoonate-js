@@ -41,7 +41,7 @@ class Pasoonate {
 	 * @param {Parser} parser 
 	 */
 	static setParser (parser) {
-		Pasoonate.parsers.push(parser);
+		Pasoonate.parser = parser instanceof Parser ? parser : new SimpleParser();
 	}
 
 	/**
@@ -64,12 +64,12 @@ Object.defineProperty(Pasoonate, 'localization', {
 
 Pasoonate.formatter = new SimpleDateFormat();
 Object.defineProperty(Pasoonate, 'formatter', {
-    writable: true,
+    writable: false,
     configurable: false
 });
 
-Pasoonate.parsers = [SimpleParser];
-Object.defineProperty(Pasoonate, 'parsers', {
+Pasoonate.parser = new SimpleParser();
+Object.defineProperty(Pasoonate, 'parser', {
 	writable: false,
 	configurable: false
 });
