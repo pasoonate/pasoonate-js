@@ -63,7 +63,7 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
       var currChar = "";
       var pattern = "";
       var index = 0;
-      var patterns = new Map([[SimpleParser.FULL_YEAR, "(\d{4})"], [SimpleParser.SHORT_YEAR, "(\d{2})"], [SimpleParser.FULL_MONTH_NAME, "(\D+)"], [SimpleParser.SHORT_MONTH_NAME, "(\D+)"], [SimpleParser.FULL_MONTH, "(\d{2})"], [SimpleParser.SHORT_MONTH, "(\d{1,2})"], [SimpleParser.FULL_DAY_NAME, "(\D+)"], [SimpleParser.SHORT_DAY_NAME, "(\D+)"], [SimpleParser.FULL_DAY, "(\d{2})"], [SimpleParser.SHORT_DAY, "(\d{1,2})"], [SimpleParser.FULL_HOUR, "(\d{2})"], [SimpleParser.SHORT_HOUR, "(\d{1,2})"], [SimpleParser.FULL_MINUTE, "(\d{2})"], [SimpleParser.SHORT_MINUTE, "(\d{1,2})"], [SimpleParser.FULL_SECOND, "(\d{2})"], [SimpleParser.SHORT_SECOND, "(\d{1,2})"]]);
+      var patterns = new Map([[SimpleParser.FULL_YEAR, "(\\d{4})"], [SimpleParser.SHORT_YEAR, "(\\d{2})"], [SimpleParser.FULL_MONTH_NAME, "(\\D+)"], [SimpleParser.SHORT_MONTH_NAME, "(\\D+)"], [SimpleParser.FULL_MONTH, "(\\d{2})"], [SimpleParser.SHORT_MONTH, "(\\d{1,2})"], [SimpleParser.FULL_DAY_NAME, "(\\D+)"], [SimpleParser.SHORT_DAY_NAME, "(\\D+)"], [SimpleParser.FULL_DAY, "(\\d{2})"], [SimpleParser.SHORT_DAY, "(\\d{1,2})"], [SimpleParser.FULL_HOUR, "(\\d{2})"], [SimpleParser.SHORT_HOUR, "(\\d{1,2})"], [SimpleParser.FULL_MINUTE, "(\\d{2})"], [SimpleParser.SHORT_MINUTE, "(\\d{1,2})"], [SimpleParser.FULL_SECOND, "(\\d{2})"], [SimpleParser.SHORT_SECOND, "(\\d{1,2})"]]);
 
       for (var i = 0; i < format.length; i++) {
         currChar = format[i];
@@ -143,37 +143,37 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
         var value = components[key];
 
         switch (key) {
-          case this.FULL_YEAR:
-          case this.SHORT_YEAR:
+          case SimpleParser.FULL_YEAR:
+          case SimpleParser.SHORT_YEAR:
             calendar.setYear(+value);
             break;
 
-          case this.FULL_MONTH:
-          case this.SHORT_MONTH:
+          case SimpleParser.FULL_MONTH:
+          case SimpleParser.SHORT_MONTH:
             calendar.setMonth(+value);
             break;
 
-          case this.FULL_DAY:
-          case this.SHORT_DAY:
+          case SimpleParser.FULL_DAY:
+          case SimpleParser.SHORT_DAY:
             calendar.setDay(+value);
             break;
 
-          case this.FULL_HOUR:
-          case this.SHORT_HOUR:
+          case SimpleParser.FULL_HOUR:
+          case SimpleParser.SHORT_HOUR:
             calendar.setHour(+value);
             break;
 
-          case this.FULL_MINUTE:
-          case this.SHORT_MINUTE:
+          case SimpleParser.FULL_MINUTE:
+          case SimpleParser.SHORT_MINUTE:
             calendar.setMinute(+value);
             break;
 
-          case this.FULL_SECOND:
-          case this.SHORT_SECOND:
+          case SimpleParser.FULL_SECOND:
+          case SimpleParser.SHORT_SECOND:
             calendar.setSecond(+value);
             break;
 
-          case this.FULL_MONTH_NAME:
+          case SimpleParser.FULL_MONTH_NAME:
             names = Pasoonate.trans(calendar.name() + ".month_name");
             month = names.indexOf(value);
 
@@ -183,7 +183,7 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
 
             break;
 
-          case this.SHORT_MONTH_NAME:
+          case SimpleParser.SHORT_MONTH_NAME:
             names = Pasoonate.trans(calendar.name() + ".short_month_name");
             month = names.indexOf(value);
 
@@ -193,11 +193,11 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
 
             break;
 
-          case this.FULL_DAY_NAME:
+          case SimpleParser.FULL_DAY_NAME:
             // names = Pasoonate.trans(calendar.name() . ".day_name");
             break;
 
-          case this.SHORT_DAY_NAME:
+          case SimpleParser.SHORT_DAY_NAME:
             // names = Pasoonate.trans(calendar.name() . ".short_day_name");
             break;
         }

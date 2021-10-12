@@ -1,7 +1,6 @@
 const { src, dest, series, watch } = require('gulp');
 const concat = require('gulp-concat');
-const minify = require('gulp-minify');
-const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
 const replace = require('gulp-replace');
  
 const regex = /^(import|export).*;{1}$/gm;
@@ -29,11 +28,10 @@ function jsMinify(){
     './src/lang/*.js',
     './src/*.js'
   ], {base:'./'})
-    .pipe(concat('pasoonate.js'))
+    .pipe(concat('pasoonate.min.js'))
     .pipe(replace(regex, ''))
-    .pipe(minify())
-    .pipe(dest('browser'))
-    .pipe(rename('pasoonate.min.js'))
+    .pipe(uglify())
+    .pipe(dest('browser'));
 }
 
 function watching() {
