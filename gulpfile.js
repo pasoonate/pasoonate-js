@@ -35,7 +35,7 @@ function jsMinify(){
 }
 
 function watching() {
-  watch('./src', null, series(jsMinify));
+  watch('./src', null, series(jsBuild));
 }
 
 exports.minify = jsMinify;
