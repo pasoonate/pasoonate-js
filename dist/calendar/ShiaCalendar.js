@@ -13,6 +13,18 @@ var _Constants = _interopRequireDefault(require("../Constants"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -127,7 +139,8 @@ var ShiaCalendar = /*#__PURE__*/function (_Calendar) {
         1440: [30, 29, 30, 30, 30, 29, 30, 29, 30, 29, 30, 29],
         1441: [29, 30, 29, 30, 30, 29, 30, 30, 29, 30, 29, 30],
         1442: [29, 29, 30, 29, 30, 29, 30, 30, 29, 30, 30, 29],
-        1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30]
+        1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30],
+        1444: [30, 30, 29, 30, 29, 29, 30, 30, 29, 30, 29, 30]
       };
 
       if (month < 1 || month > 12) {
@@ -152,9 +165,26 @@ var ShiaCalendar = /*#__PURE__*/function (_Calendar) {
         1440: 2458372.5,
         1441: 2458727.5,
         1442: 2459082.5,
-        1443: 2459436.5
+        1443: 2459436.5,
+        1444: 2459790.5
       };
-      return julianDays[year];
+
+      if (julianDays[year] !== undefined) {
+        return julianDays[year];
+      }
+
+      var availYears = Object.keys(julianDays);
+      var minYear = Math.min.apply(Math, _toConsumableArray(availYears));
+      var maxYear = Math.max.apply(Math, _toConsumableArray(availYears));
+      var julianDay = 0;
+
+      if (year > maxYear) {
+        julianDay = julianDays[maxYear] + (year - maxYear) * _Constants["default"].DaysOfShiaYear;
+      } else {
+        julianDay = julianDays[minYear] - (minYear - year) * _Constants["default"].DaysOfShiaYear;
+      }
+
+      return julianDay;
     }
   }, {
     key: "isLeap",

@@ -86,7 +86,8 @@ class ShiaCalendar extends Calendar {
             1440: [30, 29, 30, 30, 30, 29, 30, 29, 30, 29, 30, 29],
             1441: [29, 30, 29, 30, 30, 29, 30, 30, 29, 30, 29, 30],
             1442: [29, 29, 30, 29, 30, 29, 30, 30, 29, 30, 30, 29],
-            1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30]
+            1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30],
+            1444: [30, 30, 29, 30, 29, 29, 30, 30, 29, 30, 29, 30]
         };
 
         if (month < 1 || month > 12) {
@@ -110,10 +111,27 @@ class ShiaCalendar extends Calendar {
             1440: 2458372.5,
             1441: 2458727.5,
             1442: 2459082.5,
-            1443: 2459436.5
+            1443: 2459436.5,
+            1444: 2459790.5
         };
 
-        return julianDays[year];
+        if(julianDays[year] !== undefined) {
+            return julianDays[year];
+        }
+        
+        const availYears = Object.keys(julianDays)
+        const minYear = Math.min(...availYears);
+        const maxYear = Math.max(...availYears);
+        let julianDay = 0;
+
+        if(year > maxYear) {
+           julianDay = julianDays[maxYear] + ((year - maxYear) * Constants.DaysOfShiaYear);
+        }
+        else {
+            julianDay = julianDays[minYear] - ((minYear - year) * Constants.DaysOfShiaYear);
+        }
+
+        return julianDay;
     }
 
     isLeap (year) {
