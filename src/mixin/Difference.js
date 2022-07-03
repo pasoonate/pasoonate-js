@@ -2,16 +2,44 @@ import Constants from '../Constants';
 import CalendarManager from '../calendar/CalendarManager';
 
 const Difference = {
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Object}
+     */
+    age (instance) {
+        const diffInSeconds = this.diffInSeconds(instance);
+        const diffInDays = diffInSeconds / Constants.DayInSeconds;
+
+        const years = parseInt(diffInSeconds / Constants.YearInSeconds);
+        const months = parseInt((diffInSeconds - (years * Constants.YearInSeconds)) / Constants.MonthInSeconds);
+        const days = parseInt(diffInDays);
+        const hours = diffInSeconds / Constants.HourInSeconds;
+        const minutes = diffInSeconds / Constants.SecondsPerMinute;
+        const seconds = diffInSeconds;
+
+        const diff = {
+            years: parseInt(years),
+            months: parseInt(months),
+            days: parseInt(days),
+            hours: parseInt(hours),
+            minutes: parseInt(minutes),
+            seconds: parseInt(seconds)
+        };
+
+        return diff;
+    },
+
     diff (instance) {
         const diffInSeconds = this.diffInSeconds(instance);
         const diffInDays = diffInSeconds / Constants.DayInSeconds;
 
         const years = parseInt(diffInDays) / Constants.YearInDays;
         const months = parseInt(diffInDays) / Constants.MonthInDays;
-        const days = this.diffInDays(instance) % Constants.MonthInDays;
-        const hours = this.diffInHours(instance) % Constants.HoursPerDay;
-        const minutes = this.diffInMinutes(instance) % Constants.MinutesPerHour;
-        const seconds = diffInSeconds % Constants.SecondsPerMinute;
+        const days = parseInt(diffInDays);
+        const hours = diffInSeconds / Constants.HourInSeconds;
+        const minutes = diffInSeconds / Constants.SecondsPerMinute;
+        const seconds = diffInSeconds;
 
         const diff = {
             years: parseInt(years),
