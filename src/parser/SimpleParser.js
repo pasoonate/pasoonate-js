@@ -1,5 +1,6 @@
 import Parser from "./Parser";
 import CalendarManager from "../calendar/CalendarManager";
+import Pasoonate from "../Pasoonate";
 
 class SimpleParser extends Parser {   
 
@@ -134,8 +135,12 @@ class SimpleParser extends Parser {
 
             switch (key) {
                 case SimpleParser.FULL_YEAR:
-                case SimpleParser.SHORT_YEAR:
                     calendar.setYear(+value);
+                break;
+                case SimpleParser.SHORT_YEAR:
+                    const now = Pasoonate.make();
+                    now.name(calendar.name());
+                    calendar.setYear((parseInt(now.getYear() / 100) * 100) + +value);
                 break;
                 case SimpleParser.FULL_MONTH:
                 case SimpleParser.SHORT_MONTH:
