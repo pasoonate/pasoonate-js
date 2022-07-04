@@ -138,7 +138,7 @@ class SimpleParser extends Parser {
                     calendar.setYear(+value);
                 break;
                 case SimpleParser.SHORT_YEAR:
-                    const now = Pasoonate.make();
+                    const now = new CalendarManager();
                     now.name(calendar.name());
                     calendar.setYear((parseInt(now.getYear() / 100) * 100) + +value);
                 break;
