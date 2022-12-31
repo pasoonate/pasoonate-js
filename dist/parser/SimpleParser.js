@@ -11,6 +11,8 @@ var _Parser2 = _interopRequireDefault(require("./Parser"));
 
 var _CalendarManager = _interopRequireDefault(require("../calendar/CalendarManager"));
 
+var _Pasoonate = _interopRequireDefault(require("../Pasoonate"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -138,57 +140,63 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
       var result = this.translate(format);
       var components = this.match(result.pattern, text, result.sequence);
       var calendar = this.calendar;
+      var dateTime = calendar.getDateTime();
 
       for (var key in components) {
         var value = components[key];
 
         switch (key) {
           case SimpleParser.FULL_YEAR:
+            dateTime.year = +value;
+            break;
+
           case SimpleParser.SHORT_YEAR:
-            calendar.setYear(+value);
+            var now = new _CalendarManager["default"]();
+            now.name(calendar.name());
+            dateTime.year = parseInt(now.getYear() / 100) * 100 + +value;
             break;
 
           case SimpleParser.FULL_MONTH:
           case SimpleParser.SHORT_MONTH:
-            calendar.setMonth(+value);
+            dateTime.month = +value;
             break;
 
           case SimpleParser.FULL_DAY:
           case SimpleParser.SHORT_DAY:
-            calendar.setDay(+value);
+            dateTime.day = +value;
             break;
 
           case SimpleParser.FULL_HOUR:
           case SimpleParser.SHORT_HOUR:
-            calendar.setHour(+value);
+            dateTime.hour = +value;
             break;
 
           case SimpleParser.FULL_MINUTE:
           case SimpleParser.SHORT_MINUTE:
-            calendar.setMinute(+value);
+            dateTime.minute = +value;
             break;
 
           case SimpleParser.FULL_SECOND:
           case SimpleParser.SHORT_SECOND:
-            calendar.setSecond(+value);
+            dateTime.second = +value;
             break;
 
           case SimpleParser.FULL_MONTH_NAME:
-            names = Pasoonate.trans(calendar.name() + ".month_name");
+            names = _Pasoonate["default"].trans(calendar.name() + ".month_name");
             month = names.indexOf(value);
 
             if (month > 0) {
-              calendar.setMonth(month);
+              dateTime.month = month;
             }
 
             break;
 
           case SimpleParser.SHORT_MONTH_NAME:
-            names = Pasoonate.trans(calendar.name() + ".short_month_name");
+            names = _Pasoonate["default"].trans(calendar.name() + ".short_month_name");
             month = names.indexOf(value);
 
             if (month > 0) {
-              calendar.setMonth(month);
+              dateTime.month = month;
             }
 
             break;
@@ -202,6 +210,8 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
             break;
         }
       }
+
+      calendar.setDateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute, dateTime.second);
     }
   }]);
 

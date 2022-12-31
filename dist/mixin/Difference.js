@@ -12,6 +12,30 @@ var _CalendarManager = _interopRequireDefault(require("../calendar/CalendarManag
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var Difference = {
+  /**
+   * 
+   * @param {CalendarManager} instance
+   * @return {Object}
+   */
+  age: function age(instance) {
+    var diffInSeconds = this.diffInSeconds(instance);
+    var diffInDays = diffInSeconds / _Constants["default"].DayInSeconds;
+    var years = parseInt(diffInSeconds / _Constants["default"].YearInSeconds);
+    var months = parseInt((diffInSeconds - years * _Constants["default"].YearInSeconds) / _Constants["default"].MonthInSeconds);
+    var days = parseInt(diffInDays);
+    var hours = diffInSeconds / _Constants["default"].HourInSeconds;
+    var minutes = diffInSeconds / _Constants["default"].SecondsPerMinute;
+    var seconds = diffInSeconds;
+    var diff = {
+      years: parseInt(years),
+      months: parseInt(months),
+      days: parseInt(days),
+      hours: parseInt(hours),
+      minutes: parseInt(minutes),
+      seconds: parseInt(seconds)
+    };
+    return diff;
+  },
   diff: function diff(instance) {
     var diffInSeconds = this.diffInSeconds(instance);
     var diffInDays = diffInSeconds / _Constants["default"].DayInSeconds;
@@ -20,13 +44,10 @@ var Difference = {
 
     var months = parseInt(diffInDays) / _Constants["default"].MonthInDays;
 
-    var days = this.diffInDays(instance) % _Constants["default"].MonthInDays;
-
-    var hours = this.diffInHours(instance) % _Constants["default"].HoursPerDay;
-
-    var minutes = this.diffInMinutes(instance) % _Constants["default"].MinutesPerHour;
-
-    var seconds = diffInSeconds % _Constants["default"].SecondsPerMinute;
+    var days = parseInt(diffInDays);
+    var hours = diffInSeconds / _Constants["default"].HourInSeconds;
+    var minutes = diffInSeconds / _Constants["default"].SecondsPerMinute;
+    var seconds = diffInSeconds;
     var diff = {
       years: parseInt(years),
       months: parseInt(months),

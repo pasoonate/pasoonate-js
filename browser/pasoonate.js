@@ -299,7 +299,6 @@ const Base = {
 	},
 	
 	setDateTime (year, month, day, hour, minute, second) {
-		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
 		let timestamp = this._currentCalendar.dateToTimestamp(year, month, day, hour, minute, second);
 		this._timestamp = timestamp - this._timezoneOffset;
 		return this;
@@ -502,16 +501,44 @@ const Comparison = {
 
 
 const Difference = {
+    /**
+     * 
+     * @param {CalendarManager} instance
+     * @return {Object}
+     */
+    age (instance) {
+        const diffInSeconds = this.diffInSeconds(instance);
+        const diffInDays = diffInSeconds / Constants.DayInSeconds;
+
+        const years = parseInt(diffInSeconds / Constants.YearInSeconds);
+        const months = parseInt((diffInSeconds - (years * Constants.YearInSeconds)) / Constants.MonthInSeconds);
+        const days = parseInt(diffInDays);
+        const hours = diffInSeconds / Constants.HourInSeconds;
+        const minutes = diffInSeconds / Constants.SecondsPerMinute;
+        const seconds = diffInSeconds;
+
+        const diff = {
+            years: parseInt(years),
+            months: parseInt(months),
+            days: parseInt(days),
+            hours: parseInt(hours),
+            minutes: parseInt(minutes),
+            seconds: parseInt(seconds)
+        };
+
+        return diff;
+    },
+
     diff (instance) {
         const diffInSeconds = this.diffInSeconds(instance);
         const diffInDays = diffInSeconds / Constants.DayInSeconds;
 
         const years = parseInt(diffInDays) / Constants.YearInDays;
         const months = parseInt(diffInDays) / Constants.MonthInDays;
-        const days = this.diffInDays(instance) % Constants.MonthInDays;
-        const hours = this.diffInHours(instance) % Constants.HoursPerDay;
-        const minutes = this.diffInMinutes(instance) % Constants.MinutesPerHour;
-        const seconds = diffInSeconds % Constants.SecondsPerMinute;
+        const days = parseInt(diffInDays);
+        const hours = diffInSeconds / Constants.HourInSeconds;
+        const minutes = diffInSeconds / Constants.SecondsPerMinute;
+        const seconds = diffInSeconds;
 
         const diff = {
             years: parseInt(years),
@@ -800,7 +827,7 @@ class CalendarManager {
 
 		let date = new Date();
 		this._timestamp = timestamp || (Math.floor(date.getTime() / 1000)); // millisecond to seconds
-		this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
+		this._timezoneOffset = timezoneOffset || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
 	}
 
 	gregorian (dateTime) {
@@ -1450,6 +1477,7 @@ class Parser {
 
 
 
+
 class SimpleParser extends Parser {   
 
     static FULL_YEAR = 'yyyy';
@@ -1577,41 +1605,47 @@ class SimpleParser extends Parser {
         const result = this.translate(format);
         const components = this.match(result.pattern, text, result.sequence);
         const calendar = this.calendar;
+        
+        let dateTime = calendar.getDateTime();
 
         for (let key in components) {
             let value = components[key];
 
             switch (key) {
                 case SimpleParser.FULL_YEAR:
+                    dateTime.year = +value;
+                break;
                 case SimpleParser.SHORT_YEAR:
-                    calendar.setYear(+value);
+                    const now = new CalendarManager();
+                    now.name(calendar.name());
+                    dateTime.year = (parseInt(now.getYear() / 100) * 100) + +value
                 break;
                 case SimpleParser.FULL_MONTH:
                 case SimpleParser.SHORT_MONTH:
-                    calendar.setMonth(+value);
+                    dateTime.month = +value;
                 break;
                 case SimpleParser.FULL_DAY:
                 case SimpleParser.SHORT_DAY:
-                    calendar.setDay(+value);
+                    dateTime.day = +value;
                 break;
                 case SimpleParser.FULL_HOUR:
                 case SimpleParser.SHORT_HOUR:
-                    calendar.setHour(+value);
+                    dateTime.hour = +value;
                 break;
                 case SimpleParser.FULL_MINUTE:
                 case SimpleParser.SHORT_MINUTE:
-                    calendar.setMinute(+value);
+                    dateTime.minute = +value;
                 break;
                 case SimpleParser.FULL_SECOND:
                 case SimpleParser.SHORT_SECOND:
-                    calendar.setSecond(+value);
+                    dateTime.second = +value;
                 break;
                 case SimpleParser.FULL_MONTH_NAME:
                     names = Pasoonate.trans(calendar.name() + ".month_name");
                     month = names.indexOf(value)
 
                     if(month > 0) {
-                        calendar.setMonth(month);
+                        dateTime.month = month;
                     }
                 break;
                 case SimpleParser.SHORT_MONTH_NAME:
@@ -1619,7 +1653,7 @@ class SimpleParser extends Parser {
                     month = names.indexOf(value);
 
                     if(month > 0) {
-                        calendar.setMonth(month);
+                        dateTime.month = month;
                     }
                 break;
                 case SimpleParser.FULL_DAY_NAME:
@@ -1632,6 +1666,8 @@ class SimpleParser extends Parser {
                 break;
             }
         }
+
+        calendar.setDateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute, dateTime.second);
     }
 }
 

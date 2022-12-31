@@ -198,8 +198,6 @@ var Base = {
     };
   },
   setDateTime: function setDateTime(year, month, day, hour, minute, second) {
-    var date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
-
     var timestamp = this._currentCalendar.dateToTimestamp(year, month, day, hour, minute, second);
 
     this._timestamp = timestamp - this._timezoneOffset;

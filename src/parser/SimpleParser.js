@@ -129,45 +129,47 @@ class SimpleParser extends Parser {
         const result = this.translate(format);
         const components = this.match(result.pattern, text, result.sequence);
         const calendar = this.calendar;
+        
+        let dateTime = calendar.getDateTime();
 
         for (let key in components) {
             let value = components[key];
 
             switch (key) {
                 case SimpleParser.FULL_YEAR:
-                    calendar.setYear(+value);
+                    dateTime.year = +value;
                 break;
                 case SimpleParser.SHORT_YEAR:
                     const now = new CalendarManager();
                     now.name(calendar.name());
-                    calendar.setYear((parseInt(now.getYear() / 100) * 100) + +value);
+                    dateTime.year = (parseInt(now.getYear() / 100) * 100) + +value
                 break;
                 case SimpleParser.FULL_MONTH:
                 case SimpleParser.SHORT_MONTH:
-                    calendar.setMonth(+value);
+                    dateTime.month = +value;
                 break;
                 case SimpleParser.FULL_DAY:
                 case SimpleParser.SHORT_DAY:
-                    calendar.setDay(+value);
+                    dateTime.day = +value;
                 break;
                 case SimpleParser.FULL_HOUR:
                 case SimpleParser.SHORT_HOUR:
-                    calendar.setHour(+value);
+                    dateTime.hour = +value;
                 break;
                 case SimpleParser.FULL_MINUTE:
                 case SimpleParser.SHORT_MINUTE:
-                    calendar.setMinute(+value);
+                    dateTime.minute = +value;
                 break;
                 case SimpleParser.FULL_SECOND:
                 case SimpleParser.SHORT_SECOND:
-                    calendar.setSecond(+value);
+                    dateTime.second = +value;
                 break;
                 case SimpleParser.FULL_MONTH_NAME:
                     names = Pasoonate.trans(calendar.name() + ".month_name");
                     month = names.indexOf(value)
 
                     if(month > 0) {
-                        calendar.setMonth(month);
+                        dateTime.month = month;
                     }
                 break;
                 case SimpleParser.SHORT_MONTH_NAME:
@@ -175,7 +177,7 @@ class SimpleParser extends Parser {
                     month = names.indexOf(value);
 
                     if(month > 0) {
-                        calendar.setMonth(month);
+                        dateTime.month = month;
                     }
                 break;
                 case SimpleParser.FULL_DAY_NAME:
@@ -188,6 +190,8 @@ class SimpleParser extends Parser {
                 break;
             }
         }
+
+        calendar.setDateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour, dateTime.minute, dateTime.second);
     }
 }
 

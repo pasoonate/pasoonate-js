@@ -47,7 +47,7 @@ var CalendarManager = /*#__PURE__*/function () {
     var date = new Date();
     this._timestamp = timestamp || Math.floor(date.getTime() / 1000); // millisecond to seconds
 
-    this._timezoneOffset = timezoneOffset !== undefined || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
+    this._timezoneOffset = timezoneOffset || -date.getTimezoneOffset() * 60; // minute * 60 = offset in seconds
   }
 
   _createClass(CalendarManager, [{

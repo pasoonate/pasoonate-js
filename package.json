@@ -1,6 +1,6 @@
 {
   "name": "pasoonate",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "DateTime helpers and convert to calendars.",
   "main": "dist/Pasoonate.js",
   "directories": {
