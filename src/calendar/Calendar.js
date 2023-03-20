@@ -34,12 +34,12 @@ class Calendar {
         julianDay += 0.5;
 
         // Astronomical to civil
-        let time = Math.floor((julianDay - Math.floor(julianDay)) * Constants.DayInSeconds);
+        let time = Math.round((julianDay - Math.trunc(julianDay)) * Constants.DayInSeconds);
 
         return {
-        	"hour": Math.floor(time / 3600),
-        	"minute": Math.floor((time / 60) % 60),
-        	"second": Math.floor(time % 60)
+        	"hour": Math.trunc(time / 3600),
+        	"minute": Math.trunc((time / 60) % 60),
+        	"second": Math.trunc(time % 60)
         };
     }
 

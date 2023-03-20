@@ -52,11 +52,11 @@ var Calendar = /*#__PURE__*/function () {
     value: function extractJulianDayTime(julianDay) {
       julianDay += 0.5; // Astronomical to civil
 
-      var time = Math.floor((julianDay - Math.floor(julianDay)) * _Constants["default"].DayInSeconds);
+      var time = Math.round((julianDay - Math.trunc(julianDay)) * _Constants["default"].DayInSeconds);
       return {
-        "hour": Math.floor(time / 3600),
-        "minute": Math.floor(time / 60 % 60),
-        "second": Math.floor(time % 60)
+        "hour": Math.trunc(time / 3600),
+        "minute": Math.trunc(time / 60 % 60),
+        "second": Math.trunc(time % 60)
       };
     }
   }, {
