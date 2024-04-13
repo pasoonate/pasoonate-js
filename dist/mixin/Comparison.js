@@ -82,7 +82,7 @@ var Comparison = {
     return today.gregorian().diffInDays(this) > 1;
   },
   isLeapYear: function isLeapYear() {
-    return this._currentCalendar.isLeap(this._currentCalendar.getYear());
+    return this._currentCalendar.isLeap(this.getYear());
   },
   isSameDay: function isSameDay(other) {
     return this.gregorian().diffInDays(other) === 0;
