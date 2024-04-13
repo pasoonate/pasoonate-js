@@ -100,7 +100,7 @@ const Comparison = {
     },
 
     isLeapYear () {
-        return this._currentCalendar.isLeap(this._currentCalendar.getYear());
+        return this._currentCalendar.isLeap(this.getYear());
     },
 
     isSameDay (other) {
