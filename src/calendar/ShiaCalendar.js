@@ -139,9 +139,7 @@ class ShiaCalendar extends Calendar {
     }
 
     isLeap (year) {
-        let isLeap = (((year * 11) + 14) % 30) < 11;
-
-		return isLeap;
+       return (((year * 11) + 14) % 30) < 11;
 	}
 }
 

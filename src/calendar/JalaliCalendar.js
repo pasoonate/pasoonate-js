@@ -82,7 +82,12 @@ class JalaliCalendar extends Calendar {
     }
 
     isLeap (year) {
-        return ((((((year - ((year > 0) ? 474 : 473)) % 2820) + 474) + 38) * 682) % 2816) < 682;
+        const validRemainValueAfter1343 = [1,5,9,13,17,22,26,30];
+        const validRemainValueBefore1343 = [1,5,9,13,17,21,26,30];
+
+        const remain = year % 33;
+
+	    return year < 1343 ? remain in validRemainValueBefore1343 : remain in validRemainValueAfter1343;
     }
 }
 
