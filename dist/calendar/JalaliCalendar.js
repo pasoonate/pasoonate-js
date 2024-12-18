@@ -119,7 +119,10 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
   }, {
     key: "isLeap",
     value: function isLeap(year) {
-      return ((year - (year > 0 ? 474 : 473)) % 2820 + 474 + 38) * 682 % 2816 < 682;
+      var validRemainValueAfter1343 = [1, 5, 9, 13, 17, 22, 26, 30];
+      var validRemainValueBefore1343 = [1, 5, 9, 13, 17, 21, 26, 30];
+      var remain = year % 33;
+      return year < 1343 ? remain in validRemainValueBefore1343 : remain in validRemainValueAfter1343;
     }
   }]);
 

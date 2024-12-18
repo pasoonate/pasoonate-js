@@ -97,8 +97,7 @@ var IslamicCalendar = /*#__PURE__*/function (_Calendar) {
   }, {
     key: "isLeap",
     value: function isLeap(year) {
-      var isLeap = (year * 11 + 14) % 30 < 11;
-      return isLeap;
+      return (year * 11 + 14) % 30 < 11;
     }
   }]);
 
