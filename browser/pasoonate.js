@@ -1085,12 +1085,12 @@ class JalaliCalendar extends Calendar {
         let timestamp = 0
         let days = 0;
 
-        days += Math.floor(((year * 682) - 110) / 2816) + ((year - 1) * 365);
-        days += month <= 7 ? ((month - 1) * 31) : (((month - 1) * 30) + 6);
         days += day - 1;
+        days += month <= 7 ? ((month - 1) * 31) : (((month - 1) * 30) + 6);
+        days += Math.floor(((year * 682) - 110) / 2816) + ((year - 1) * 365);
 
-        if(year == 1404 && month == 1 && day >= 1 && day <= 25) {
-            days += 1;
+        if(year == 1404) {
+            days++;
         }
 
         timestamp += days * 86400;
@@ -1122,7 +1122,12 @@ class JalaliCalendar extends Calendar {
         const hour = Math.floor(this.mod(base, 86400) / 3600);
         const days = Math.floor(base / 86400);
         let year = Math.floor(days / 365);
-        const dayOfYear = days - (Math.floor(((year * 682) - 110) / 2816) + ((year - 1) * 365));
+        let dayOfYear = days - (Math.floor(((year * 682) - 110) / 2816) + ((year - 1) * 365));
+
+        if (days >= 512460 && days <= 512497) {
+            dayOfYear--;
+        }
+
         let month = Math.floor(dayOfYear <= 186 ? (dayOfYear / 31) : ((dayOfYear - 6) / 30)) + 1;
         let day = dayOfYear - (month <= 7 ? (month - 1) * 31 : ((month - 1) * 30) + 6) + 1;
 
@@ -1137,6 +1142,8 @@ class JalaliCalendar extends Calendar {
             month = 1;
             year += 1;
         }
+
+        
 
     	// let time = this.extractJulianDayTime(julianDay);
     	
