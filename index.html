@@ -9,29 +9,54 @@
 <body>
 	<script>
 		const pasoonate = Pasoonate.make();
-		const secondPasoonate = Pasoonate.make();
+		// const secondPasoonate = Pasoonate.make();
 
-		secondPasoonate.jalali("1363-07-23 00:00:00");
+		// secondPasoonate.jalali("1363-07-23 00:00:00");
 
-		console.log('Second ', secondPasoonate.jalali().format("yyyy-MM-dd"));
-		// secondPasoonate.jalali("1398/11/02 18:36:25");
-		secondPasoonate.gregorian("2020-01-01 00:00:00");
+		// console.log('Second ', secondPasoonate.jalali().format("yyyy-MM-dd"));
+		// // secondPasoonate.jalali("1398/11/02 18:36:25");
+		// secondPasoonate.gregorian("2020-01-01 00:00:00");
 
-		console.log('Second ', secondPasoonate.gregorian().format("yyyy-MM-dd  HH:mm:ss"));
-		console.log('Second ', secondPasoonate.jalali().format("yyyy-MM-dd  HH:mm:ss"));
+		// console.log('Second ', secondPasoonate.gregorian().format("yyyy-MM-dd  HH:mm:ss"));
+		// console.log('Second ', secondPasoonate.jalali().format("yyyy-MM-dd  HH:mm:ss"));
 
-		console.log('Diff \t\t\t', pasoonate.diff(secondPasoonate));
-		console.log('Diff In Seconds ', pasoonate.diffInSeconds(secondPasoonate));
-		console.log('Diff In Minutes ', pasoonate.diffInMinutes(secondPasoonate));
-		console.log('Diff In Hours \t', pasoonate.diffInHours(secondPasoonate));
-		console.log('Diff In Days \t', pasoonate.diffInDays(secondPasoonate));
-		console.log('Diff In Months \t', pasoonate.diffInMonths(secondPasoonate));
-		console.log('Diff In Years \t', pasoonate.diffInYears(secondPasoonate));
+		// console.log('Diff \t\t\t', pasoonate.diff(secondPasoonate));
+		// console.log('Diff In Seconds ', pasoonate.diffInSeconds(secondPasoonate));
+		// console.log('Diff In Minutes ', pasoonate.diffInMinutes(secondPasoonate));
+		// console.log('Diff In Hours \t', pasoonate.diffInHours(secondPasoonate));
+		// console.log('Diff In Days \t', pasoonate.diffInDays(secondPasoonate));
+		// console.log('Diff In Months \t', pasoonate.diffInMonths(secondPasoonate));
+		// console.log('Diff In Years \t', pasoonate.diffInYears(secondPasoonate));
 		
-		console.log('Shia \t\t', pasoonate.shia().format("yyyy/M/dd HH:mm:ss"));
-		console.log('Islamic \t', pasoonate.islamic().format("yyyy-MM-dd HH:mm:ss"));
-		console.log('Jalali \t\t', pasoonate.jalali().format("yyyy-MM-dd HH:mm:ss"));
-		console.log('Gregorian \t', pasoonate.gregorian().format("yyyy-MM-dd HH:mm:ss"));
+		// console.log('Shia \t\t', pasoonate.shia().format("yyyy/M/dd HH:mm:ss"));
+		// console.log('Islamic \t', pasoonate.islamic().format("yyyy-MM-dd HH:mm:ss"));
+		// console.log('Jalali \t\t', pasoonate.jalali().format("yyyy-MM-dd HH:mm:ss"));
+		// console.log('Gregorian \t', pasoonate.gregorian().format("yyyy-MM-dd HH:mm:ss"));
+
+		console.log(pasoonate.jalali("1403-12-29 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1403-12-30 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-01 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-02 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-03 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-10 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-11 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-15 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-20 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-25 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-26 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-27 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-28 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-29 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-30 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-01-31 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-02-01 12:00:00").getDate(), pasoonate.getTimestamp());
+		console.log(pasoonate.jalali("1404-03-01 12:00:00").getDate(), pasoonate.getTimestamp());
+
+		// for(let i = 0; i < 4; i++) {
+		// 	console.log(pasoonate.jalali().getDate());
+		// 	pasoonate.jalali().addDay(1);
+		// }
+
 	</script>	
 </body>
 </html>
