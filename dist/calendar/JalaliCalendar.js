@@ -9,6 +9,8 @@ exports["default"] = void 0;
 
 var _Calendar2 = _interopRequireDefault(require("./Calendar"));
 
+var _Constants = _interopRequireDefault(require("../Constants"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -42,7 +44,7 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
     _classCallCheck(this, JalaliCalendar);
 
     _this = _super.call(this);
-    _this.name = "jalali";
+    _this.name = _Constants["default"].Jalali;
     _this.JalaliEpoch = 1948320.5;
     Object.defineProperty(_assertThisInitialized(_this), 'JalaliEpoch', {
       writable: false,
@@ -56,7 +58,7 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
     value: function dateToJulianDay(year, month, day, hour, minute, second) {
       var timestamp = 0;
       var days = 0;
-      days += Math.floor((year - 1) * 365.24219878);
+      days += Math.floor((year - 1) * _Constants["default"].DaysOfTropicalJalaliYear);
       days += month <= 7 ? (month - 1) * 31 : (month - 1) * 30 + 6;
       days += day - 1;
 
@@ -64,8 +66,8 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
         days++;
       }
 
-      timestamp += days * 86400;
-      timestamp += hour * 3600 + minute * 60 + second;
+      timestamp += days * _Constants["default"].DayInSeconds;
+      timestamp += hour * _Constants["default"].HourInSeconds + minute * _Constants["default"].SecondsPerMinute + second;
       timestamp -= 42531868800;
       var julianDay = this.timestampToJulianDay(timestamp);
       return julianDay;
@@ -75,19 +77,19 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
     value: function julianDayToDate(julianDay) {
       var timestamp = this.julianDayToTimestamp(julianDay);
       var base = timestamp + 42531868800;
-      var second = this.mod(base, 60);
-      var minute = Math.floor(this.mod(base, 3600) / 60);
-      var hour = Math.floor(this.mod(base, 86400) / 3600);
-      var days = Math.floor(base / 86400);
-      var fyear = Math.floor(days / 365.24219878);
-      var year = Math.floor(days / 365);
-      var dayOfYear = days - Math.floor(fyear * 365.24219878);
+      var second = this.mod(base, _Constants["default"].SecondsPerMinute);
+      var minute = Math.floor(this.mod(base, _Constants["default"].HourInSeconds) / _Constants["default"].SecondsPerMinute);
+      var hour = Math.floor(this.mod(base, _Constants["default"].DayInSeconds) / _Constants["default"].HourInSeconds);
+      var days = Math.floor(base / _Constants["default"].DayInSeconds);
+      var fyear = Math.floor(days / _Constants["default"].DaysOfTropicalJalaliYear);
+      var year = Math.floor(days / _Constants["default"].DaysOfJalaliYear);
+      var dayOfYear = days - Math.floor(fyear * _Constants["default"].DaysOfTropicalJalaliYear);
 
       if (this.isLeap(fyear)) {
         dayOfYear--;
       }
 
-      if (dayOfYear >= 365 && !this.isLeap(year)) {
+      if (dayOfYear >= _Constants["default"].DaysOfJalaliYear && !this.isLeap(year)) {
         dayOfYear = 0;
         year++;
       }
@@ -116,7 +118,7 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
         throw new RangeException("$month Out Of Range Exception");
       }
 
-      if (year && this.isLeap(year) && month == 12) {
+      if (year && this.isLeap(year) && month == _Constants["default"].MonthsPerYear) {
         return 30;
       }
 

@@ -1068,12 +1068,13 @@ class IslamicCalendar extends Calendar {
 
 
 
+
 class JalaliCalendar extends Calendar {
 	
 	constructor () {
         super();
 
-        this.name = "jalali";
+        this.name = Constants.Jalali;
 		this.JalaliEpoch = 1948320.5;
 		Object.defineProperty(this, 'JalaliEpoch', {
             writable: false,
@@ -1082,10 +1083,10 @@ class JalaliCalendar extends Calendar {
 	}
 
 	dateToJulianDay (year, month, day, hour, minute, second) {
-        let timestamp = 0
+        let timestamp = 0;
         let days = 0;
 
-        days += Math.floor((year - 1) * 365.24219878);
+        days += Math.floor((year - 1) * Constants.DaysOfTropicalJalaliYear);
         days += month <= 7 ? ((month - 1) * 31) : (((month - 1) * 30) + 6);
         days += day - 1;
 
@@ -1093,8 +1094,8 @@ class JalaliCalendar extends Calendar {
             days++;
         }
 
-        timestamp += days * 86400;
-        timestamp += (hour * 3600) + (minute * 60) + second;
+        timestamp += days * Constants.DayInSeconds;
+        timestamp += (hour * Constants.HourInSeconds) + (minute * Constants.SecondsPerMinute) + second;
         timestamp -= 42531868800;
         
         const julianDay = this.timestampToJulianDay(timestamp);
@@ -1105,19 +1106,19 @@ class JalaliCalendar extends Calendar {
     julianDayToDate (julianDay) {
         const timestamp = this.julianDayToTimestamp(julianDay);
         const base = timestamp + 42531868800;
-        const second = this.mod(base, 60);
-        const minute = Math.floor(this.mod(base, 3600) / 60);
-        const hour = Math.floor(this.mod(base, 86400) / 3600);
-        const days = Math.floor(base / 86400);
-        const fyear = Math.floor(days / 365.24219878); 
-        let year = Math.floor(days / 365); 
-        let dayOfYear = days - Math.floor(fyear * 365.24219878);
+        const second = this.mod(base, Constants.SecondsPerMinute);
+        const minute = Math.floor(this.mod(base, Constants.HourInSeconds) / Constants.SecondsPerMinute);
+        const hour = Math.floor(this.mod(base, Constants.DayInSeconds) / Constants.HourInSeconds);
+        const days = Math.floor(base / Constants.DayInSeconds);
+        const fyear = Math.floor(days / Constants.DaysOfTropicalJalaliYear); 
+        let year = Math.floor(days / Constants.DaysOfJalaliYear); 
+        let dayOfYear = days - Math.floor(fyear * Constants.DaysOfTropicalJalaliYear);
 
         if(this.isLeap(fyear)) {
             dayOfYear--;
         }
 
-        if(dayOfYear >= 365 && !this.isLeap(year)) {
+        if(dayOfYear >= Constants.DaysOfJalaliYear && !this.isLeap(year)) {
             dayOfYear = 0;
             year++;
         }
@@ -1146,7 +1147,7 @@ class JalaliCalendar extends Calendar {
             throw new RangeException("$month Out Of Range Exception");
         }
         
-        if (year && this.isLeap(year) && month == 12) {
+        if (year && this.isLeap(year) && month == Constants.MonthsPerYear) {
             return 30;
         }
         
@@ -2036,6 +2037,7 @@ const Constants = {
 	DaysOfIslamicYear: 354,
 	DaysOfShiaYear: 354,
 	DaysOfJalaliYear: 365,
+	DaysOfTropicalJalaliYear: 365.24219878,
 	DaysOfGregorianYear: 365,
 	Gregorian: 'gregorian',
 	Jalali: 'jalali',

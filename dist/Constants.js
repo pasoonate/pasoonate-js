@@ -36,6 +36,7 @@ var Constants = {
   DaysOfIslamicYear: 354,
   DaysOfShiaYear: 354,
   DaysOfJalaliYear: 365,
+  DaysOfTropicalJalaliYear: 365.24219878,
   DaysOfGregorianYear: 365,
   Gregorian: 'gregorian',
   Jalali: 'jalali',
