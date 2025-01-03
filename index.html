@@ -33,6 +33,31 @@
 		// console.log('Jalali \t\t', pasoonate.jalali().format("yyyy-MM-dd HH:mm:ss"));
 		// console.log('Gregorian \t', pasoonate.gregorian().format("yyyy-MM-dd HH:mm:ss"));
 
+		// pasoonate.gregorian("2024-03-19 00:00:00");
+		// // pasoonate.gregorian("2025-04-13 00:00:00");
+		
+		// for(let i = 0; i < 380; i++) {
+		// 	console.log(pasoonate.jalali().getDate(), pasoonate.gregorian().getDate());
+
+		// 	pasoonate.addDay(1);
+		// }
+
+		const setPasoonate = Pasoonate.make();
+		pasoonate.gregorian("2024-03-19 00:00:00");
+		// pasoonate.gregorian("2025-04-13 00:00:00");
+		let date = '';
+		
+		for(let i = 0; i < 380; i++) {
+			// console.log(pasoonate.jalali().getDate(), pasoonate.gregorian().getDate());
+			date = pasoonate.jalali().format('yyyy-MM-dd HH:mm:ss');
+			setPasoonate.jalali(date);
+
+			console.log(setPasoonate.jalali().getDate(), pasoonate.gregorian().getDate());
+
+			pasoonate.addDay(1);
+		}
+		
+
 	</script>	
 </body>
 </html>
