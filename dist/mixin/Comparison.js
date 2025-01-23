@@ -4,11 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _Constants = _interopRequireDefault(require("../Constants"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 var Comparison = {
   equal: function equal(other) {
     return this._timestamp === other._timestamp;
@@ -88,5 +85,4 @@ var Comparison = {
     return this.gregorian().diffInDays(other) === 0;
   }
 };
-var _default = Comparison;
-exports["default"] = _default;
+var _default = exports["default"] = Comparison;

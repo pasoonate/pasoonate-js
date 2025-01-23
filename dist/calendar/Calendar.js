@@ -4,27 +4,21 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _Constants = _interopRequireDefault(require("../Constants"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var Calendar = /*#__PURE__*/function () {
   function Calendar() {
     _classCallCheck(this, Calendar);
-
     this.J1970 = 2440587.5; // Julian date at Unix epoch: 1970-01-01
-
     this.name = '';
   }
-
-  _createClass(Calendar, [{
+  return _createClass(Calendar, [{
     key: "getName",
     value: function getName() {
       return this.name;
@@ -50,8 +44,9 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "extractJulianDayTime",
     value: function extractJulianDayTime(julianDay) {
-      julianDay += 0.5; // Astronomical to civil
+      julianDay += 0.5;
 
+      // Astronomical to civil
       var time = Math.round((julianDay - Math.trunc(julianDay)) * _Constants["default"].DayInSeconds);
       return {
         "hour": Math.trunc(time / 3600),
@@ -70,7 +65,8 @@ var Calendar = /*#__PURE__*/function () {
     }
   }, {
     key: "dateToJulianDay",
-    value: function dateToJulianDay(year, month, day, hour, minute, second) {//
+    value: function dateToJulianDay(year, month, day, hour, minute, second) {
+      //
     }
   }, {
     key: "dateToTimestamp",
@@ -80,7 +76,8 @@ var Calendar = /*#__PURE__*/function () {
     }
   }, {
     key: "julianDayToDate",
-    value: function julianDayToDate(julianDay) {//
+    value: function julianDayToDate(julianDay) {
+      //
     }
   }, {
     key: "timestampToDate",
@@ -115,11 +112,9 @@ var Calendar = /*#__PURE__*/function () {
       var dayOfWeekInCurrentDayOfMonth = this.dayOfWeek(timestamp);
       var dayOfWeekInFirstDayOfMonth = this.dayOfWeek(firstDayOfMonthTimestamp);
       var week = 1;
-
       if (currentDate.day <= 7 - dayOfWeekInFirstDayOfMonth) {
         return week;
       }
-
       week += (currentDate.day - (7 - dayOfWeekInFirstDayOfMonth + (dayOfWeekInCurrentDayOfMonth + 1))) / 7 + 1;
       return week;
     }
@@ -132,11 +127,9 @@ var Calendar = /*#__PURE__*/function () {
       var dayOfWeekInCurrentDayOfYear = this.dayOfWeek(timestamp);
       var dayOfWeekInFirstDayOfYear = this.dayOfWeek(firstDayOfYearTimestamp);
       var week = 1;
-
       if (dayOfYear <= 7 - dayOfWeekInFirstDayOfYear) {
         return week;
       }
-
       week += (dayOfYear - (7 - dayOfWeekInFirstDayOfYear + (dayOfWeekInCurrentDayOfYear + 1))) / 7 + 1;
       return week;
     }
@@ -147,12 +140,9 @@ var Calendar = /*#__PURE__*/function () {
     }
   }, {
     key: "isLeap",
-    value: function isLeap(year) {//
+    value: function isLeap(year) {
+      //
     }
   }]);
-
-  return Calendar;
 }();
-
-var _default = Calendar;
-exports["default"] = _default;
+var _default = exports["default"] = Calendar;

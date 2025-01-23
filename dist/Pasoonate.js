@@ -4,37 +4,26 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
-
 var _Constants = _interopRequireDefault(require("./Constants"));
-
 var _Localization = _interopRequireDefault(require("./Localization"));
-
 var _DateFormat = _interopRequireDefault(require("./formatter/DateFormat"));
-
 var _SimpleDateFormat = _interopRequireDefault(require("./formatter/SimpleDateFormat"));
-
 var _CalendarManager = _interopRequireDefault(require("./calendar/CalendarManager"));
-
 var _SimpleParser = _interopRequireDefault(require("./parser/SimpleParser"));
-
 var _Parser = _interopRequireDefault(require("./parser/Parser"));
-
 var _fa = _interopRequireDefault(require("./lang/fa"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 var Pasoonate = /*#__PURE__*/function () {
   function Pasoonate() {
     _classCallCheck(this, Pasoonate);
   }
-
-  _createClass(Pasoonate, null, [{
+  return _createClass(Pasoonate, null, [{
     key: "make",
     value: function make(timestamp, timezoneOffset) {
       return new _CalendarManager["default"](timestamp, timezoneOffset);
@@ -64,32 +53,29 @@ var Pasoonate = /*#__PURE__*/function () {
     value: function setFormatter(formatter) {
       Pasoonate.formatter = formatter instanceof _DateFormat["default"] ? formatter : new _SimpleDateFormat["default"]();
     }
+
     /**
      * 
      * @param {Parser} parser 
      */
-
   }, {
     key: "setParser",
     value: function setParser(parser) {
       Pasoonate.parser = parser instanceof _Parser["default"] ? parser : new _SimpleParser["default"]();
     }
+
     /**
      *
      * @param {CalendarManager} instance 
      * @param {CalendarManager}
      */
-
   }, {
     key: "clone",
     value: function clone(instance) {
       return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
     }
   }]);
-
-  return Pasoonate;
 }();
-
 Object.assign(Pasoonate, _Constants["default"]);
 Pasoonate.localization = new _Localization["default"]();
 Object.defineProperty(Pasoonate, 'localization', {
@@ -107,5 +93,4 @@ Object.defineProperty(Pasoonate, 'parser', {
   configurable: false
 });
 Pasoonate.localization.setLang('fa', _fa["default"]);
-var _default = Pasoonate;
-exports["default"] = _default;
+var _default = exports["default"] = Pasoonate;

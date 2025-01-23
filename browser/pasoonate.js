@@ -508,26 +508,54 @@ const Difference = {
      * @return {Object}
      */
     age (instance) {
-        const diffInSeconds = this.diffInSeconds(instance);
-        const diffInDays = diffInSeconds / Constants.DayInSeconds;
+        const birthday = instance.clone();
+        birthday.name(this.name());
 
-        const years = parseInt(diffInSeconds / Constants.YearInSeconds);
-        const months = parseInt((diffInSeconds - (years * Constants.YearInSeconds)) / Constants.MonthInSeconds);
-        const days = parseInt(diffInDays);
-        const hours = diffInSeconds / Constants.HourInSeconds;
-        const minutes = diffInSeconds / Constants.SecondsPerMinute;
-        const seconds = diffInSeconds;
+        const todayDateTime = this.getDateTime();
+        const birthdayDateTime = birthday.getDateTime();
+        
+        let seconds = todayDateTime.second - birthdayDateTime.second;
+        let minutes = todayDateTime.minute - birthdayDateTime.minute;
+        let hours = todayDateTime.hour - birthdayDateTime.hour;
+        let days = todayDateTime.day - birthdayDateTime.day;
+        let months = todayDateTime.month - birthdayDateTime.month;
+        let years = todayDateTime.year - birthdayDateTime.year;
 
-        const diff = {
-            years: parseInt(years),
-            months: parseInt(months),
-            days: parseInt(days),
-            hours: parseInt(hours),
-            minutes: parseInt(minutes),
-            seconds: parseInt(seconds)
+        if(seconds < 0) {
+            seconds += Constants.SecondsPerMinute;
+            minutes -= 1;
+        }
+
+        if(minutes < 0) {
+            minutes += Constants.MinutesPerHour;
+            hours -= 1;
+        }
+
+        if(hours < 0) {
+            hours += Constants.HoursPerDay;
+            days -= 1;
+        }
+
+        if(days < 0) {
+            months -= 1;
+            days += birthday._currentCalendar.daysInMonth(todayDateTime.year, todayDateTime.month - 1);
+        }
+
+        if(months < 0) {
+            months += 12;
+            years -= 1;
+        }
+
+        const age = {
+            years: years,
+            months: months,
+            days: days,
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds
         };
 
-        return diff;
+        return age;
     },
 
     diff (instance) {

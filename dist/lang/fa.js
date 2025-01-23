@@ -198,5 +198,4 @@ var fa = {
     }
   }
 };
-var _default = fa;
-exports["default"] = _default;
+var _default = exports["default"] = fa;

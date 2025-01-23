@@ -43,5 +43,4 @@ var Constants = {
   Shia: 'shia',
   Islamic: 'islamic'
 };
-var _default = Constants;
-exports["default"] = _default;
+var _default = exports["default"] = Constants;

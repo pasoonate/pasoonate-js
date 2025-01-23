@@ -32,5 +32,4 @@ var Modifiers = {
     return this.addDay(daysToFriday).endOfDay();
   }
 };
-var _default = Modifiers;
-exports["default"] = _default;
+var _default = exports["default"] = Modifiers;

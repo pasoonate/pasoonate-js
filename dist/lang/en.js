@@ -118,5 +118,4 @@ var en = {
     }
   }
 };
-var _default = en;
-exports["default"] = _default;
+var _default = exports["default"] = en;
