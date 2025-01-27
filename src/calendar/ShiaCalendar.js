@@ -89,7 +89,8 @@ class ShiaCalendar extends Calendar {
             1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30],
             1444: [30, 30, 29, 30, 29, 29, 30, 29, 30, 29, 30, 29],
             1445: [30, 30, 30, 29, 30, 29, 29, 30, 29, 30, 29, 29],
-            1446: [30, 30, 30, 29, 30, 30, 29, 30, 29, 30, 29, 29]
+            1446: [30, 30, 30, 29, 30, 30, 29, 30, 29, 29, 29, 30],
+            1447: [29, 30, 30, 29, 30, 30, 30, 29, 30, 29, 29, 29],
         };
 
         if (month < 1 || month > 12) {
@@ -116,17 +117,18 @@ class ShiaCalendar extends Calendar {
             1443: 2459436.5,
             1444: 2459790.5,
             1445: 2460144.5,
-            1446: 2460498.5
+            1446: 2460498.5,
+            1447: 2460853.5,
         };
 
         if(julianDays[year] !== undefined) {
             return julianDays[year];
         }
         
-        const availYears = Object.keys(julianDays)
+        const availYears = Object.keys(julianDays).map(year => parseInt(year));
         const minYear = Math.min(...availYears);
         const maxYear = Math.max(...availYears);
-        let julianDay = 0;
+        let julianDay;
 
         if(year > maxYear) {
            julianDay = julianDays[maxYear] + ((year - maxYear) * Constants.DaysOfShiaYear);
