@@ -190,7 +190,20 @@ const fa = {
             '11': 'ذیقعده',
             '12': 'ذیحجه',
         }
-	}
+	},
+    diff: {
+        year: 'سال',
+        month: 'ماه',
+        day: 'روز',
+        hour: 'ساعت',
+        minute: 'دقیقه',
+        second: 'ثانیه',
+        before: 'قبل',
+        after: 'بعد',
+        ago: 'پیش',
+        from_now: 'از اکنون',
+        now: 'اکنون'
+    }
 };
 
 export default fa;
