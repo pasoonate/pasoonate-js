@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -67,7 +67,7 @@ var Pasoonate = /*#__PURE__*/function () {
     /**
      *
      * @param {CalendarManager} instance 
-     * @param {CalendarManager}
+     * @return {CalendarManager}
      */
   }, {
     key: "clone",

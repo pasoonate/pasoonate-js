@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 Object.defineProperty(exports, "__esModule", {
@@ -59,7 +59,7 @@ var GregorianCalendar = /*#__PURE__*/function (_Calendar) {
       var dquad = this.mod(dcent, 1461);
       var yindex = Math.floor(dquad / 365);
       var year = quadricent * 400 + cent * 100 + quad * 4 + yindex;
-      if (!(cent == 4 || yindex == 4)) {
+      if (!(cent === 4 || yindex === 4)) {
         year++;
       }
       var yearday = wjd - this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second));
@@ -82,7 +82,7 @@ var GregorianCalendar = /*#__PURE__*/function (_Calendar) {
       if (month < 1 || month > 12) {
         throw new RangeException("$month Out Of Range Exception");
       }
-      if (year && this.isLeap(year) && month == 2) {
+      if (year && this.isLeap(year) && month === 2) {
         return 29;
       }
       return gregorianDaysInMonth[month - 1];
@@ -90,7 +90,7 @@ var GregorianCalendar = /*#__PURE__*/function (_Calendar) {
   }, {
     key: "isLeap",
     value: function isLeap(year) {
-      return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+      return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
     }
   }]);
 }(_Calendar2["default"]);

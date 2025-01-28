@@ -1,11 +1,10 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports["default"] = void 0;
 var _Constants = _interopRequireDefault(require("../Constants"));
-var _CalendarManager = _interopRequireDefault(require("../calendar/CalendarManager"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 var Difference = {
   /**
@@ -44,7 +43,7 @@ var Difference = {
       months += 12;
       years -= 1;
     }
-    var age = {
+    return {
       years: years,
       months: months,
       days: days,
@@ -52,26 +51,27 @@ var Difference = {
       minutes: minutes,
       seconds: seconds
     };
-    return age;
   },
+  /**
+   *
+   * @param {CalendarManager} instance
+   * @return {Object}
+   */
   diff: function diff(instance) {
-    var diffInSeconds = this.diffInSeconds(instance);
-    var diffInDays = diffInSeconds / _Constants["default"].DayInSeconds;
-    var years = parseInt(diffInDays) / _Constants["default"].YearInDays;
-    var months = parseInt(diffInDays) / _Constants["default"].MonthInDays;
-    var days = parseInt(diffInDays);
-    var hours = diffInSeconds / _Constants["default"].HourInSeconds;
-    var minutes = diffInSeconds / _Constants["default"].SecondsPerMinute;
-    var seconds = diffInSeconds;
-    var diff = {
-      years: parseInt(years),
-      months: parseInt(months),
-      days: parseInt(days),
-      hours: parseInt(hours),
-      minutes: parseInt(minutes),
-      seconds: parseInt(seconds)
+    var seconds = this.diffInSeconds(instance);
+    var minutes = Math.floor(seconds / _Constants["default"].SecondsPerMinute);
+    var hours = Math.floor(seconds / _Constants["default"].HourInSeconds);
+    var days = Math.floor(seconds / _Constants["default"].DayInSeconds);
+    var months = Math.floor(days / _Constants["default"].MonthInDays);
+    var years = Math.floor(days / _Constants["default"].YearInDays);
+    return {
+      years: years,
+      months: months,
+      days: days,
+      hours: hours,
+      minutes: minutes,
+      seconds: seconds
     };
-    return diff;
   },
   /**
    * 
@@ -79,8 +79,7 @@ var Difference = {
    * @return {Number}
    */
   diffInSeconds: function diffInSeconds(instance) {
-    var diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-    return diffInSeconds;
+    return Math.abs(this.getTimestamp() - instance.getTimestamp());
   },
   /**
    * 
@@ -88,9 +87,8 @@ var Difference = {
    * @return {Number}
    */
   diffInMinutes: function diffInMinutes(instance) {
-    var diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-    var diffInMinutes = diffInSeconds >= _Constants["default"].SecondsPerMinute ? parseInt(diffInSeconds / _Constants["default"].SecondsPerMinute) : 0;
-    return diffInMinutes;
+    var diffInSeconds = this.diffInSeconds(instance);
+    return diffInSeconds >= _Constants["default"].SecondsPerMinute ? Math.floor(diffInSeconds / _Constants["default"].SecondsPerMinute) : 0;
   },
   /**
    * 
@@ -98,9 +96,8 @@ var Difference = {
    * @return {Number}
    */
   diffInHours: function diffInHours(instance) {
-    var diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-    var diffInHours = diffInSeconds >= _Constants["default"].HourInSeconds ? parseInt(diffInSeconds / _Constants["default"].HourInSeconds) : 0;
-    return diffInHours;
+    var diffInSeconds = this.diffInSeconds(instance);
+    return diffInSeconds >= _Constants["default"].HourInSeconds ? Math.floor(diffInSeconds / _Constants["default"].HourInSeconds) : 0;
   },
   /**
    * 
@@ -108,9 +105,8 @@ var Difference = {
    * @return {Number}
    */
   diffInDays: function diffInDays(instance) {
-    var diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-    var diffInDays = diffInSeconds >= _Constants["default"].DayInSeconds ? parseInt(diffInSeconds / _Constants["default"].DayInSeconds) : 0;
-    return diffInDays;
+    var diffInSeconds = this.diffInSeconds(instance);
+    return diffInSeconds >= _Constants["default"].DayInSeconds ? Math.floor(diffInSeconds / _Constants["default"].DayInSeconds) : 0;
   },
   /**
    * 
@@ -118,9 +114,8 @@ var Difference = {
    * @return {Number}
    */
   diffInMonths: function diffInMonths(instance) {
-    var diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-    var diffInMonths = diffInSeconds >= _Constants["default"].MonthInSeconds ? parseInt(diffInSeconds / _Constants["default"].MonthInSeconds) : 0;
-    return diffInMonths;
+    var diffInSeconds = this.diffInSeconds(instance);
+    return diffInSeconds >= _Constants["default"].MonthInSeconds ? Math.floor(diffInSeconds / _Constants["default"].MonthInSeconds) : 0;
   },
   /**
    * 
@@ -128,9 +123,59 @@ var Difference = {
    * @return {Number}
    */
   diffInYears: function diffInYears(instance) {
-    var diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-    var diffInYears = diffInSeconds >= _Constants["default"].YearInSeconds ? parseInt(diffInSeconds / _Constants["default"].YearInSeconds) : 0;
-    return diffInYears;
+    var diffInSeconds = this.diffInSeconds(instance);
+    return diffInSeconds >= _Constants["default"].YearInSeconds ? Math.floor(diffInSeconds / _Constants["default"].YearInSeconds) : 0;
+  },
+  /**
+   *
+   * @param {CalendarManager} instance
+   * @return {Object}
+   */
+  diffForHumans: function diffForHumans(instance) {
+    var before, base, other;
+    var result = [];
+    var space = " ";
+    var defaultCalendar = this.name();
+    var now = Pasoonate.make();
+    if (this.beforeThan(instance)) {
+      before = false;
+      base = instance.clone();
+      other = this.clone();
+    } else {
+      before = true;
+      base = this.clone();
+      other = instance.clone();
+    }
+    base.name(defaultCalendar);
+    other.name(defaultCalendar);
+    now.name(defaultCalendar);
+    var age = base.age(other);
+    if (age.years > 0) {
+      result.push(age.years + space + Pasoonate.trans('diff.year'));
+    }
+    if (age.months > 0) {
+      result.push(age.months + space + Pasoonate.trans('diff.month'));
+    }
+    if (age.days > 0) {
+      result.push(age.days + space + Pasoonate.trans('diff.day'));
+    }
+    if (age.hours > 0) {
+      result.push(age.hours + space + Pasoonate.trans('diff.hour'));
+    }
+    if (age.minutes > 0) {
+      result.push(age.minutes + space + Pasoonate.trans('diff.minute'));
+    }
+    if (age.seconds > 0) {
+      result.push(age.seconds + space + Pasoonate.trans('diff.second'));
+    }
+    if (result.length === 0) {
+      result.push(Pasoonate.trans('diff.now'));
+    } else if (now.diff(base).minutes === 0 || now.diff(other).minutes === 0) {
+      result.push(before ? Pasoonate.trans('diff.ago') : Pasoonate.trans('diff.from_now'));
+    } else {
+      result.push(before ? Pasoonate.trans('diff.before') : Pasoonate.trans('diff.after'));
+    }
+    return result.join(space);
   }
 };
 var _default = exports["default"] = Difference;

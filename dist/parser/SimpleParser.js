@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -43,7 +43,7 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
       var sequence = [];
       var prevChar = "";
       var currChar = "";
-      var pattern = "";
+      var pattern;
       var index = 0;
       var patterns = new Map([[SimpleParser.FULL_YEAR, "(\\d{4})"], [SimpleParser.SHORT_YEAR, "(\\d{2})"], [SimpleParser.FULL_MONTH_NAME, "(\\D+)"], [SimpleParser.SHORT_MONTH_NAME, "(\\D+)"], [SimpleParser.FULL_MONTH, "(\\d{2})"], [SimpleParser.SHORT_MONTH, "(\\d{1,2})"], [SimpleParser.FULL_DAY_NAME, "(\\D+)"], [SimpleParser.SHORT_DAY_NAME, "(\\D+)"], [SimpleParser.FULL_DAY, "(\\d{2})"], [SimpleParser.SHORT_DAY, "(\\d{1,2})"], [SimpleParser.FULL_HOUR, "(\\d{2})"], [SimpleParser.SHORT_HOUR, "(\\d{1,2})"], [SimpleParser.FULL_MINUTE, "(\\d{2})"], [SimpleParser.SHORT_MINUTE, "(\\d{1,2})"], [SimpleParser.FULL_SECOND, "(\\d{2})"], [SimpleParser.SHORT_SECOND, "(\\d{1,2})"]]);
       for (var i = 0; i < format.length; i++) {
@@ -111,6 +111,8 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
       var dateTime = calendar.getDateTime();
       for (var key in components) {
         var value = components[key];
+        var names = void 0,
+          month = void 0;
         switch (key) {
           case SimpleParser.FULL_YEAR:
             dateTime.year = +value;
@@ -118,7 +120,7 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
           case SimpleParser.SHORT_YEAR:
             var now = new _CalendarManager["default"]();
             now.name(calendar.name());
-            dateTime.year = parseInt(now.getYear() / 100) * 100 + +value;
+            dateTime.year = Math.floor(now.getYear() / 100) * 100 + +value;
             break;
           case SimpleParser.FULL_MONTH:
           case SimpleParser.SHORT_MONTH:
@@ -155,11 +157,11 @@ var SimpleParser = /*#__PURE__*/function (_Parser) {
             }
             break;
           case SimpleParser.FULL_DAY_NAME:
-            // names = Pasoonate.trans(calendar.name() . ".day_name");
+            // names = Pasoonate.trans(calendar.name() + ".day_name");
 
             break;
           case SimpleParser.SHORT_DAY_NAME:
-            // names = Pasoonate.trans(calendar.name() . ".short_day_name");
+            // names = Pasoonate.trans(calendar.name() + ".short_day_name");
 
             break;
         }

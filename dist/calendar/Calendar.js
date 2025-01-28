@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -33,8 +33,7 @@ var Calendar = /*#__PURE__*/function () {
   }, {
     key: "julianDayToTimestamp",
     value: function julianDayToTimestamp(julianDay) {
-      var timestamp = Math.round((julianDay - this.J1970) * _Constants["default"].DayInSeconds);
-      return timestamp;
+      return Math.round((julianDay - this.J1970) * _Constants["default"].DayInSeconds);
     }
   }, {
     key: "julianDayWithoutTime",

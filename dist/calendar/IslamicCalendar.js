@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 Object.defineProperty(exports, "__esModule", {
@@ -69,7 +69,7 @@ var IslamicCalendar = /*#__PURE__*/function (_Calendar) {
       if (month < 1 || month > 12) {
         throw new RangeException("$month Out Of Range Exception");
       }
-      if (year && this.isLeap(year) && month == 12) {
+      if (year && this.isLeap(year) && month === 12) {
         return 30;
       }
       return islamicDaysInMonth[month - 1];

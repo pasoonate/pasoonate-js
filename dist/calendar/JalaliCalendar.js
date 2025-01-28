@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 Object.defineProperty(exports, "__esModule", {
@@ -48,8 +48,7 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
       timestamp += days * _Constants["default"].DayInSeconds;
       timestamp += hour * _Constants["default"].HourInSeconds + minute * _Constants["default"].SecondsPerMinute + second;
       timestamp -= 42531868800;
-      var julianDay = this.timestampToJulianDay(timestamp);
-      return julianDay;
+      return this.timestampToJulianDay(timestamp);
     }
   }, {
     key: "julianDayToDate",
@@ -92,7 +91,7 @@ var JalaliCalendar = /*#__PURE__*/function (_Calendar) {
       if (month < 1 || month > 12) {
         throw new RangeException("$month Out Of Range Exception");
       }
-      if (year && this.isLeap(year) && month == _Constants["default"].MonthsPerYear) {
+      if (year && this.isLeap(year) && month === _Constants["default"].MonthsPerYear) {
         return 30;
       }
       return gregorianDaysInMonth[month - 1];

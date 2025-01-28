@@ -116,6 +116,67 @@ var en = {
       '11': 'Dhuq',
       '12': 'Dhuh'
     }
+  },
+  shia: {
+    day_name: {
+      '0': 'Saturday',
+      '1': 'Sunday',
+      '2': 'Monday',
+      '3': 'Tuesday',
+      '4': 'Wednesday',
+      '5': 'Thursday',
+      '6': 'Friday'
+    },
+    short_day_name: {
+      '0': 'Sat',
+      '1': 'Sun',
+      '2': 'Mon',
+      '3': 'Tue',
+      '4': 'Wed',
+      '5': 'Thu',
+      '6': 'Fri'
+    },
+    month_name: {
+      '1': 'Muharram',
+      '2': 'Safar',
+      '3': 'Rabi al-Awwal',
+      '4': 'Rabi al-Thani',
+      '5': 'Jumada al-Awwal',
+      '6': 'Jumada al-Thani',
+      '7': 'Rajab',
+      '8': 'Sha’ban',
+      '9': 'Ramadan',
+      '10': 'Shawwal',
+      '11': 'Dhul-Qadah',
+      '12': 'Dhul-Hijjah'
+    },
+    short_month_name: {
+      '1': 'Muh',
+      '2': 'Saf',
+      '3': 'Raa',
+      '4': 'Rat',
+      '5': 'Jua',
+      '6': 'Jut',
+      '7': 'Raj',
+      '8': 'Sha',
+      '9': 'Ram',
+      '10': 'Shw',
+      '11': 'Dhuq',
+      '12': 'Dhuh'
+    }
+  },
+  diff: {
+    year: 'year',
+    month: 'month',
+    day: 'day',
+    hour: 'hour',
+    minute: 'minute',
+    second: 'second',
+    before: 'before',
+    after: 'after',
+    ago: 'ago',
+    from_now: 'from now',
+    now: 'now'
   }
 };
 var _default = exports["default"] = en;

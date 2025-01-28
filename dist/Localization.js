@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -40,7 +40,7 @@ var Localization = /*#__PURE__*/function () {
     key: "hasTransKey",
     value: function hasTransKey(key, locale) {
       var subKeys = key.split('.');
-      if (this._langs[locale] == undefined) return false;
+      if (this._langs[locale] === undefined) return false;
       var result = this._langs[locale];
       for (var i = 0; i < subKeys.length; i++) {
         if (subKeys[i] in result) {

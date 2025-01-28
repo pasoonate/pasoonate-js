@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 Object.defineProperty(exports, "__esModule", {
@@ -8,6 +8,12 @@ exports["default"] = void 0;
 var _Calendar2 = _interopRequireDefault(require("./Calendar"));
 var _Constants = _interopRequireDefault(require("../Constants"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
@@ -103,7 +109,8 @@ var ShiaCalendar = /*#__PURE__*/function (_Calendar) {
         1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30],
         1444: [30, 30, 29, 30, 29, 29, 30, 29, 30, 29, 30, 29],
         1445: [30, 30, 30, 29, 30, 29, 29, 30, 29, 30, 29, 29],
-        1446: [30, 30, 30, 29, 30, 30, 29, 30, 29, 30, 29, 29]
+        1446: [30, 30, 30, 29, 30, 30, 29, 30, 29, 29, 29, 30],
+        1447: [29, 30, 30, 29, 30, 30, 30, 29, 30, 29, 29, 29]
       };
       if (month < 1 || month > 12) {
         throw new RangeException("$month Out Of Range Exception");
@@ -128,15 +135,18 @@ var ShiaCalendar = /*#__PURE__*/function (_Calendar) {
         1443: 2459436.5,
         1444: 2459790.5,
         1445: 2460144.5,
-        1446: 2460498.5
+        1446: 2460498.5,
+        1447: 2460853.5
       };
       if (julianDays[year] !== undefined) {
         return julianDays[year];
       }
-      var availYears = Object.keys(julianDays);
-      var minYear = Math.min.apply(Math, availYears);
-      var maxYear = Math.max.apply(Math, availYears);
-      var julianDay = 0;
+      var availYears = Object.keys(julianDays).map(function (year) {
+        return parseInt(year);
+      });
+      var minYear = Math.min.apply(Math, _toConsumableArray(availYears));
+      var maxYear = Math.max.apply(Math, _toConsumableArray(availYears));
+      var julianDay;
       if (year > maxYear) {
         julianDay = julianDays[maxYear] + (year - maxYear) * _Constants["default"].DaysOfShiaYear;
       } else {

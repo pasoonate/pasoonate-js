@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -204,7 +204,6 @@ var Base = {
     };
   },
   setUTCDateTime: function setUTCDateTime(year, month, day, hour, minute, second) {
-    var date = this._currentCalendar.timestampToDate(this._timestamp);
     this._timestamp = this._currentCalendar.dateToTimestamp(year, month, day, hour, minute, second);
     return this;
   },

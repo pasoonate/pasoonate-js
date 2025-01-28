@@ -1,3 +1,5 @@
+
+
 const AdditionAndSubtraction = {
 	addYear(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);
@@ -103,6 +105,8 @@ const AdditionAndSubtraction = {
 		return this;
 	}
 };
+
+
 
 
 const Base = {
@@ -350,7 +354,6 @@ const Base = {
 	},
 	
 	setUTCDateTime (year, month, day, hour, minute, second) {
-		let date = this._currentCalendar.timestampToDate(this._timestamp);
 		this._timestamp = this._currentCalendar.dateToTimestamp(year, month, day, hour, minute, second);
 		return this;
 	},
@@ -384,6 +387,8 @@ const Base = {
     	return this._currentCalendar.weekOfYear(this._timestamp + this._timezoneOffset);
     },
 };
+
+
 
 
 
@@ -501,6 +506,7 @@ const Comparison = {
 
 
 
+
 const Difference = {
     /**
      * 
@@ -513,7 +519,7 @@ const Difference = {
 
         const todayDateTime = this.getDateTime();
         const birthdayDateTime = birthday.getDateTime();
-        
+
         let seconds = todayDateTime.second - birthdayDateTime.second;
         let minutes = todayDateTime.minute - birthdayDateTime.minute;
         let hours = todayDateTime.hour - birthdayDateTime.hour;
@@ -546,7 +552,7 @@ const Difference = {
             years -= 1;
         }
 
-        const age = {
+        return {
             years: years,
             months: months,
             days: days,
@@ -554,31 +560,29 @@ const Difference = {
             minutes: minutes,
             seconds: seconds
         };
-
-        return age;
     },
 
+    /**
+     *
+     * @param {CalendarManager} instance
+     * @return {Object}
+     */
     diff (instance) {
-        const diffInSeconds = this.diffInSeconds(instance);
-        const diffInDays = diffInSeconds / Constants.DayInSeconds;
+        const seconds = this.diffInSeconds(instance);
+        const minutes = Math.floor(seconds / Constants.SecondsPerMinute);
+        const hours = Math.floor(seconds / Constants.HourInSeconds);
+        const days =  Math.floor(seconds / Constants.DayInSeconds);
+        const months = Math.floor(days / Constants.MonthInDays);
+        const years = Math.floor(days / Constants.YearInDays);
 
-        const years = parseInt(diffInDays) / Constants.YearInDays;
-        const months = parseInt(diffInDays) / Constants.MonthInDays;
-        const days = parseInt(diffInDays);
-        const hours = diffInSeconds / Constants.HourInSeconds;
-        const minutes = diffInSeconds / Constants.SecondsPerMinute;
-        const seconds = diffInSeconds;
-
-        const diff = {
-            years: parseInt(years),
-            months: parseInt(months),
-            days: parseInt(days),
-            hours: parseInt(hours),
-            minutes: parseInt(minutes),
-            seconds: parseInt(seconds)
+        return {
+            years: years,
+            months: months,
+            days: days,
+            hours: hours,
+            minutes: minutes,
+            seconds: seconds
         };
-
-        return diff;
     },
 
     /**
@@ -587,9 +591,7 @@ const Difference = {
      * @return {Number}
      */
     diffInSeconds (instance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-
-        return diffInSeconds;
+        return  Math.abs(this.getTimestamp() - instance.getTimestamp());
     },
 
     /**
@@ -598,10 +600,9 @@ const Difference = {
      * @return {Number}
      */
     diffInMinutes (instance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-        const diffInMinutes = diffInSeconds >= Constants.SecondsPerMinute ? parseInt(diffInSeconds / Constants.SecondsPerMinute) : 0;
+        const diffInSeconds = this.diffInSeconds(instance);
 
-        return diffInMinutes;
+        return diffInSeconds >= Constants.SecondsPerMinute ? Math.floor(diffInSeconds / Constants.SecondsPerMinute) : 0;
     },
 
     /**
@@ -610,10 +611,9 @@ const Difference = {
      * @return {Number}
      */
     diffInHours (instance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-        const diffInHours = diffInSeconds >= Constants.HourInSeconds ? parseInt(diffInSeconds / Constants.HourInSeconds) : 0;
+        const diffInSeconds = this.diffInSeconds(instance);
 
-        return diffInHours;
+        return diffInSeconds >= Constants.HourInSeconds ? Math.floor(diffInSeconds / Constants.HourInSeconds) : 0;
     },
 
     /**
@@ -622,10 +622,9 @@ const Difference = {
      * @return {Number}
      */
     diffInDays (instance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-        const diffInDays = diffInSeconds >= Constants.DayInSeconds ? parseInt(diffInSeconds / Constants.DayInSeconds) : 0;
+        const diffInSeconds = this.diffInSeconds(instance);
 
-        return diffInDays;
+        return diffInSeconds >= Constants.DayInSeconds ? Math.floor(diffInSeconds / Constants.DayInSeconds) : 0;
     },
 
     /**
@@ -634,10 +633,9 @@ const Difference = {
      * @return {Number}
      */
     diffInMonths (instance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-        const diffInMonths = diffInSeconds >= Constants.MonthInSeconds ? parseInt(diffInSeconds / Constants.MonthInSeconds) : 0;
+        const diffInSeconds = this.diffInSeconds(instance);
 
-        return diffInMonths;
+        return diffInSeconds >= Constants.MonthInSeconds ? Math.floor(diffInSeconds / Constants.MonthInSeconds) : 0;
     },
 
     /**
@@ -646,12 +644,75 @@ const Difference = {
      * @return {Number}
      */
     diffInYears (instance) {
-        const diffInSeconds = Math.abs(this.getTimestamp() - instance.getTimestamp());
-        const diffInYears = diffInSeconds >= Constants.YearInSeconds ? parseInt(diffInSeconds / Constants.YearInSeconds) : 0;
+        const diffInSeconds = this.diffInSeconds(instance);
 
-        return diffInYears;
+        return diffInSeconds >= Constants.YearInSeconds ? Math.floor(diffInSeconds / Constants.YearInSeconds) : 0;
+    },
+
+    /**
+     *
+     * @param {CalendarManager} instance
+     * @return {Object}
+     */
+    diffForHumans (instance) {
+        let before, base, other;
+        const result = [];
+        const space = " ";
+        const defaultCalendar = this.name();
+        const now = Pasoonate.make();
+
+        if(this.beforeThan(instance)) {
+            before = false;
+            base = instance.clone();
+            other = this.clone();
+        } else {
+            before = true;
+            base = this.clone();
+            other = instance.clone();
+        }
+
+        base.name(defaultCalendar);
+        other.name(defaultCalendar);
+        now.name(defaultCalendar);
+
+        const age = base.age(other);
+
+        if(age.years > 0) {
+            result.push(age.years + space + Pasoonate.trans('diff.year'));
+        }
+
+        if(age.months > 0) {
+            result.push(age.months + space + Pasoonate.trans('diff.month'));
+        }
+
+        if(age.days > 0) {
+            result.push(age.days + space + Pasoonate.trans('diff.day'));
+        }
+
+        if(age.hours > 0) {
+            result.push(age.hours + space + Pasoonate.trans('diff.hour'));
+        }
+
+        if(age.minutes > 0) {
+            result.push(age.minutes + space + Pasoonate.trans('diff.minute'));
+        }
+
+        if(age.seconds > 0) {
+            result.push(age.seconds + space + Pasoonate.trans('diff.second'));
+        }
+
+        if(result.length === 0) {
+            result.push(Pasoonate.trans('diff.now'));
+        } else if (now.diff(base).minutes === 0 || now.diff(other).minutes === 0) {
+            result.push(before ? Pasoonate.trans('diff.ago') : Pasoonate.trans('diff.from_now'));
+        } else {
+            result.push(before ? Pasoonate.trans('diff.before') : Pasoonate.trans('diff.after'));
+        }
+
+        return result.join(space);
     }
 };
+
 
 
 
@@ -697,6 +758,8 @@ const Modifiers = {
 
 
 
+
+
 class Calendar {
 	
 	constructor () {
@@ -717,13 +780,10 @@ class Calendar {
 	}
 
 	julianDayToTimestamp (julianDay) {
-		let timestamp = Math.round((julianDay - this.J1970) * Constants.DayInSeconds);
-		
-		return timestamp;
+		return Math.round((julianDay - this.J1970) * Constants.DayInSeconds);
     }
 
 	julianDayWithoutTime (julianDay) {
-		
 		return Math.floor(julianDay) + ((julianDay - Math.floor(julianDay)) >= 0.5 ?  0.5 : -0.5);
 	}
 
@@ -843,6 +903,8 @@ class Calendar {
 
 
 
+
+
 class CalendarManager {
 	
 	constructor (timestamp, timezoneOffset) {
@@ -950,6 +1012,8 @@ Object.assign(CalendarManager.prototype, Modifiers);
 
 
 
+
+
 class GregorianCalendar extends Calendar {
 	constructor () {
         super();
@@ -989,7 +1053,7 @@ class GregorianCalendar extends Calendar {
         let dquad = this.mod(dcent, 1461);
         let yindex = Math.floor(dquad / 365);
         let year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
-        if (!((cent == 4) || (yindex == 4))) {
+        if (!((cent === 4) || (yindex === 4))) {
             year++;
         }
         let yearday = wjd - this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second));
@@ -1015,7 +1079,7 @@ class GregorianCalendar extends Calendar {
             throw new RangeException("$month Out Of Range Exception");
         }
         
-        if (year && this.isLeap(year) && month == 2) {
+        if (year && this.isLeap(year) && month === 2) {
             return 29;
         }
         
@@ -1023,9 +1087,11 @@ class GregorianCalendar extends Calendar {
     }
 
     isLeap (year) {
-        return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+        return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
     }
 }
+
+
 
 
 
@@ -1081,7 +1147,7 @@ class IslamicCalendar extends Calendar {
             throw new RangeException("$month Out Of Range Exception");
         }
         
-        if (year && this.isLeap(year) && month == 12) {
+        if (year && this.isLeap(year) && month === 12) {
             return 30;
         }
         
@@ -1092,6 +1158,8 @@ class IslamicCalendar extends Calendar {
         return (((year * 11) + 14) % 30) < 11;
     }
 }
+
+
 
 
 
@@ -1126,9 +1194,7 @@ class JalaliCalendar extends Calendar {
         timestamp += (hour * Constants.HourInSeconds) + (minute * Constants.SecondsPerMinute) + second;
         timestamp -= 42531868800;
         
-        const julianDay = this.timestampToJulianDay(timestamp);
-
-		return julianDay;
+        return this.timestampToJulianDay(timestamp);
 	}
 
     julianDayToDate (julianDay) {
@@ -1175,7 +1241,7 @@ class JalaliCalendar extends Calendar {
             throw new RangeException("$month Out Of Range Exception");
         }
         
-        if (year && this.isLeap(year) && month == Constants.MonthsPerYear) {
+        if (year && this.isLeap(year) && month === Constants.MonthsPerYear) {
             return 30;
         }
         
@@ -1191,6 +1257,8 @@ class JalaliCalendar extends Calendar {
 	    return year < 1343 ? validRemainValueBefore1343.includes(remain) : validRemainValueAfter1343.includes(remain);
     }
 }
+
+
 
 
 
@@ -1284,7 +1352,8 @@ class ShiaCalendar extends Calendar {
             1443: [29, 30, 30, 29, 29, 30, 29, 29, 30, 29, 30, 30],
             1444: [30, 30, 29, 30, 29, 29, 30, 29, 30, 29, 30, 29],
             1445: [30, 30, 30, 29, 30, 29, 29, 30, 29, 30, 29, 29],
-            1446: [30, 30, 30, 29, 30, 30, 29, 30, 29, 30, 29, 29]
+            1446: [30, 30, 30, 29, 30, 30, 29, 30, 29, 29, 29, 30],
+            1447: [29, 30, 30, 29, 30, 30, 30, 29, 30, 29, 29, 29],
         };
 
         if (month < 1 || month > 12) {
@@ -1311,17 +1380,18 @@ class ShiaCalendar extends Calendar {
             1443: 2459436.5,
             1444: 2459790.5,
             1445: 2460144.5,
-            1446: 2460498.5
+            1446: 2460498.5,
+            1447: 2460853.5,
         };
 
         if(julianDays[year] !== undefined) {
             return julianDays[year];
         }
         
-        const availYears = Object.keys(julianDays)
+        const availYears = Object.keys(julianDays).map(year => parseInt(year));
         const minYear = Math.min(...availYears);
         const maxYear = Math.max(...availYears);
-        let julianDay = 0;
+        let julianDay;
 
         if(year > maxYear) {
            julianDay = julianDays[maxYear] + ((year - maxYear) * Constants.DaysOfShiaYear);
@@ -1337,6 +1407,8 @@ class ShiaCalendar extends Calendar {
        return (((year * 11) + 14) % 30) < 11;
 	}
 }
+
+
 
 
 
@@ -1364,6 +1436,8 @@ class DateFormat {
 		return `${this._calendar.getYear()}-${this._calendar.getMonth()}-${this._calendar.getDay()} ${this._calendar.getHour()}:${this._calendar.getMinute()}:${this._calendar.getSecond()}`;
 	}
 }
+
+
 
 
 
@@ -1482,6 +1556,7 @@ class SimpleDateFormat extends DateFormat {
 
 
 
+
 class Parser {
 
     _calendar = null;
@@ -1513,6 +1588,8 @@ class Parser {
         //
     }
 }
+
+
 
 
 
@@ -1554,7 +1631,7 @@ class SimpleParser extends Parser {
         let sequence = [];
         let prevChar = "";
         let currChar = "";
-        let pattern = "";
+        let pattern;
         let index = 0;
         const patterns = new Map([
             [SimpleParser.FULL_YEAR, "(\\d{4})"],
@@ -1651,6 +1728,7 @@ class SimpleParser extends Parser {
 
         for (let key in components) {
             let value = components[key];
+            let names, month;
 
             switch (key) {
                 case SimpleParser.FULL_YEAR:
@@ -1659,7 +1737,7 @@ class SimpleParser extends Parser {
                 case SimpleParser.SHORT_YEAR:
                     const now = new CalendarManager();
                     now.name(calendar.name());
-                    dateTime.year = (parseInt(now.getYear() / 100) * 100) + +value
+                    dateTime.year = (Math.floor(now.getYear() / 100) * 100) + +value
                 break;
                 case SimpleParser.FULL_MONTH:
                 case SimpleParser.SHORT_MONTH:
@@ -1698,11 +1776,11 @@ class SimpleParser extends Parser {
                     }
                 break;
                 case SimpleParser.FULL_DAY_NAME:
-                    // names = Pasoonate.trans(calendar.name() . ".day_name");
+                    // names = Pasoonate.trans(calendar.name() + ".day_name");
                    
                 break;
                 case SimpleParser.SHORT_DAY_NAME:
-                    // names = Pasoonate.trans(calendar.name() . ".short_day_name");
+                    // names = Pasoonate.trans(calendar.name() + ".short_day_name");
                     
                 break;
             }
@@ -1833,6 +1911,67 @@ const en = {
             '11': 'Dhuq',
             '12': 'Dhuh'
         }
+    },
+    shia: {
+        day_name: {
+            '0': 'Saturday',
+            '1': 'Sunday',
+            '2': 'Monday',
+            '3': 'Tuesday',
+            '4': 'Wednesday',
+            '5': 'Thursday',
+            '6': 'Friday'
+        },
+        short_day_name: {
+            '0': 'Sat',
+            '1': 'Sun',
+            '2': 'Mon',
+            '3': 'Tue',
+            '4': 'Wed',
+            '5': 'Thu',
+            '6': 'Fri'
+        },
+        month_name: {
+            '1': 'Muharram',
+            '2': 'Safar',
+            '3': 'Rabi al-Awwal',
+            '4': 'Rabi al-Thani',
+            '5': 'Jumada al-Awwal',
+            '6': 'Jumada al-Thani',
+            '7': 'Rajab',
+            '8': 'Sha’ban',
+            '9': 'Ramadan',
+            '10': 'Shawwal',
+            '11': 'Dhul-Qadah',
+            '12': 'Dhul-Hijjah'
+        },
+        short_month_name: {
+            '1': 'Muh',
+            '2': 'Saf',
+            '3': 'Raa',
+            '4': 'Rat',
+            '5': 'Jua',
+            '6': 'Jut',
+            '7': 'Raj',
+            '8': 'Sha',
+            '9': 'Ram',
+            '10': 'Shw',
+            '11': 'Dhuq',
+            '12': 'Dhuh'
+        }
+    },
+    diff: {
+        year: 'year',
+        month: 'month',
+        day: 'day',
+        hour: 'hour',
+        minute: 'minute',
+        second: 'second',
+        before: 'before',
+        after: 'after',
+        ago: 'ago',
+        from_now: 'from now',
+        now: 'now'
     }
 }
 
@@ -2030,8 +2169,23 @@ const fa = {
             '11': 'ذیقعده',
             '12': 'ذیحجه',
         }
-	}
+	},
+    diff: {
+        year: 'سال',
+        month: 'ماه',
+        day: 'روز',
+        hour: 'ساعت',
+        minute: 'دقیقه',
+        second: 'ثانیه',
+        before: 'قبل',
+        after: 'بعد',
+        ago: 'پیش',
+        from_now: 'از اکنون',
+        now: 'اکنون'
+    }
 };
+
+
 
 
 const Constants = {
@@ -2074,6 +2228,7 @@ const Constants = {
 };
 
 
+
 class Localization {
 
     constructor () {
@@ -2099,7 +2254,7 @@ class Localization {
 
     hasTransKey (key, locale) {
         let subKeys = key.split('.');
-        if (this._langs[locale] == undefined) return false;
+        if (this._langs[locale] === undefined) return false;
         let result = this._langs[locale];
         for (let i = 0; i < subKeys.length; i++) {
             if (subKeys[i] in result) {
@@ -2124,6 +2279,8 @@ class Localization {
         return this.getTrans(key, locale);
     }
 }
+
+
 
 
 
@@ -2175,7 +2332,7 @@ class Pasoonate {
 	/**
 	 *
 	 * @param {CalendarManager} instance 
-	 * @param {CalendarManager}
+	 * @return {CalendarManager}
 	 */
 	static clone (instance) {
 		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());
