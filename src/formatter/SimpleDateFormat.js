@@ -1,3 +1,5 @@
+'use strict';
+
 import DateFormat from "./DateFormat";
 import Pasoonate from "../Pasoonate";
 

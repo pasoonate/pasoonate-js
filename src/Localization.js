@@ -1,3 +1,4 @@
+'use strict';
 class Localization {
 
     constructor () {
@@ -23,7 +24,7 @@ class Localization {
 
     hasTransKey (key, locale) {
         let subKeys = key.split('.');
-        if (this._langs[locale] == undefined) return false;
+        if (this._langs[locale] === undefined) return false;
         let result = this._langs[locale];
         for (let i = 0; i < subKeys.length; i++) {
             if (subKeys[i] in result) {

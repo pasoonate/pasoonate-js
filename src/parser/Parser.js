@@ -1,5 +1,6 @@
+'use strict';
+
 import CalendarManager from "../calendar/CalendarManager";
-import Pasoonate from "../Pasoonate";
 
 class Parser {
 

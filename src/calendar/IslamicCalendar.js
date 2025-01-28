@@ -1,3 +1,5 @@
+'use strict';
+
 import Calendar from "./Calendar";
 
 class IslamicCalendar extends Calendar {
@@ -51,7 +53,7 @@ class IslamicCalendar extends Calendar {
             throw new RangeException("$month Out Of Range Exception");
         }
         
-        if (year && this.isLeap(year) && month == 12) {
+        if (year && this.isLeap(year) && month === 12) {
             return 30;
         }
         

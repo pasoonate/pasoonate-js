@@ -1,3 +1,5 @@
+'use strict';
+
 import Pasoonate from '../Pasoonate';
 import GregorianCalendar from './GregorianCalendar';
 import JalaliCalendar from './JalaliCalendar';

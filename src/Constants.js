@@ -1,3 +1,5 @@
+'use strict';
+
 const Constants = {
 	J1970: 2440587.5, // Julian date at Unix epoch: 1970-01-01
 	Saturday: 0,

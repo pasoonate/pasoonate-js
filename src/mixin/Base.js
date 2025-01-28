@@ -1,3 +1,5 @@
+'use strict';
+
 const Base = {
 	setTimestamp (timestamp) {
 		this._timestamp = timestamp;
@@ -243,7 +245,6 @@ const Base = {
 	},
 	
 	setUTCDateTime (year, month, day, hour, minute, second) {
-		let date = this._currentCalendar.timestampToDate(this._timestamp);
 		this._timestamp = this._currentCalendar.dateToTimestamp(year, month, day, hour, minute, second);
 		return this;
 	},

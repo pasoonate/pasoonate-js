@@ -1,3 +1,5 @@
+'use strict';
+
 import Calendar from "./Calendar";
 import Constants from "../Constants";
 
@@ -30,9 +32,7 @@ class JalaliCalendar extends Calendar {
         timestamp += (hour * Constants.HourInSeconds) + (minute * Constants.SecondsPerMinute) + second;
         timestamp -= 42531868800;
         
-        const julianDay = this.timestampToJulianDay(timestamp);
-
-		return julianDay;
+        return this.timestampToJulianDay(timestamp);
 	}
 
     julianDayToDate (julianDay) {
@@ -79,7 +79,7 @@ class JalaliCalendar extends Calendar {
             throw new RangeException("$month Out Of Range Exception");
         }
         
-        if (year && this.isLeap(year) && month == Constants.MonthsPerYear) {
+        if (year && this.isLeap(year) && month === Constants.MonthsPerYear) {
             return 30;
         }
         

@@ -1,3 +1,5 @@
+'use strict';
+
 import Calendar from "./Calendar";
 import Constants from "../Constants";
 

@@ -1,3 +1,5 @@
+'use strict';
+
 const AdditionAndSubtraction = {
 	addYear(count) {
 		let date = this._currentCalendar.timestampToDate(this._timestamp + this._timezoneOffset);

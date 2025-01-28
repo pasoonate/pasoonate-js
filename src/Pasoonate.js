@@ -1,3 +1,5 @@
+'use strict';
+
 import Constants from './Constants';
 import Localization from './Localization';
 import DateFormat from './formatter/DateFormat';
@@ -47,7 +49,7 @@ class Pasoonate {
 	/**
 	 *
 	 * @param {CalendarManager} instance 
-	 * @param {CalendarManager}
+	 * @return {CalendarManager}
 	 */
 	static clone (instance) {
 		return Pasoonate.make(instance.getTimestamp(), instance.getTimezoneOffset());

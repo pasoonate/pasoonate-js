@@ -1,3 +1,5 @@
+'use strict';
+
 import Constants from "../Constants";
 
 class Calendar {
@@ -20,13 +22,10 @@ class Calendar {
 	}
 
 	julianDayToTimestamp (julianDay) {
-		let timestamp = Math.round((julianDay - this.J1970) * Constants.DayInSeconds);
-		
-		return timestamp;
+		return Math.round((julianDay - this.J1970) * Constants.DayInSeconds);
     }
 
 	julianDayWithoutTime (julianDay) {
-		
 		return Math.floor(julianDay) + ((julianDay - Math.floor(julianDay)) >= 0.5 ?  0.5 : -0.5);
 	}
 

@@ -1,3 +1,5 @@
+'use strict';
+
 import Parser from "./Parser";
 import CalendarManager from "../calendar/CalendarManager";
 import Pasoonate from "../Pasoonate";
@@ -37,7 +39,7 @@ class SimpleParser extends Parser {
         let sequence = [];
         let prevChar = "";
         let currChar = "";
-        let pattern = "";
+        let pattern;
         let index = 0;
         const patterns = new Map([
             [SimpleParser.FULL_YEAR, "(\\d{4})"],
@@ -134,6 +136,7 @@ class SimpleParser extends Parser {
 
         for (let key in components) {
             let value = components[key];
+            let names, month;
 
             switch (key) {
                 case SimpleParser.FULL_YEAR:
@@ -142,7 +145,7 @@ class SimpleParser extends Parser {
                 case SimpleParser.SHORT_YEAR:
                     const now = new CalendarManager();
                     now.name(calendar.name());
-                    dateTime.year = (parseInt(now.getYear() / 100) * 100) + +value
+                    dateTime.year = (Math.floor(now.getYear() / 100) * 100) + +value
                 break;
                 case SimpleParser.FULL_MONTH:
                 case SimpleParser.SHORT_MONTH:
@@ -181,11 +184,11 @@ class SimpleParser extends Parser {
                     }
                 break;
                 case SimpleParser.FULL_DAY_NAME:
-                    // names = Pasoonate.trans(calendar.name() . ".day_name");
+                    // names = Pasoonate.trans(calendar.name() + ".day_name");
                    
                 break;
                 case SimpleParser.SHORT_DAY_NAME:
-                    // names = Pasoonate.trans(calendar.name() . ".short_day_name");
+                    // names = Pasoonate.trans(calendar.name() + ".short_day_name");
                     
                 break;
             }

@@ -1,3 +1,5 @@
+'use strict';
+
 import CalendarManager from "../calendar/CalendarManager";
 
 class DateFormat {

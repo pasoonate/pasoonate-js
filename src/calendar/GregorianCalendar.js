@@ -1,3 +1,5 @@
+'use strict';
+
 import Calendar from "./Calendar";
 
 class GregorianCalendar extends Calendar {
@@ -39,7 +41,7 @@ class GregorianCalendar extends Calendar {
         let dquad = this.mod(dcent, 1461);
         let yindex = Math.floor(dquad / 365);
         let year = (quadricent * 400) + (cent * 100) + (quad * 4) + yindex;
-        if (!((cent == 4) || (yindex == 4))) {
+        if (!((cent === 4) || (yindex === 4))) {
             year++;
         }
         let yearday = wjd - this.julianDayWithoutTime(this.dateToJulianDay(year, 1, 1, time.hour, time.minute, time.second));
@@ -65,7 +67,7 @@ class GregorianCalendar extends Calendar {
             throw new RangeException("$month Out Of Range Exception");
         }
         
-        if (year && this.isLeap(year) && month == 2) {
+        if (year && this.isLeap(year) && month === 2) {
             return 29;
         }
         
@@ -73,7 +75,7 @@ class GregorianCalendar extends Calendar {
     }
 
     isLeap (year) {
-        return year % 4 == 0 && (year % 100 != 0 || year % 400 == 0);
+        return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
     }
 }
 

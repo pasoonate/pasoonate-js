@@ -1,3 +1,5 @@
+'use strict';
+
 import Constants from '../Constants';
 
 const Comparison = {
